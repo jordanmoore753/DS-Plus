@@ -44,6 +44,8 @@
 
 `chars` returns an `Array` of the passed `string`.
 
+`eachGroup(string. delim)` allows iteration of a string and transformation of the values. Returns a list.
+ 
 ## Number
 
 `divMod(num, numeric)` this will perform the exact operation from *Ruby*. Returns a new `Array` containing the quotient and modulus obtained from dividing `num` by `numeric`.
