@@ -88,9 +88,9 @@ Plus.Stack = class {
 // Linked List Prototype
 
 Plus.LinkedList = class {
-  constructor() {
+  constructor(value) {
     let headNode = {
-      val: undefined,
+      val: value,
       next: null
     };
 
@@ -102,7 +102,7 @@ Plus.LinkedList = class {
     return 1;
   }
 
-  insertAtTail(...newData) {
+  insert(...newData) {
     let nodes = newData.map(function(data) {
       return {
         val: data,
@@ -130,7 +130,7 @@ Plus.LinkedList = class {
       };
     });
 
-    let tail = this.traverseToIndex(index);
+    let tail = this.getNodeAtIndex(index);
 
     if (tail === -1) {
       return 0;
@@ -155,6 +155,10 @@ Plus.LinkedList = class {
     let headNode = this.head;
 
     if (headNode.val === value) {
+      if (this.head.next === null) {
+        return 0;
+      }
+
       this.head = this.head.next;
       return 1;
     }
@@ -172,9 +176,13 @@ Plus.LinkedList = class {
   }
 
   removeByIndex(index) {
-    if (index === undefined) { return 0; }
+    if (index === undefined || typeof index !== 'number') { return 0; }
 
     if (index === 0) {
+      if (this.head.next === null) {
+        return 0;
+      }
+
       this.head = this.head.next;
       return 1;
     }
@@ -209,7 +217,7 @@ Plus.LinkedList = class {
     return 1;
   }
 
-  traverseToIndex(index) {
+  getNodeAtIndex(index) {
     if (typeof index !== 'number' || index < 0) { return 0; }
 
     let headNode = this.head;
@@ -225,7 +233,7 @@ Plus.LinkedList = class {
     return headNode;
   }
 
-  traverseToValue(value) {
+  getNodeIndexByValue(value) {
     if (value === undefined) {
       return 0;
     }
@@ -237,9 +245,12 @@ Plus.LinkedList = class {
     let headNode = this.head;
     let i = 0;
 
-    while (headNode.next !== null) {
+    while (headNode !== null) {
       if (headNode.val === value) {
-        return [headNode, i];        // also returns index for ease of access
+        return {
+          node: headNode,
+          index: i
+        };
       }
 
       headNode = headNode.next;
@@ -288,7 +299,7 @@ Plus.LinkedList = class {
   }
 
   updateValueAtIndex(index, value) {
-    let node = this.traverseToIndex(index);
+    let node = this.getNodeAtIndex(index);
 
     if (node === 0) { return 0; }
 
@@ -350,11 +361,11 @@ Plus.LinkedList = class {
   }
 };
 
-let list = new Plus.LinkedList();
-list.assignHeadValue(3);
-list.insertAtTail(4, 4, { one: 'two' }, 55, true);
-list.insertAtIndex(0, 'string', 'second string', 'third string');
-list.traverse();
+// let list = new Plus.LinkedList();
+// list.assignHeadValue(3);
+// list.insertAtTail(4, 4, { one: 'two' }, 55, true);
+// list.insertAtIndex(0, 'string', 'second string', 'third string');
+// list.traverse();
 
 
 // Tree Prototype
