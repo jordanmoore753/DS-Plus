@@ -1,46 +1,49 @@
 let Plus = {};
 
-Plus.add = function() {
-  return 2 + 2;
-};
-
 // Queue Prototype
 
 Plus.Queue = class {
   constructor(ds) {
     if (ds === 'linkedlist') {
-      this.data = new Plus.Stack;
+      this.data = new Plus.LinkedList();
+      this.ll = true;
     } else {
       this.data = [];  
     }
 
-    return;
+    return 1;
   }
 
   enqueue(...newData) {
-    newData.forEach((element) => this.data.push(element));
-
-    // linked list adding
-    return;
+    if (this.ll) {
+      return this.data.insert.apply(this.data, newData);
+    } else {
+      newData.forEach((element) => this.data.push(element));
+    }
+    
+    return 1;
   }
 
   dequeue() {
-    // linked list removing
-    if (this.data.length > 0) {
-      this.data.shift();
+    if (this.ll) {
+      return this.data.removeByIndex(0);
     } else {
-      return 0;
+      if (this.data.length > 0) {
+        this.data.shift();
+      } else {
+        return 0;
+      }
     }
 
     return 1;
   }
 
   front() {
-    return this.data[0];
+    return this.ll ? this.data.head : this.data[0];
   }
 
   rear() {
-    return this.data[this.data.length - 1];
+    return this.ll ? this.data.tail() : this.data[this.data.length - 1];
   }
 };
 
@@ -49,7 +52,8 @@ Plus.Queue = class {
 Plus.Stack = class {
   constructor(ds) {
     if (ds === 'linkedlist') {
-      this.data = new Plus.Queue;
+      this.data = new Plus.LinkedList();
+      this.ll = true;
     } else {
       this.data = [];  
     }
@@ -57,7 +61,7 @@ Plus.Stack = class {
     return 1;
   }
 
-  push(newData) {
+  push(...newData) {
     this.data.push(newData);
     return 1;
   }
@@ -123,6 +127,10 @@ Plus.LinkedList = class {
   }
 
   insertAtIndex(index, ...newData) {
+    if (index === undefined || typeof index !== 'number' || index < 0) {
+      return 0;
+    }
+
     let nodes = newData.map(function(data) {
       return {
         val: data,
@@ -132,7 +140,7 @@ Plus.LinkedList = class {
 
     let tail = this.getNodeAtIndex(index);
 
-    if (tail === -1) {
+    if (tail === 0) {
       return 0;
     }
 
@@ -180,10 +188,11 @@ Plus.LinkedList = class {
 
     if (index === 0) {
       if (this.head.next === null) {
-        return 0;
+        this.head = null;
+      } else {
+        this.head = this.head.next;
       }
 
-      this.head = this.head.next;
       return 1;
     }
 

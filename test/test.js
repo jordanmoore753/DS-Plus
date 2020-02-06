@@ -43,6 +43,12 @@ describe('Queue With Array', () => {
     expect(queue.data[0]).toBe(true);
     expect(queue.data[1]).toBe(false);
     expect(queue.data.includes(12)).toBe(false);
+
+    queue.dequeue();
+    queue.dequeue();
+
+    expect(queue.dequeue()).toBe(0);
+
   });
 
   it('should return the first element', () => {
@@ -80,6 +86,66 @@ describe('Queue With Array', () => {
     expect(last === queue.data[1]).toBe(true);   
   });
 })
+
+describe('Queue with Linked List', () => {
+  it('should initialize without value', () => {
+    let queue = new Plus.Queue('linkedlist');
+    expect(queue.data.head.val).toBe(undefined);
+    expect(queue.ll).toBe(true);
+  });
+
+  it('should add multiple or single elements to tail', () => {
+    let queue = new Plus.Queue('linkedlist');
+    queue.data.assignHeadValue(4);
+
+    let res = queue.enqueue(2, 3, 5);
+    expect(res).toBe(1);
+    expect(queue.data.head.val).toBe(4);
+    expect(queue.data.getNodeAtIndex(1).val).toBe(2);
+    expect(queue.data.getNodeAtIndex(2).val).toBe(3);
+    expect(queue.data.getNodeAtIndex(3).val).toBe(5);
+  });
+
+  it('should remove element from head', () => {
+    let queue = new Plus.Queue('linkedlist');
+    queue.data.assignHeadValue(4);
+
+    expect(queue.dequeue()).toBe(1);
+    expect(queue.data.head).toBe(null);
+
+    queue = new Plus.Queue('linkedlist');
+    queue.data.assignHeadValue(4);    
+    queue.enqueue(2, 3, 5);
+
+    expect(queue.dequeue()).toBe(1);
+    expect(queue.data.head.val).toBe(2);
+    expect(queue.dequeue()).toBe(1);
+    expect(queue.data.head.val).toBe(3);
+    expect(queue.dequeue()).toBe(1);
+    expect(queue.front().val).toBe(5);
+  });
+
+  it('should return the head node', () => {
+    let queue = new Plus.Queue('linkedlist');
+    queue.data.assignHeadValue(4);
+
+    expect(queue.front().val).toBe(4);
+
+    queue.enqueue(2, 3);
+    queue.dequeue();
+    expect(queue.front().val).toBe(2);
+  });
+
+  it('should return the tail node', () => {
+    let queue = new Plus.Queue('linkedlist');
+    queue.data.assignHeadValue(4);
+    expect(queue.rear().val).toBe(4);
+
+    let obj = { one: '1' };
+    queue.enqueue(2, 3, 4, obj);
+    expect(queue.rear().val).toBe(obj);
+  });
+});
 
 describe('Linked List', () => {
   it('should initialize with or without value', () => {
@@ -152,6 +218,18 @@ describe('Linked List', () => {
     expect(ll.tail().val).toBe('prototypeeeee');
     expect(ll.tail().next).toBe(null);
     expect(ll.getNodeAtIndex(6).val).toBe(true); 
+
+    let invalid = ll.insertAtIndex(33939, 'la');
+    expect(invalid).toBe(0);
+
+    let i2 = ll.insertAtIndex(undefined, 'la');
+    expect(i2).toBe(0);
+
+    i2 = ll.insertAtIndex('kdkdk', 'la');
+    expect(i2).toBe(0);
+
+    i2 = ll.insertAtIndex(-1, 'la');
+    expect(i2).toBe(0);
   });
 
   it('should remove the first node with matching value', () => {
@@ -161,6 +239,7 @@ describe('Linked List', () => {
 
     expect(ll.head.val).toBe(4);
     expect(ll.length()).toBe(1);
+    expect(ll.removeByValue()).toBe(0);
 
     ll.insert(23, 44,  true, [2, 3, 4]);
     ll.removeByValue(44);
@@ -190,9 +269,9 @@ describe('Linked List', () => {
 
     ll.removeByIndex(0);
 
-    expect(ll.head.val).toBe(4);
-    expect(ll.length()).toBe(1);
-    expect(ll.head.next).toBe(null);
+    expect(ll.head).toBe(null);
+
+    ll = new Plus.LinkedList(4);
 
     ll.removeByIndex(322);
 
