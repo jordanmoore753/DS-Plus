@@ -3,15 +3,13 @@ let Plus = {};
 // Queue Prototype
 
 Plus.Queue = class {
-  constructor(ds) {
+  constructor(ds, value) {
     if (ds === 'linkedlist') {
-      this.data = new Plus.LinkedList();
+      this.data = new Plus.LinkedList(value);
       this.ll = true;
     } else {
       this.data = [];  
     }
-
-    return 1;
   }
 
   enqueue(...newData) {
@@ -50,42 +48,47 @@ Plus.Queue = class {
 // Stack Prototype
 
 Plus.Stack = class {
-  constructor(ds) {
+  constructor(ds, value) {
     if (ds === 'linkedlist') {
-      this.data = new Plus.LinkedList();
+      this.data = new Plus.LinkedList(value);
       this.ll = true;
     } else {
       this.data = [];  
     }
-
-    return 1;
   }
 
   push(...newData) {
-    this.data.push(newData);
+    if (this.ll) {
+      this.data.insert.apply(this.data, newData);
+    } else {
+      newData.forEach((e) => this.data.push(e));
+    }
+
     return 1;
   }
 
   pop(newData) {
-    if (this.data.length > 0) {
-      this.data.pop();
+    if (this.ll) {
+      return this.data.removeByTail();
     } else {
-      return 0;
+      return this.data.pop();
     }
-
-    return 1;
   }
 
   peek() {
-    if (this.data.length > 0) {
-      return this.data[this.data.length - 1];
+    if (this.ll) {
+      return this.data.tail();
     } else {
-      return undefined;
+      return this.data[this.data.length - 1];
     }
   }
 
   isEmpty() {
-    return this.data.length > 0 ? false : true;
+    if (this.ll) {
+      return this.data.head === null;
+    } else {
+      return this.data.length > 0 ? false : true;
+    } 
   }
 };
 
@@ -104,6 +107,26 @@ Plus.LinkedList = class {
   assignHeadValue(value) {
     this.head.val = value;
     return 1;
+  }
+
+  removeByTail() {
+    let headNode = this.head;
+
+    if (headNode.next === null) {
+      this.head = null;
+      return this.head;
+    }
+
+    while (headNode.next !== null) {
+      if (headNode.next.next === null) {
+        break;
+      }
+
+      headNode = headNode.next;
+    }
+
+    headNode.next = null;
+    return this.head;    
   }
 
   insert(...newData) {
