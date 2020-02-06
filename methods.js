@@ -188,7 +188,7 @@ Plus.LinkedList = class {
     }
 
     let headNode = this.head;
-    let i = 1;
+    let i = 0;
  
     while (headNode.next !== null) {
       if (i === index - 1) {
@@ -206,16 +206,16 @@ Plus.LinkedList = class {
     }
   }
 
-  traverse() {
-    let headNode = this.head;
+  // traverse() {
+  //   let headNode = this.head;
 
-    while (headNode !== null) {
-      console.log(headNode);
-      headNode = headNode.next;
-    }
+  //   while (headNode !== null) {
+  //     console.log(headNode);
+  //     headNode = headNode.next;
+  //   }
 
-    return 1;
-  }
+  //   return 1;
+  // }
 
   getNodeAtIndex(index) {
     if (typeof index !== 'number' || index < 0) { return 0; }
