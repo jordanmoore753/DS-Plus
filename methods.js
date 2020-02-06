@@ -269,7 +269,7 @@ Plus.LinkedList = class {
       headNode = headNode.next
     }
 
-    return nodes[Math.ceil((values.length - 1) / 2)];
+    return nodes[Math.ceil((nodes.length - 1) / 2)];
   }
 
   length() {
@@ -299,6 +299,10 @@ Plus.LinkedList = class {
   }
 
   updateValueAtIndex(index, value) {
+    if (index === undefined || typeof index !== 'number' || index < 0) {
+      return 0;
+    }
+
     let node = this.getNodeAtIndex(index);
 
     if (node === 0) { return 0; }
@@ -332,7 +336,7 @@ Plus.LinkedList = class {
     let counts = {};
     let headNode = this.head;
 
-    values.forEach((property) => counts[property]);
+    values.forEach((property) => counts[property] = 0);
 
     while (headNode !== null) {
       if (values.indexOf(headNode.val) !== -1) {

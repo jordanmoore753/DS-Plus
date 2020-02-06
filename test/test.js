@@ -284,4 +284,165 @@ describe('Linked List', () => {
 
     expect(nope).toBe(0);
   });
+
+  it('should get middle node', () => {
+    let ll = new Plus.LinkedList(4);
+
+    let first = ll.getMiddleNode();
+    expect(first.val).toBe(4);
+    expect(ll.length()).toBe(1);
+
+    ll.insert(2, 3, 5, 1);
+    let second = ll.getMiddleNode();
+
+    expect(second.val).toBe(3);
+    expect(ll.length()).toBe(5);
+
+    ll.insert(11);
+    let third = ll.getMiddleNode();
+
+    expect(third.val).toBe(5);
+  });
+
+  it('should get number of nodes', () => {
+    let ll = new Plus.LinkedList(4);
+
+    expect(ll.length()).toBe(1);
+
+    ll.insert(1, 2, 3, 4);
+    expect(ll.length()).toBe(5);
+
+    ll.removeByValue(4);
+    expect(ll.length()).toBe(4);
+
+    ll.removeByValue(4);
+    expect(ll.length()).toBe(3);
+
+    ll.insertAtIndex(1, true, { one: 'more' }, [1, 2, 3], 99);
+
+    expect(ll.length()).toBe(7);
+  });
+
+  it('should get the last node', () => {
+    let ll = new Plus.LinkedList();
+    let tail = ll.tail();
+
+    expect(tail.val).toBe(undefined);
+
+    ll.assignHeadValue(4);
+    tail = ll.tail();
+
+    expect(tail.val).toBe(4);
+
+    ll.insert(1, 2, 3);
+    tail = ll.tail();
+
+    expect(tail.val).toBe(3);
+
+    ll.removeByValue(3);
+    tail = ll.tail();
+
+    expect(tail.val).toBe(2);
+  });
+
+  it('should update the node value at index', () => {
+    let ll = new Plus.LinkedList(4);
+    ll.insert(2, { one: 'more' }, [1, 2, 3], true, 'no!');
+
+    ll.updateValueAtIndex(0, false);
+
+    expect(ll.head.val).toBe(false);
+
+    ll.updateValueAtIndex(2, 'bye bye Object');
+
+    expect(ll.getNodeAtIndex(2).val).toBe('bye bye Object');
+
+    ll.updateValueAtIndex(5, 'yes!');
+
+    expect(ll.getNodeAtIndex(5).val).toBe('yes!');
+
+    let invalid = ll.updateValueAtIndex(2222, 9);
+
+    expect(invalid).toBe(0);
+
+    let secondInvalid = ll.updateValueAtIndex(-1, 9);
+
+    expect(secondInvalid).toBe(0);
+
+    let thirdInvalid = ll.updateValueAtIndex('one', 9);
+
+    expect(thirdInvalid).toBe(0);
+  });
+
+  it('should reverse the entire list destructively', () => {
+    let ll = new Plus.LinkedList(4);
+    ll.reverse();
+
+    expect(ll.head.val).toBe(4);
+
+    ll.insert(1, 2, 3, 5, 6, 7, 8);
+    ll.removeByIndex(0);
+    ll.reverse();
+
+    expect(ll.head.val).toBe(8);
+    expect(ll.getNodeAtIndex(1).val).toBe(7);
+    expect(ll.getNodeAtIndex(2).val).toBe(6);
+    expect(ll.getNodeAtIndex(3).val).toBe(5);
+    expect(ll.getNodeAtIndex(4).val).toBe(3);
+    expect(ll.getNodeAtIndex(5).val).toBe(2);
+    expect(ll.getNodeAtIndex(6).val).toBe(1);
+
+    ll.reverse();
+
+    expect(ll.head.val).toBe(1);
+    expect(ll.tail().val).toBe(8);
+    expect(ll.getMiddleNode().val).toBe(5);
+  });
+
+  it('should get count for multiple strings and numbers', () => {
+    let ll = new Plus.LinkedList(4);
+    let firstCount = ll.countMultiple(4);
+
+    expect(firstCount['4']).toBe(1);
+
+    ll.insert(4, 3, 2, 'one', 'one', 3, 'one', 'two');
+
+    let secondCount = ll.countMultiple(4, 3, 'one', 'two', 2);
+
+    expect(secondCount['4']).toBe(2);
+    expect(secondCount['3']).toBe(2);
+    expect(secondCount['one']).toBe(3);
+    expect(secondCount['two']).toBe(1);
+    expect(secondCount['2']).toBe(1);
+
+    ll.insert('4', '3', 2);
+    let thirdCount = ll.countMultiple(4, 3, 2);
+
+    expect(thirdCount['4']).toBe(2);
+    expect(thirdCount['3']).toBe(2);
+    expect(thirdCount['2']).toBe(2);
+  });
+
+  it('should get count for any single data', () => {
+    let obj = { one: 'more' };
+    let ll = new Plus.LinkedList(obj);
+    let fCount = ll.count(obj);
+
+    expect(fCount).toBe(1);
+
+    ll.insert(obj); 
+    fCount = ll.count(obj);
+
+    expect(fCount).toBe(2);
+
+    let arr = [1, 3, 2];
+    ll.insert(arr);
+    fCount = ll.count(arr);
+
+    expect(fCount).toBe(1);
+
+    fCount = ll.count([1, 3, 2]);
+
+    expect(fCount).toBe(0);
+  });
 });
