@@ -111,6 +111,7 @@ Plus.LinkedList = class {
 
   removeByTail() {
     let headNode = this.head;
+    let deletedValue;
 
     if (headNode.next === null) {
       this.head = null;
@@ -125,8 +126,9 @@ Plus.LinkedList = class {
       headNode = headNode.next;
     }
 
+    deletedValue = headNode.next.val;
     headNode.next = null;
-    return this.head;    
+    return deletedValue;    
   }
 
   insert(...newData) {
@@ -237,17 +239,6 @@ Plus.LinkedList = class {
       i += 1;
     }
   }
-
-  // traverse() {
-  //   let headNode = this.head;
-
-  //   while (headNode !== null) {
-  //     console.log(headNode);
-  //     headNode = headNode.next;
-  //   }
-
-  //   return 1;
-  // }
 
   getNodeAtIndex(index) {
     if (typeof index !== 'number' || index < 0) { return 0; }
@@ -397,23 +388,10 @@ Plus.LinkedList = class {
   }
 };
 
-// let list = new Plus.LinkedList();
-// list.assignHeadValue(3);
-// list.insertAtTail(4, 4, { one: 'two' }, 55, true);
-// list.insertAtIndex(0, 'string', 'second string', 'third string');
-// list.traverse();
-
-
 // Tree Prototype
 
 // BST Prototype
 
 // Graph Prototype
-
-// Array/Object methods
-
-// String methods
-
-// Number methods
 
 module.exports = Plus;

@@ -99,7 +99,6 @@ describe('Queue with Linked List', () => {
     queue.data.assignHeadValue(4);
 
     let res = queue.enqueue(2, 3, 5);
-    expect(res).toBe(1);
     expect(queue.data.head.val).toBe(4);
     expect(queue.data.getNodeAtIndex(1).val).toBe(2);
     expect(queue.data.getNodeAtIndex(2).val).toBe(3);
