@@ -335,23 +335,18 @@ Plus.LinkedList = class {
   }
 
   reverse() {
-    let tailNode = this.tail();
-    let length = this.length();
+    let prev = null;
+    let next = null;
     let headNode = this.head;
-    let nextNode;
-    let nextNextNode;
-    let i = 0;
 
-    while (i <= length) {
-      nextNextNode = tailNode.next;
-      tailNode.next = headNode;
-      nextNode = headNode.next;
-      headNode.next = nextNextNode;
-      headNode = nextNode;
-      i += 1;
+    while (headNode !== null) {
+      next = headNode.next;
+      headNode.next = prev;
+      prev = headNode;
+      headNode = next;
     }
 
-    this.head = tailNode;
+    this.head = prev;
     return 1;
   }
 
@@ -390,7 +385,50 @@ Plus.LinkedList = class {
 
 // Tree Prototype
 
+Plus.Tree = class {
+  constructor(value) {
+    this.val = value;
+    this.children = null;
+  }
+
+  findMaxDepth() {
+    if (this.val === null) {
+      return 0;
+    } else if (this.children === null) {
+      return 1;
+    }
+
+    let queue = new Plus.Queue();
+    queue.enqueue(this.children);
+
+    let newNodes;
+    let oldNodes;
+    let i = 1;
+
+    while (queue.data.length > 0) {
+      oldNodes = queue.dequeue();
+      newNodes = [];
+
+      oldNodes.forEach(function(node) {
+        if (node.children !== null) {
+          node.children.forEach((child) => newNodes.push(child));
+        }
+      });
+
+      if (newNodes.length > 0) {
+        queue.enqueue(newNodes);
+      }
+
+      i += 1;
+    }
+
+    return i;
+  }
+};
+
 // BST Prototype
+
+// Heap Prototype
 
 // Graph Prototype
 

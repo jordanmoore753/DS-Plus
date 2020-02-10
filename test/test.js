@@ -611,9 +611,9 @@ describe('Linked List', () => {
     expect(ll.head.val).toBe(4);
 
     ll.insert(1, 2, 3, 5, 6, 7, 8);
-    ll.removeByIndex(0);
     ll.reverse();
 
+    console.log(ll.head);
     expect(ll.head.val).toBe(8);
     expect(ll.getNodeAtIndex(1).val).toBe(7);
     expect(ll.getNodeAtIndex(2).val).toBe(6);
@@ -624,7 +624,7 @@ describe('Linked List', () => {
 
     ll.reverse();
 
-    expect(ll.head.val).toBe(1);
+    expect(ll.head.val).toBe(4);
     expect(ll.tail().val).toBe(8);
     expect(ll.getMiddleNode().val).toBe(5);
   });
@@ -674,5 +674,47 @@ describe('Linked List', () => {
     fCount = ll.count([1, 3, 2]);
 
     expect(fCount).toBe(0);
+  });
+});
+
+describe('Tree Prototype', () => {
+  it('should initialize with value', () => {
+
+  });
+
+  it('should initialize without value', () => {
+
+  });
+
+  it('should find max depth for self', () => {
+
+  });
+
+  it('should insert nodes one at a time', () => {
+
+  });
+
+  it('should insert nodes multiple at a time with children', () => {
+
+  });
+
+  it('should remove a single node of n value', () => {
+
+  });
+
+  it('should remove nodes at a certain level', () => {
+
+  });
+
+  it('should be able to daisy chain methods', () => {
+
+  });
+
+  it('should return an array of all values with postorder traversal', () => {
+
+  });
+
+  it('should return an array of all values with preorder traversal', () => {
+
   });
 });
