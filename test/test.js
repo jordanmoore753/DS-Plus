@@ -613,7 +613,6 @@ describe('Linked List', () => {
     ll.insert(1, 2, 3, 5, 6, 7, 8);
     ll.reverse();
 
-    console.log(ll.head);
     expect(ll.head.val).toBe(8);
     expect(ll.getNodeAtIndex(1).val).toBe(7);
     expect(ll.getNodeAtIndex(2).val).toBe(6);
@@ -677,17 +676,61 @@ describe('Linked List', () => {
   });
 });
 
-describe('Tree Prototype', () => {
-  it('should initialize with value', () => {
+describe('Binary Tree Prototype', () => {
+  it('should initialize with array', () => {
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+
+    expect(tree.root.val).toBe(1);
+    expect(tree.root.left.val).toBe(2);
+    expect(tree.root.left.left.val).toBe(4);
+    expect(tree.root.left.right.val).toBe(5);
+    expect(tree.root.left.left.left.val).toBe(8);
+    expect(tree.root.left.left.right).toBe(undefined);
+
+    expect(tree.root.right.val).toBe(3);  
+    expect(tree.root.right.left.val).toBe(6);
+    expect(tree.root.right.right.val).toBe(7); 
+
+    let arrTwo = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
+    let treeTwo = new Plus.BinaryTree(arrTwo);
+
+    expect(treeTwo.root.left.right.left.val).toBe(8);
+    expect(treeTwo.root.left.left.left.val).toBe(undefined);
 
   });
 
-  it('should initialize without value', () => {
+  it('should only allow up to 2 children', () => {
 
   });
 
   it('should find max depth for self', () => {
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
 
+    expect(tree.findMaxDepth()).toBe(4);
+
+    let arrTwo = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
+    let treeTwo = new Plus.BinaryTree(arrTwo);
+
+    expect(treeTwo.findMaxDepth()).toBe(4);
+
+    let arrThree = [1, undefined, 3, undefined, undefined,
+                    5, undefined, undefined, undefined, undefined,
+                    undefined, 3, undefined, undefined, undefined, undefined,
+                    undefined, undefined, undefined, undefined, undefined,
+                    undefined, undefined, 5, 6];
+    let treeThree = new Plus.BinaryTree(arrThree);
+
+    expect(treeThree.findMaxDepth()).toBe(5);
+
+    let noRoot = new Plus.BinaryTree([]);
+
+    expect(noRoot.findMaxDepth()).toBe(0);
+
+    let someRoot = new Plus.BinaryTree([1]);
+
+    expect(someRoot.findMaxDepth()).toBe(1);
   });
 
   it('should insert nodes one at a time', () => {
@@ -715,6 +758,10 @@ describe('Tree Prototype', () => {
   });
 
   it('should return an array of all values with preorder traversal', () => {
+
+  });
+
+  it('should return an array of all values with inorder traversal', () => {
 
   });
 });

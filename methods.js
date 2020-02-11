@@ -27,13 +27,11 @@ Plus.Queue = class {
       return this.data.removeByIndex(0);
     } else {
       if (this.data.length > 0) {
-        this.data.shift();
+        return this.data.shift();
       } else {
         return 0;
       }
     }
-
-    return 1;
   }
 
   front() {
@@ -385,21 +383,32 @@ Plus.LinkedList = class {
 
 // Tree Prototype
 
-Plus.Tree = class {
-  constructor(value) {
-    this.val = value;
-    this.children = null;
+Plus.BinaryTree = class {
+  constructor(array) {
+    const insertLevelOrder = (array, root, index) => {
+      if (index < array.length) {
+        let temp = new Plus.TreeNode(array[index]);
+        root = temp;
+
+        root.left = insertLevelOrder(array, root.left, 2 * index + 1);
+        root.right = insertLevelOrder(array, root.right, 2 * index + 2);
+      }
+
+      return root;
+    };
+
+    this.root = insertLevelOrder(array, new Plus.TreeNode(), 0);
   }
 
   findMaxDepth() {
-    if (this.val === null) {
+    if (!this.root.val) {
       return 0;
-    } else if (this.children === null) {
+    } else if (this.root.left === undefined && this.root.right === undefined) {
       return 1;
     }
 
     let queue = new Plus.Queue();
-    queue.enqueue(this.children);
+    queue.enqueue([this.root.left, this.root.right]);
 
     let newNodes;
     let oldNodes;
@@ -410,8 +419,12 @@ Plus.Tree = class {
       newNodes = [];
 
       oldNodes.forEach(function(node) {
-        if (node.children !== null) {
-          node.children.forEach((child) => newNodes.push(child));
+        if (node.left !== undefined) {
+          newNodes.push(node.left);
+        }
+
+        if (node.right !== undefined) {
+          newNodes.push(node.right);
         }
       });
 
@@ -422,7 +435,15 @@ Plus.Tree = class {
       i += 1;
     }
 
-    return i;
+    return i;    
+  }
+};
+
+// Node Prototype
+
+Plus.TreeNode = class {
+  constructor(val, left, right) {
+    this.val = val;
   }
 };
 
