@@ -676,7 +676,7 @@ describe('Linked List', () => {
   });
 });
 
-describe('Binary Tree Prototype', () => {
+describe('Binary Tree', () => {
   it('should initialize with array', () => {
     let arr = [1, 2, 3, 4, 5, 6, 7, 8];
     let tree = new Plus.BinaryTree(arr);
@@ -697,10 +697,6 @@ describe('Binary Tree Prototype', () => {
 
     expect(treeTwo.root.left.right.left.val).toBe(8);
     expect(treeTwo.root.left.left.left.val).toBe(undefined);
-
-  });
-
-  it('should only allow up to 2 children', () => {
 
   });
 
@@ -734,12 +730,47 @@ describe('Binary Tree Prototype', () => {
   });
 
   it('should insert nodes one at a time', () => {
+    let arr = [1, 2, 3, 4, undefined, 6, 7];
+    let tree = new Plus.BinaryTree(arr);  
+    tree.insert(5);
 
+    expect(tree.root.left.right.val).toBe(5);
+
+    let two = [];
+    let treeTwo = new Plus.BinaryTree(two);
+    treeTwo.insert(5);
+
+    expect(treeTwo.root.val).toBe(5);
+
+    let three = [1];
+    let treeThree = new Plus.BinaryTree(three);   
+    treeThree.insert(22);
+
+    expect(treeThree.root.left.val).toBe(22);
+
+    let arr4 = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
+    let tree4 = new Plus.BinaryTree(arr4);
+    tree4.insert(77);
+
+    expect(tree4.root.left.left.val).toBe(77);
+
+    let arr5 = [1, 2, 3, 4, 5, 6, 7, 8, undefined];
+    let tree5 = new Plus.BinaryTree(arr5);
+    let res5 = tree5.insert('srrr');
+
+    expect(res5).toBe(tree5);
+    expect(tree5.root.left.left.right.val).toBe('srrr');
+
+    let arr6 = [1, 2, undefined];
+    let tree6 = new Plus.BinaryTree(arr6);
+    tree6.insert(12);
+
+    expect(tree6.root.right.val).toBe(12);
   });
 
-  it('should insert nodes multiple at a time with children', () => {
+  // it('should insert nodes multiple at a time with children', () => {
 
-  });
+  // });
 
   it('should remove a single node of n value', () => {
 
@@ -753,15 +784,195 @@ describe('Binary Tree Prototype', () => {
 
   });
 
-  it('should return an array of all values with postorder traversal', () => {
+  it('should return an array of all values with preorder traversal', () => {
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+    let solution = [1, 2, 4, 8, 5, 3, 6, 7];
+    let res = tree.getValuesPreorderTraversal();
 
+    res.forEach((num, i) => expect(num === solution[i]).toBe(true));
+
+    let two = [];
+    let treeTwo = new Plus.BinaryTree(two);
+
+    expect(treeTwo.getValuesPreorderTraversal().length).toBe(0);
+    expect(Array.isArray(treeTwo.getValuesPreorderTraversal())).toBe(true);
+
+    let three = [1];
+    let treeThree = new Plus.BinaryTree(three); 
+
+    expect(treeThree.getValuesPreorderTraversal().length).toBe(1);
+    expect(treeThree.getValuesPreorderTraversal()[0]).toBe(1);
+
+    let arr4 = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
+    let tree4 = new Plus.BinaryTree(arr4);
+    let sol4 = [1, 2, 5, 8, 3, 6];
+    let res4 = tree4.getValuesPreorderTraversal();
+
+    res4.forEach((num, i) => expect(num === sol4[i]).toBe(true));
   });
 
-  it('should return an array of all values with preorder traversal', () => {
+  it('should return an array of all values with postorder traversal', () => {
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+    let solution = [8, 4, 5, 2, 6, 7, 3, 1];
+    let res = tree.getValuesPostorderTraversal();
 
+    res.forEach((num, i) => expect(num === solution[i]).toBe(true));
+
+    let two = [];
+    let treeTwo = new Plus.BinaryTree(two);
+
+    expect(treeTwo.getValuesPostorderTraversal().length).toBe(0);
+    expect(Array.isArray(treeTwo.getValuesPostorderTraversal())).toBe(true);
+
+    let three = [1];
+    let treeThree = new Plus.BinaryTree(three); 
+
+    expect(treeThree.getValuesPostorderTraversal().length).toBe(1);
+    expect(treeThree.getValuesPostorderTraversal()[0]).toBe(1);
+
+    let arr4 = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
+    let tree4 = new Plus.BinaryTree(arr4);
+    let sol4 = [8, 5, 2, 6, 3, 1];
+    let res4 = tree4.getValuesPostorderTraversal();
+
+    res4.forEach((num, i) => expect(num === sol4[i]).toBe(true));
   });
 
   it('should return an array of all values with inorder traversal', () => {
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+    let solution = [8, 4, 2, 5, 1, 6, 3, 7];
+    let res = tree.getValuesInorderTraversal();
 
+    res.forEach((num, i) => expect(num === solution[i]).toBe(true));
+
+    let two = [];
+    let treeTwo = new Plus.BinaryTree(two);
+
+    expect(treeTwo.getValuesInorderTraversal().length).toBe(0);
+    expect(Array.isArray(treeTwo.getValuesInorderTraversal())).toBe(true);
+
+    let three = [1];
+    let treeThree = new Plus.BinaryTree(three); 
+
+    expect(treeThree.getValuesInorderTraversal().length).toBe(1);
+    expect(treeThree.getValuesInorderTraversal()[0]).toBe(1);
+
+    let arr4 = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
+    let tree4 = new Plus.BinaryTree(arr4);
+    let sol4 = [2, 8, 5, 1, 6, 3];
+    let res4 = tree4.getValuesInorderTraversal();
+
+    res4.forEach((num, i) => expect(num === sol4[i]).toBe(true));
+  });
+
+  it('should mutate all values of root with postorder, return this for daisy chain', () => {
+    const double = (node) => {
+      return node.val = node.val * 2;
+    };
+
+    const halve = (node) => {
+      return node.val = node.val / 2;
+    };
+
+    const quadruple = (node) => {
+      return node.val = node.val * 4;
+    };
+
+    const not_function = 3;
+
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+    let solution = [16, 8, 10, 4, 12, 14, 6, 2];
+    tree.manipulatePostorder(double);
+
+    let res = tree.getValuesPostorderTraversal();
+    res.forEach((num, i) => expect(num === solution[i]).toBe(true)); 
+
+    let sol3 = [32, 16, 20, 8, 24, 28, 12, 4];
+    tree.manipulatePostorder(halve).manipulatePostorder(quadruple);
+    res = tree.getValuesPostorderTraversal();
+
+    res.forEach((num, i) => expect(num === sol3[i]).toBe(true)); 
+    let two = [];
+    let treeTwo = new Plus.BinaryTree(two);
+    let res2 = treeTwo.manipulatePostorder(double);
+
+    expect(res2.root).toBe(treeTwo.root);
+    expect(tree.manipulatePostorder(not_function)).toBe(0);
+  });
+
+  it('should mutate all values of root with preorder, return this for daisy chain', () => {
+    const double = (node) => {
+      return node.val = node.val * 2;
+    };
+
+    const halve = (node) => {
+      return node.val = node.val / 2;
+    };
+
+    const quadruple = (node) => {
+      return node.val = node.val * 4;
+    };
+
+    const not_function = 3;
+
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+    let solution = [2, 4, 8, 16, 10, 6, 12, 14];
+    let sol3 = solution.map((num) => num * 2);
+    tree.manipulatePreorder(double);
+
+    let res = tree.getValuesPreorderTraversal();
+    res.forEach((num, i) => expect(num === solution[i]).toBe(true)); 
+
+    tree.manipulatePreorder(halve).manipulatePreorder(quadruple);
+    res = tree.getValuesPreorderTraversal();
+    res.forEach((num, i) => expect(num === sol3[i]).toBe(true));
+
+    let two = [];
+    let treeTwo = new Plus.BinaryTree(two);
+    let res2 = treeTwo.manipulatePreorder(double);
+
+    expect(res2.root).toBe(treeTwo.root);
+    expect(tree.manipulatePreorder(not_function)).toBe(0);
+  });
+
+  it('should mutate all values of root with inorder, return this for daisy chain', () => {
+    const double = (node) => {
+      return node.val = node.val * 2;
+    };
+
+    const halve = (node) => {
+      return node.val = node.val / 2;
+    };
+
+    const quadruple = (node) => {
+      return node.val = node.val * 4;
+    };
+
+    const not_function = 3;
+
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+    let solution = [16, 8, 4, 10, 2, 12, 6, 14];
+    let sol3 = solution.map((num) => num * 2);
+    tree.manipulateInorder(double);
+
+    let res = tree.getValuesInorderTraversal();
+    res.forEach((num, i) => expect(num === solution[i]).toBe(true)); 
+
+    tree.manipulateInorder(halve).manipulateInorder(quadruple);
+    res = tree.getValuesInorderTraversal();
+    res.forEach((num, i) => expect(num === sol3[i]).toBe(true));
+     
+    let two = [];
+    let treeTwo = new Plus.BinaryTree(two);
+    let res2 = treeTwo.manipulateInorder(double);
+
+    expect(res2.root).toBe(treeTwo.root);
+    expect(tree.manipulateInorder(not_function)).toBe(0);
   });
 });

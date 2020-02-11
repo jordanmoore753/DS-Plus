@@ -437,6 +437,197 @@ Plus.BinaryTree = class {
 
     return i;    
   }
+
+  getValuesPreorderTraversal() {
+    const traverse = (node) => {
+      if (node === undefined || node.val === undefined) {
+        return;
+      }
+
+      data.push(node.val);
+
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      if (node.right) {
+        traverse(node.right);
+      }
+    };
+
+    let data = [];
+    traverse(this.root);
+    return data;
+  }
+
+  getValuesPostorderTraversal() {
+    const traverse = (node) => {
+      if (node === undefined || node.val === undefined) {
+        return;
+      }
+
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      if (node.right) {
+        traverse(node.right);
+      }
+
+      data.push(node.val);
+    };
+
+    let data = [];
+    traverse(this.root);
+    return data;
+  }
+
+  getValuesInorderTraversal() {
+    const traverse = (node) => {
+      if (node === undefined || node.val === undefined) {
+        return;
+      }
+
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      data.push(node.val);
+
+      if (node.right) {
+        traverse(node.right);
+      }
+    };
+
+    let data = [];
+    traverse(this.root);
+    return data;
+  }
+
+  manipulatePostorder(func) {
+    const isFunction = (functionToCheck) => {
+      return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    };
+
+    const traverse = (node) => {
+      if (node === undefined || node.val === undefined) {
+        return;
+      }
+
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      if (node.right) {
+        traverse(node.right);
+      }
+
+      func(node);
+    };
+
+    if (!isFunction(func)) {
+      return 0;
+    }
+
+    traverse(this.root);
+    return this;
+  }
+
+  manipulatePreorder(func) {
+    const isFunction = (functionToCheck) => {
+      return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    };
+
+    const traverse = (node) => {
+      if (node === undefined || node.val === undefined) {
+        return;
+      }
+      
+      func(node);
+
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      if (node.right) {
+        traverse(node.right);
+      }
+    };
+
+    if (!isFunction(func)) {
+      return 0;
+    }
+
+    traverse(this.root);
+    return this;
+  }
+
+  manipulateInorder(func) {
+    const isFunction = (functionToCheck) => {
+      return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    };
+
+    const traverse = (node) => {
+      if (node === undefined || node.val === undefined) {
+        return;
+      }
+      
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      func(node);
+
+      if (node.right) {
+        traverse(node.right);
+      }
+    };
+
+    if (!isFunction(func)) {
+      return 0;
+    }
+
+    traverse(this.root);
+    return this;
+  }
+
+  insert(value) {
+    if (!this.root.val) {
+      this.root.val = value;
+      return this;
+    } else if (!this.root.left) {
+      this.root.left = new Plus.TreeNode(value);
+      return this;
+    }
+
+    let queue = new Plus.Queue();
+    let valueQueue = new Plus.Queue();
+    let oldNodes;
+    let newNodes;
+    let node;
+
+    queue.enqueue([this.root.left, this.root.right]);
+    valueQueue.enqueue(value);
+
+    while (valueQueue.data.length > 0) {
+      oldNodes = queue.dequeue();
+      newNodes = [];
+
+      for (let i = 0; i < oldNodes.length; i += 1) {
+        node = oldNodes[i];
+
+        if (!node.val) {
+          node.val = valueQueue.dequeue();
+          return this;
+        } 
+
+        newNodes.push(node.left);
+        newNodes.push(node.right);
+      }
+
+      queue.enqueue(newNodes);
+    }
+  }
 };
 
 // Node Prototype
@@ -444,6 +635,8 @@ Plus.BinaryTree = class {
 Plus.TreeNode = class {
   constructor(val, left, right) {
     this.val = val;
+    this.left = undefined;
+    this.right = undefined;
   }
 };
 
