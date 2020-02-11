@@ -438,152 +438,62 @@ Plus.BinaryTree = class {
     return i;    
   }
 
-  getValuesPreorderTraversal() {
+  getValuesTraversal(type = 'post') {
+    const acceptable = ['post', 'pre', 'in'];
     const traverse = (node) => {
       if (node === undefined || node.val === undefined) {
         return;
       }
 
-      data.push(node.val);
+      if (type === 'pre') { data.push(node.val); }
 
       if (node.left) {
         traverse(node.left);
       }
 
+      if (type === 'in') { data.push(node.val); }
+
       if (node.right) {
         traverse(node.right);
       }
+
+      if (type === 'post') { data.push(node.val); }
     };
+
+    if (!acceptable.includes(type)) { return 0; }
 
     let data = [];
     traverse(this.root);
     return data;
   }
 
-  getValuesPostorderTraversal() {
+  manipulateTraversal(func, type = 'post') {
+    const acceptable = ['post', 'pre', 'in'];
     const traverse = (node) => {
       if (node === undefined || node.val === undefined) {
         return;
       }
 
-      if (node.left) {
-        traverse(node.left);
-      }
-
-      if (node.right) {
-        traverse(node.right);
-      }
-
-      data.push(node.val);
-    };
-
-    let data = [];
-    traverse(this.root);
-    return data;
-  }
-
-  getValuesInorderTraversal() {
-    const traverse = (node) => {
-      if (node === undefined || node.val === undefined) {
-        return;
-      }
+      if (type === 'pre') { func(node); }
 
       if (node.left) {
         traverse(node.left);
       }
 
-      data.push(node.val);
+      if (type === 'in') { func(node); }
 
       if (node.right) {
         traverse(node.right);
       }
+
+      if (type === 'post') { func(node); }
     };
 
-    let data = [];
-    traverse(this.root);
-    return data;
-  }
-
-  manipulatePostorder(func) {
     const isFunction = (functionToCheck) => {
       return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
     };
 
-    const traverse = (node) => {
-      if (node === undefined || node.val === undefined) {
-        return;
-      }
-
-      if (node.left) {
-        traverse(node.left);
-      }
-
-      if (node.right) {
-        traverse(node.right);
-      }
-
-      func(node);
-    };
-
-    if (!isFunction(func)) {
-      return 0;
-    }
-
-    traverse(this.root);
-    return this;
-  }
-
-  manipulatePreorder(func) {
-    const isFunction = (functionToCheck) => {
-      return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
-    };
-
-    const traverse = (node) => {
-      if (node === undefined || node.val === undefined) {
-        return;
-      }
-      
-      func(node);
-
-      if (node.left) {
-        traverse(node.left);
-      }
-
-      if (node.right) {
-        traverse(node.right);
-      }
-    };
-
-    if (!isFunction(func)) {
-      return 0;
-    }
-
-    traverse(this.root);
-    return this;
-  }
-
-  manipulateInorder(func) {
-    const isFunction = (functionToCheck) => {
-      return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
-    };
-
-    const traverse = (node) => {
-      if (node === undefined || node.val === undefined) {
-        return;
-      }
-      
-      if (node.left) {
-        traverse(node.left);
-      }
-
-      func(node);
-
-      if (node.right) {
-        traverse(node.right);
-      }
-    };
-
-    if (!isFunction(func)) {
+    if (!isFunction(func) || !acceptable.includes(type)) {
       return 0;
     }
 
@@ -627,6 +537,58 @@ Plus.BinaryTree = class {
 
       queue.enqueue(newNodes);
     }
+  }
+
+  remove(value) {
+    if (!this.root.val) {
+      return 0;
+    }
+
+    let queue = new Plus.Queue();
+    let foundMatch = false;
+    let oldNodes;
+    let newNodes;
+    let deleteNode;
+    let lastNode;
+    let node;
+    let i = 0;
+
+    queue.enqueue([this.root]);
+
+    while (queue.data[0].length > 0) {
+      oldNodes = queue.dequeue();
+      newNodes = [];
+
+      for (let i = 0; i < oldNodes.length; i += 1) {
+        node = oldNodes[i];
+
+        if (node.val === value && !foundMatch) {
+          foundMatch = true;
+          deleteNode = node;
+        } 
+
+        if (node.val !== value) {
+          lastNode = node;
+        }
+
+        if (node.left) {
+          newNodes.push(node.left);
+        }
+
+        if (node.right) {
+          newNodes.push(node.right);
+        }
+      }
+
+      queue.enqueue(newNodes);
+    }
+
+    if (deleteNode && lastNode) {
+      deleteNode.val = lastNode.val;
+      lastNode.val = undefined;      
+    }
+
+    return this;
   }
 };
 
