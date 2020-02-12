@@ -781,7 +781,12 @@ Plus.BST = class {
   }
 
   insert(value) {
-
+    // check if value is array or single value
+    // collapse the data into a queue
+    // validate the data as it goes through
+    // if data is correct type, proceed
+    // check if the data is greater or less than the root node val
+    // follow the path until the nearest null
   }
 
   remove(key) {
@@ -797,6 +802,47 @@ Plus.BST = class {
   }
 
   betweenBounds() {
+
+  }
+
+  validData(value) {
+    const isDate = (value) => {
+      return Object.prototype.toString.call(value) === '[object Date]';
+    };
+
+    const isNumber = (value) => {
+      return typeof value === 'number';
+    };
+
+    const isString = (value) => {
+      return typeof value === 'string';
+    };
+
+    const isObject = (value) => {
+      if (isDate(value)) { 
+        return false; 
+      }
+
+      return typeof value === 'object' && !Array.isArray(value) && value[this.key] && typeof value[this.key] === this.keyType;
+    };
+
+    if (!value) {
+      return false;
+    }
+
+    switch (this.type) {
+      case 'string':
+        return isString(value);
+      case 'date':
+        return isDate(value);
+      case 'number':
+        return isNumber(value);
+      default:
+        return isObject(value);
+    }
+  }
+
+  sorter() {
 
   }
 };

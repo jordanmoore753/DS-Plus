@@ -1256,4 +1256,34 @@ describe('BST', () => {
     bst = new Plus.BST('object', { sortFunction: validFunction, key: 'id', keyType: 'string', unique: true });
     expect(bst.root.val).toBe(null);
   });
+
+  it('should validate parameter data type', () => {
+    let bst = new Plus.BST('string');
+    expect(bst.validData('okay')).toBe(true);
+    expect(bst.validData(undefined)).toBe(false);
+    expect(bst.validData(23)).toBe(false);
+    expect(bst.validData([])).toBe(false);
+
+    bst = new Plus.BST('number');
+    expect(bst.validData('okay')).toBe(false);
+    expect(bst.validData(undefined)).toBe(false);
+    expect(bst.validData(23)).toBe(true);
+    expect(bst.validData([])).toBe(false);
+
+    bst = new Plus.BST('date');
+    expect(bst.validData('okay')).toBe(false);
+    expect(bst.validData(undefined)).toBe(false);
+    expect(bst.validData(23)).toBe(false);
+    expect(bst.validData(new Date())).toBe(true);
+    expect(bst.validData([])).toBe(false);
+    expect(bst.validData({})).toBe(false);
+
+    bst = new Plus.BST('object', { sortFunction: validFunction, key: 'id', keyType: 'string' });
+    expect(bst.validData('okay')).toBe(false);
+    expect(bst.validData(undefined)).toBe(false);
+    expect(bst.validData(23)).toBe(false);
+    expect(bst.validData(new Date())).toBe(false);
+    expect(bst.validData({ id: 'yes' })).toBe(true);
+    expect(bst.validData([])).toBe(false);
+  });
 });
