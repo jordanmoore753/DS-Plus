@@ -439,35 +439,35 @@ Plus.BinaryTree = class {
   findMaxDepth() {
     if (!this.root.val) {
       return 0;
-    } else if (this.root.left === undefined && this.root.right === undefined) {
+    } else if (!this.root.left && !this.root.right) {
       return 1;
     }
 
     let queue = new Plus.Queue();
-    queue.enqueue([this.root.left, this.root.right]);
+    queue.enqueue([this.root]);
 
     let newNodes;
     let oldNodes;
-    let i = 1;
+    let currentNode;
+    let i = 0;
 
-    while (queue.data.length > 0) {
+    while (queue.data[0].length > 0) {
       oldNodes = queue.dequeue();
       newNodes = [];
 
-      oldNodes.forEach(function(node) {
-        if (node.left !== undefined) {
-          newNodes.push(node.left);
-        }
+      for (let i = 0; i < oldNodes.length; i += 1) {
+        currentNode = oldNodes[i];
 
-        if (node.right !== undefined) {
-          newNodes.push(node.right);
+        if (currentNode.left && currentNode.left.val) {
+          newNodes.push(currentNode.left);  
         }
-      });
-
-      if (newNodes.length > 0) {
-        queue.enqueue(newNodes);
+        
+        if (currentNode.right && currentNode.right.val) {
+          newNodes.push(currentNode.right);
+        }
       }
 
+      queue.enqueue(newNodes);
       i += 1;
     }
 
@@ -477,7 +477,7 @@ Plus.BinaryTree = class {
   getValuesTraversal(type = 'post') {
     const acceptable = ['post', 'pre', 'in'];
     const traverse = (node) => {
-      if (node === undefined || node.val === undefined) {
+      if (node === undefined || node.val === null) {
         return;
       }
 
@@ -506,7 +506,7 @@ Plus.BinaryTree = class {
   manipulateTraversal(func, type = 'post') {
     const acceptable = ['post', 'pre', 'in'];
     const traverse = (node) => {
-      if (node === undefined || node.val === undefined) {
+      if (node === undefined || node.val === null) {
         return;
       }
 
@@ -664,7 +664,7 @@ Plus.BinaryTree = class {
 
     if (deleteNode && lastNode) {
       deleteNode.val = lastNode.val;
-      lastNode.val = undefined;      
+      lastNode.val = null;      
     }
 
     return this;
@@ -675,15 +675,131 @@ Plus.BinaryTree = class {
 
 Plus.TreeNode = class {
   constructor(val, left, right) {
-    this.val = val;
-    this.left = undefined;
-    this.right = undefined;
+    this.val = val || null;
+    this.left = null;
+    this.right = null;
   }
 };
 
 // BST Prototype
 
-// Heap Prototype
+Plus.BST = class {
+  constructor(dataType, options) {
+    const acceptableTypes = ['string', 'date', 'number', 'object'];
+    const acceptableOptionsObject = ['key', 'keyType', 'sortFunction', 'unique'];
+    const acceptableOptionsNonObject = ['sortFunction', 'unique'];
+
+    const isFunction = (functionToCheck) => { return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]'; };
+    const isCorrectType = (dataType) => { 
+      if (!dataType) {
+        throw 'Data type must be defined as either string, number, date, or object.';
+      }
+
+      if (acceptableTypes.indexOf(dataType) === -1) {
+        throw 'Data type was defined, but was not a correct value: string, date, number, or object.';
+      }
+
+      return true;
+    };
+    const hasCorrectProperties = (dataType, options) => {
+      const nonObjects = ['string', 'date', 'number'];
+      const isNonObject = (dataType) => { return nonObjects.indexOf(dataType) !== -1; };
+      const hasNonObjectProperties = (options) => {
+        if (!options) {
+          return true;
+        }
+
+        let keys = Object.keys(options);
+
+        for (let i = 0; i < keys.length; i += 1) {
+          if (acceptableOptionsNonObject.indexOf(keys[i]) === -1) {
+            throw `${keys[i]} is an unacceptable property for the options object and the specified data type.`;
+          }
+        }
+
+        if (options['sortFunction'] && !isFunction(options['sortFunction'])) {
+          throw `object[sortFunction] is not a valid function.`;
+        }
+
+        if (options['unique'] && options['unique'] !== true) {
+          throw `'unique' property of options must be boolean value: true.`;
+        }
+
+        return true;
+      };
+
+      const hasObjectProperties = (options) => {
+        const validKeyTypes = ['string', 'number', 'date'];
+
+        if (!options) {
+          throw 'Options object is not defined, must be present for object data type.';
+        }
+
+        let keys = Object.keys(options);
+
+        for (let i = 0; i < keys.length; i += 1) {
+          if (acceptableOptionsObject.indexOf(keys[i]) === -1) {
+            throw `${keys[i]} is an unacceptable property for the options object and the specified data type.`;
+          }
+        }
+
+        if (!options['sortFunction'] || !isFunction(options['sortFunction'])) {
+          throw `object[sortFunction] is not a valid function or is not present.`;
+        }
+
+        if (options['unique'] && options['unique'] !== true) {
+          throw `'unique' property of options must be boolean value: true.`;
+        }
+
+        if (!options['key'] || typeof options['key'] !== 'string') {
+          throw `'key' property must be a string value and be present for object data type.`;
+        }
+
+        if (!options['keyType'] || validKeyTypes.indexOf(options['keyType']) === -1) {
+          throw `'keyType' property must be present and of 'string', 'number', or 'date' value for object data.`;
+        }
+
+        return true;
+      };
+
+      return isNonObject(dataType) ? hasNonObjectProperties(options) : hasObjectProperties(options);
+    };
+
+    isCorrectType(dataType);
+    hasCorrectProperties(dataType, options);
+
+    if (!options) {
+      options = {};
+    }
+
+    this.type = dataType;
+    this.unique = options['unique'];
+    this.sortFunction = options['sortFunction'];
+    this.key = options['key'];
+    this.keyType = options['keyType'];
+    this.root = new Plus.TreeNode();
+  }
+
+  insert(value) {
+
+  }
+
+  remove(key) {
+
+  }
+
+  search(key) {
+
+  }
+
+  collect() {
+
+  }
+
+  betweenBounds() {
+
+  }
+};
 
 // Graph Prototype
 
