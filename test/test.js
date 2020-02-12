@@ -768,7 +768,6 @@ describe('Binary Tree', () => {
     expect(tree6.root.right.val).toBe(12);
   });
 
-
   it('should remove a single node of n value', () => {
     let arr = [1, 2, 3];
     let tree = new Plus.BinaryTree(arr);
@@ -821,11 +820,107 @@ describe('Binary Tree', () => {
     sol = [20, 10, 40];
     tree.remove(30);
     res = tree.getValuesTraversal('in');
-    res.forEach((num, i) => expect(num === sol[i]).toBe(true));   
+    res.forEach((num, i) => expect(num === sol[i]).toBe(true));  
+
+    arr = [10, 20, 30, undefined, undefined, undefined, 40];
+    tree = new Plus.BinaryTree(arr);
+    sol = [20, 10, 30, 40];
+    tree.remove(60);
+    res = tree.getValuesTraversal('in');
+    res.forEach((num, i) => expect(num === sol[i]).toBe(true));  
+  });
+
+  it('should return a node of n value', () => {
+    let arr = [10, 20, 30, undefined, undefined, undefined, 40];
+    let tree = new Plus.BinaryTree(arr);
+    let node = tree.getNode(30);
+    expect(node.val).toBe(30); 
+    expect(node.left.val).toBe(undefined);
+    expect(node.right.val).toBe(40);
+
+    arr = [10, 20, 30, undefined, undefined, 10, 40];
+    tree = new Plus.BinaryTree(arr);
+    node = tree.getNode(10);
+    expect(node.val).toBe(10);
+    expect(node.left.val).toBe(20);
+    expect(node.right.val).toBe(30);
+
+    arr = [];
+    tree = new Plus.BinaryTree(arr);
+    node = tree.getNode(30);
+    expect(node).toBe(0);
+
+    arr = [1];
+    tree = new Plus.BinaryTree(arr);
+    node = tree.getNode(1);
+    expect(node.val).toBe(1);
+    expect(node.left).toBe(undefined);
+    expect(node.right).toBe(undefined);
+
+    arr = [1, 2, 3, 4];
+    tree = new Plus.BinaryTree(arr);
+    node = tree.getNode(100);
+    expect(node).toBe(0);    
+  });
+
+  it('should return height of given node', () => {
+    let arr = [10, 20, 30, undefined, undefined, undefined, 40];
+    let tree = new Plus.BinaryTree(arr);
+    let node = tree.getNode(30);
+    let res = tree.findHeight(node);
+    expect(res).toBe(1);
+  
+    res = tree.findHeight(node);
+    expect(res).toBe(1);
+
+    node = tree.getNode(40);
+    res = tree.findHeight(node);
+    expect(res).toBe(0);
+
+    arr = [];
+    tree = new Plus.BinaryTree(arr);
+    node = tree.getNode(2);
+    expect(() => {
+      tree.findHeight(node);
+    }).toThrow('Parameter is not a node.');
+
+    arr = [1, undefined, 3, undefined, undefined,
+           5, undefined, undefined, undefined, undefined,
+           undefined, 3, undefined, undefined, undefined, undefined,
+           undefined, undefined, undefined, undefined, undefined,
+           undefined, undefined, 5, 6];
+
+    tree = new Plus.BinaryTree(arr);
+    node = tree.getNode(1);
+    expect(tree.findHeight(node)).toBe(4);
+
+    arr = [1, 2, 3, 4, 5, 6, undefined,
+           undefined, undefined, undefined, undefined, 7, undefined];
+
+    tree = new Plus.BinaryTree(arr);
+    node = tree.getNode(1);
+    let nodeTwo = tree.getNode(5);
+    let nodeThree = tree.getNode(6);
+    let nodeFour = tree.getNode(3);
+
+    expect(tree.findHeight(node)).toBe(3);
+    expect(tree.findHeight(nodeTwo)).toBe(0);
+    expect(tree.findHeight(nodeThree)).toBe(1);
+    expect(tree.findHeight(nodeFour)).toBe(2);
+    expect()
   });
 
   it('should be able to daisy chain methods', () => {
+    const multiplyTwo = (node) => {
+      return node.val = node.val * 2;
+    };
 
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    let tree = new Plus.BinaryTree(arr);
+    expect(tree.insert(44).remove(6)).toBe(tree);
+    expect(tree.remove(17).manipulateTraversal()).toBe(0);
+    expect(tree.insert(44)).toBe(tree);
+    expect(tree.manipulateTraversal(multiplyTwo, 'pre')).toBe(tree);
   });
 
   it('should return an array of all values with preorder traversal', () => {

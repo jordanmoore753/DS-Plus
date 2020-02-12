@@ -400,6 +400,42 @@ Plus.BinaryTree = class {
     this.root = insertLevelOrder(array, new Plus.TreeNode(), 0);
   }
 
+  findHeight(node) {
+    if (!node) {
+      throw 'Parameter is not a node.';
+    }
+
+    let queue = new Plus.Queue();
+    queue.enqueue([node]);
+
+    let newNodes;
+    let oldNodes;
+    let currentNode;
+    let i = -1;
+
+    while (queue.data[0].length > 0) {
+      oldNodes = queue.dequeue();
+      newNodes = [];
+
+      for (let i = 0; i < oldNodes.length; i += 1) {
+        currentNode = oldNodes[i];
+
+        if (currentNode.left && currentNode.left.val) {
+          newNodes.push(currentNode.left);  
+        }
+        
+        if (currentNode.right && currentNode.right.val) {
+          newNodes.push(currentNode.right);
+        }
+      }
+
+      queue.enqueue(newNodes);
+      i += 1;
+    }
+
+    return i;
+  }
+
   findMaxDepth() {
     if (!this.root.val) {
       return 0;
@@ -501,6 +537,44 @@ Plus.BinaryTree = class {
     return this;
   }
 
+  getNode(value) {
+    if (!this.root.val) {
+      return 0;
+    }
+
+    let queue = new Plus.Queue();
+    let oldNodes;
+    let newNodes;
+    let node;
+    let correctNode;
+
+    queue.enqueue([this.root]);
+
+    while (queue.data[0].length > 0) {
+      oldNodes = queue.dequeue();
+      newNodes = [];
+
+      for (let i = 0; i < oldNodes.length; i += 1) {
+        node = oldNodes[i];
+
+        if (!node) {
+          continue;
+        }
+
+        if (node.val === value) { 
+          return node;
+        }
+
+        newNodes.push(node.left);
+        newNodes.push(node.right);
+      }
+
+      queue.enqueue(newNodes);
+    }
+
+    return 0;
+  }
+
   insert(value) {
     if (!this.root.val) {
       this.root.val = value;
@@ -525,6 +599,11 @@ Plus.BinaryTree = class {
 
       for (let i = 0; i < oldNodes.length; i += 1) {
         node = oldNodes[i];
+
+        if (!node) {
+          node = new Plus.TreeNode(valueQueue.dequeue());
+          return this;
+        }
 
         if (!node.val) {
           node.val = valueQueue.dequeue();
