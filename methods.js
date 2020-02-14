@@ -1,3 +1,5 @@
+const Util = require('./utility-methods.js');
+
 let Plus = {};
 
 // Queue Prototype
@@ -678,6 +680,9 @@ Plus.TreeNode = class {
     this.val = val || null;
     this.left = null;
     this.right = null;
+    this.duplicates = 0;
+    this.height = 0;
+    this.bf = 0;
   }
 };
 
@@ -686,8 +691,8 @@ Plus.TreeNode = class {
 Plus.BST = class {
   constructor(dataType, options) {
     const acceptableTypes = ['string', 'date', 'number', 'object'];
-    const acceptableOptionsObject = ['key', 'keyType', 'sortFunction', 'unique'];
-    const acceptableOptionsNonObject = ['sortFunction', 'unique'];
+    const acceptableOptionsObject = ['key', 'keyType', 'compareFunction'];
+    const acceptableOptionsNonObject = ['compareFunction'];
 
     const isFunction = (functionToCheck) => { return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]'; };
     const isCorrectType = (dataType) => { 
@@ -717,12 +722,8 @@ Plus.BST = class {
           }
         }
 
-        if (options['sortFunction'] && !isFunction(options['sortFunction'])) {
-          throw `object[sortFunction] is not a valid function.`;
-        }
-
-        if (options['unique'] && options['unique'] !== true) {
-          throw `'unique' property of options must be boolean value: true.`;
+        if (options['compareFunction'] && !isFunction(options['compareFunction'])) {
+          throw `object[compareFunction] is not a valid function.`;
         }
 
         return true;
@@ -743,12 +744,8 @@ Plus.BST = class {
           }
         }
 
-        if (!options['sortFunction'] || !isFunction(options['sortFunction'])) {
-          throw `object[sortFunction] is not a valid function or is not present.`;
-        }
-
-        if (options['unique'] && options['unique'] !== true) {
-          throw `'unique' property of options must be boolean value: true.`;
+        if (!options['compareFunction'] || !isFunction(options['compareFunction'])) {
+          throw `object[compareFunction] is not a valid function or is not present.`;
         }
 
         if (!options['key'] || typeof options['key'] !== 'string') {
@@ -773,20 +770,112 @@ Plus.BST = class {
     }
 
     this.type = dataType;
-    this.unique = options['unique'];
-    this.sortFunction = options['sortFunction'];
+    this.compareFunction = options['compareFunction'] || Util.defaultComparison;
     this.key = options['key'];
     this.keyType = options['keyType'];
+    this.duplicates = 0;
     this.root = new Plus.TreeNode();
   }
 
   insert(value) {
-    // check if value is array or single value
-    // collapse the data into a queue
-    // validate the data as it goes through
-    // if data is correct type, proceed
-    // check if the data is greater or less than the root node val
-    // follow the path until the nearest null
+    const traverseAndInsert = function(node, value) {
+      if (node === null) {
+        return new Plus.TreeNode();
+      }
+
+      let res = this.compareFunction(value, node.val);
+
+      if (res) {
+        traverseAndInsert.call(this, node.left, value);
+      } else {
+        traverseAndInsert.call(this, node.right, value);
+      }
+
+      this.update.call(this, node);
+      return this.balance.call(this, node);
+    };
+
+    let queue = new Plus.Queue();
+    let currentValue;
+
+    if (!value) {
+      return this;
+    } else if (Array.isArray(value)) {
+      value.forEach((val) => queue.enqueue(val));
+    } else {
+      queue.enqueue(value);
+    }
+
+    while (queue.data.length > 0) {
+      currentValue = queue.dequeue();
+      traverseAndInsert.call(this, this.root, currentValue);
+    }
+
+    return this;
+  }
+
+  update(node) {
+    let lh, rh;
+    [lh, rh] = -[1, -1];
+
+    if (node.left !== null) {
+      lh = this.heightOf.call(this, node.left);
+    }
+
+    if (node.right !== null) {
+      rh = this.heightOf.call(this, node.right);
+    }
+
+    node.height = 1 + Math.max(lh, rh);
+    node.bf = rh - lh;
+    return;
+  }
+
+  balance(node) {
+    const leftLeftCase = function(node) {
+      return rightRotation(node);
+    };
+
+    const leftRightCase = function(node) {
+      leftRotation(node.left);
+      return leftLeftCase(node);
+    };
+
+    const rightRightCase = function(node) {
+      return leftRotation(node);
+    };
+
+    const rightLeftCase = function(node) {
+      rightRotation(node.right);
+      return rightRightCase(node);
+    };
+
+    const leftRotation = function(node) {
+      let b = node.left;
+      console.log(node);
+      node.left = b ? b.right : null;
+      b.right = node;
+      console.log(b);
+      return b;
+    };
+
+    const rightRotation = function(node) {
+      let b = node.right;
+      node.right = b.left;
+      b.left = node;
+      console.log(b);
+      return b;
+    };
+
+    // let obj = this.getBF(node);
+    // console.log(obj.BF);
+    // if (obj.BF >= 2) {
+    //   return this.getBF(node.left) >= 0 ? leftLeftCase(node) : leftRightCase(node);
+    // } else if (obj.BF <= -2) {
+    //   return this.getBF(node.left) <= 0 ? rightRightCase(node) : rightLeftCase(node);
+    // }
+
+    // return node;
   }
 
   remove(key) {
@@ -806,40 +895,42 @@ Plus.BST = class {
   }
 
   validData(value) {
-    const isDate = (value) => {
-      return Object.prototype.toString.call(value) === '[object Date]';
-    };
-
-    const isNumber = (value) => {
-      return typeof value === 'number';
-    };
-
-    const isString = (value) => {
-      return typeof value === 'string';
-    };
-
-    const isObject = (value) => {
-      if (isDate(value)) { 
-        return false; 
-      }
-
-      return typeof value === 'object' && !Array.isArray(value) && value[this.key] && typeof value[this.key] === this.keyType;
-    };
-
     if (!value) {
       return false;
     }
 
     switch (this.type) {
       case 'string':
-        return isString(value);
+        return Util.isString(value);
       case 'date':
-        return isDate(value);
+        return Util.isDate(value);
       case 'number':
-        return isNumber(value);
+        return Util.isNumber(value);
       default:
-        return isObject(value);
+        return Util.isObject.call(this, value);
     }
+  }
+
+  heightOf(node) {
+    if (node === null) {
+      return -1;
+    }
+
+    let left = this.heightOf(node.left);
+    let right = this.heightOf(node.right);
+
+    return 1 + Math.max(left, right);
+  }
+
+  getBF(node) {
+    let leftHeight = this.heightOf(node.left);
+    let rightHeight = this.heightOf(node.right);
+
+    return {
+      BF: leftHeight - rightHeight,
+      nodeHeight: Math.max(leftHeight, rightHeight) + 1,
+      node: node
+    };
   }
 
   sorter() {
