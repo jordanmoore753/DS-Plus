@@ -1122,115 +1122,129 @@ describe('BST', () => {
   const sortById = function(a, b) {
     return a.id < b.id;
   };
+
   const invalidFunction = 42;
+
   const validFunction = (one) => {
     return one + 1;
   };
 
-  // it('should initialize a string-type BST', () => {
-  //   // invalid cases
+  const solHelper = (res, sol) => {
+    return res.forEach((val, i) => expect(val === sol[i]).toBe(true));
+  };
 
-  //   expect(() => {
-  //     new Plus.BST();
-  //   }).toThrow('Data type must be defined as either string, number, date, or object.');
+  const solDateHelper = (res, sol) => {
+    return res.forEach((val, i) => expect(val.toString() === sol[i]).toBe(true));
+  };
 
-  //   expect(() => {
-  //     new Plus.BST(23);
-  //   }).toThrow('Data type was defined, but was not a correct value: string, date, number, or object.');
+  const solObjHelper = (res, sol) => {
+    return res.forEach((val, i) => expect(val.id === sol[i]).toBe(true));
+  };
 
-  //   expect(() => { 
-  //     new Plus.BST('string', { tucker: 'no!' });
-  //   }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
+  it('should initialize a string-type BST', () => {
+    // invalid cases
 
-  //   expect(() => { 
-  //     new Plus.BST('string', { compareFunction: invalidFunction });
-  //   }).toThrow(`object[compareFunction] is not a valid function.`);
+    expect(() => {
+      new Plus.BST();
+    }).toThrow('Data type must be defined as either string, number, date, or object.');
 
-  //   // valid cases
+    expect(() => {
+      new Plus.BST(23);
+    }).toThrow('Data type was defined, but was not a correct value: string, date, number, or object.');
 
-  //   let bst = new Plus.BST('string');
-  //   expect(bst.root.val).toBe(null);
+    expect(() => { 
+      new Plus.BST('string', { tucker: 'no!' });
+    }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
 
-  //   bst = new Plus.BST('string', { compareFunction: validFunction });
-  //   expect(bst.root.val).toBe(null);
-  // });
+    expect(() => { 
+      new Plus.BST('string', { compareFunction: invalidFunction });
+    }).toThrow(`object[compareFunction] is not a valid function.`);
 
-  // it('should initialize a number-type BST', () => {
-  //   // invalid cases
+    // valid cases
 
-  //   expect(() => { 
-  //     new Plus.BST('number', { tucker: 'no!' });
-  //   }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
+    let bst = new Plus.BST('string');
+    expect(bst.root).toBe(null);
 
-  //   expect(() => { 
-  //     new Plus.BST('number', { compareFunction: invalidFunction });
-  //   }).toThrow(`object[compareFunction] is not a valid function.`);
+    bst = new Plus.BST('string', { compareFunction: validFunction });
+    expect(bst.root).toBe(null);
+  });
 
-  //   // valid cases
+  it('should initialize a number-type BST', () => {
+    // invalid cases
 
-  //   bst = new Plus.BST('number', { compareFunction: validFunction });
-  //   expect(bst.root.val).toBe(null);
-  // });
+    expect(() => { 
+      new Plus.BST('number', { tucker: 'no!' });
+    }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
 
-  // it('should initialize a date-type BST', () => {
-  //   // invalid cases
+    expect(() => { 
+      new Plus.BST('number', { compareFunction: invalidFunction });
+    }).toThrow(`object[compareFunction] is not a valid function.`);
 
-  //   expect(() => { 
-  //     new Plus.BST('date', { tucker: 'no!' });
-  //   }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
+    // valid cases
 
-  //   expect(() => { 
-  //     new Plus.BST('date', { compareFunction: invalidFunction });
-  //   }).toThrow(`object[compareFunction] is not a valid function.`);
+    bst = new Plus.BST('number', { compareFunction: validFunction });
+    expect(bst.root).toBe(null);
+  });
 
-  //   // valid cases
+  it('should initialize a date-type BST', () => {
+    // invalid cases
 
-  //   let bst = new Plus.BST('date');
-  //   expect(bst.root.val).toBe(null);
+    expect(() => { 
+      new Plus.BST('date', { tucker: 'no!' });
+    }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
 
-  //   bst = new Plus.BST('date', { compareFunction: validFunction });
-  //   expect(bst.root.val).toBe(null);
-  // });
+    expect(() => { 
+      new Plus.BST('date', { compareFunction: invalidFunction });
+    }).toThrow(`object[compareFunction] is not a valid function.`);
 
-  // it('should initialize an object-type BST', () => {
-  //   // invalid cases
+    // valid cases
 
-  //   expect(() => {
-  //     new Plus.BST('object');
-  //   }).toThrow('Options object is not defined, must be present for object data type.');
+    let bst = new Plus.BST('date');
+    expect(bst.root).toBe(null);
 
-  //   expect(() => {
-  //     new Plus.BST('object', { tucker: 'no!' });
-  //   }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
+    bst = new Plus.BST('date', { compareFunction: validFunction });
+    expect(bst.root).toBe(null);
+  });
 
-  //   expect(() => {
-  //     new Plus.BST('object', { compareFunction: validFunction })
-  //   }).toThrow(`'key' property must be a string value and be present for object data type.`);
+  it('should initialize an object-type BST', () => {
+    // invalid cases
 
-  //   expect(() => {
-  //     new Plus.BST('object', { compareFunction: 23 })
-  //   }).toThrow(`object[compareFunction] is not a valid function or is not present.`);
+    expect(() => {
+      new Plus.BST('object');
+    }).toThrow('Options object is not defined, must be present for object data type.');
 
-  //   expect(() => {
-  //     new Plus.BST('object', { compareFunction: validFunction, key: 83 })
-  //   }).toThrow(`'key' property must be a string value and be present for object data type.`);
+    expect(() => {
+      new Plus.BST('object', { tucker: 'no!' });
+    }).toThrow('tucker is an unacceptable property for the options object and the specified data type.');
 
-  //   expect(() => {
-  //     new Plus.BST('object', { compareFunction: validFunction, key: 'id' })
-  //   }).toThrow(`'keyType' property must be present and of 'string', 'number', or 'date' value for object data.`); 
+    expect(() => {
+      new Plus.BST('object', { compareFunction: validFunction })
+    }).toThrow(`'key' property must be a string value and be present for object data type.`);
 
-  //   expect(() => {
-  //     new Plus.BST('object', { compareFunction: validFunction, key: 'id', keyType: 23 })
-  //   }).toThrow(`'keyType' property must be present and of 'string', 'number', or 'date' value for object data.`);   
+    expect(() => {
+      new Plus.BST('object', { compareFunction: 23 })
+    }).toThrow(`object[compareFunction] is not a valid function or is not present.`);
 
-  //   // valid cases
+    expect(() => {
+      new Plus.BST('object', { compareFunction: validFunction, key: 83 })
+    }).toThrow(`'key' property must be a string value and be present for object data type.`);
 
-  //   let bst = new Plus.BST('object', { compareFunction: validFunction, key: 'id', keyType: 'string' });
-  //   expect(bst.root.val).toBe(null);
+    expect(() => {
+      new Plus.BST('object', { compareFunction: validFunction, key: 'id' })
+    }).toThrow(`'keyType' property must be present and of 'string', 'number', or 'date' value for object data.`); 
 
-  //   bst = new Plus.BST('object', { compareFunction: validFunction, key: 'id', keyType: 'string' });
-  //   expect(bst.root.val).toBe(null);
-  // });
+    expect(() => {
+      new Plus.BST('object', { compareFunction: validFunction, key: 'id', keyType: 23 })
+    }).toThrow(`'keyType' property must be present and of 'string', 'number', or 'date' value for object data.`);   
+
+    // valid cases
+
+    let bst = new Plus.BST('object', { compareFunction: validFunction, key: 'id', keyType: 'string' });
+    expect(bst.root).toBe(null);
+
+    bst = new Plus.BST('object', { compareFunction: validFunction, key: 'id', keyType: 'string' });
+    expect(bst.root).toBe(null);
+  });
 
   it('should validate parameter data type', () => {
     let bst = new Plus.BST('string');
@@ -1263,112 +1277,108 @@ describe('BST', () => {
   });
 
   it('should insert value of specified data type in single or array form', () => {
-    // let bst = new Plus.BST('string');
+    // number cases
+    let bst = new Plus.BST('number');
 
-    // // invalid cases
-    // expect(bst.insert().root.val).toBe(null);
-    // expect(bst.insert(23).root.val).toBe(null);
-    // expect(bst.insert({ yes: 'yes'}).root.val).toBe(null);
+    bst.insert();
+    expect(bst.root).toBe(null);
 
-    // // valid cases
-    // expect(bst.insert('str').root.val).toBe('str');
-    // expect(bst.insert('23').root.left.val).toBe('23');
-    // expect(bst.insert(['string']).root.right.val).toBe('string');
-    // expect(bst.insert('23').root.left.duplicates).toBe(1);
-    // bst.insert(['coal', 'mining', 'SUCKS OMG', '22']);
-    // expect(bst.root.left.right.val).toBe('coal');
-    // expect(bst.root.left.left.val).toBe('22');
+    bst.insert('string');
+    expect(bst.root).toBe(null);
 
-    bst = new Plus.BST('number');
+    bst.insert(1);
+    expect(bst.root.val).toBe(1);
 
-    // expect(bst.insert('str').root.val).toBe(null);
-    // expect(bst.insert(new Date()).root.val).toBe(null);
+    bst.insert([2, 3]);
+    let res = bst.getValuesTraversal();
+    let sol = [1, 3, 2];
+    solHelper(res, sol);
 
-    // valid cases
-    bst.insert(23);
-    console.log(bst.root);
-    bst.insert(24);
-    console.log(bst.root);
-    let res = bst.insert(25);
-    console.log(res);
-    console.log(bst.root);
-    bst.insert(30);
-    console.log(bst.root);
-    bst.insert(33);
-    console.log(bst.root);
+    bst.insert(0);
+    bst.insert(-1);
+    solHelper(bst.getValuesTraversal(), [-1, 1, 0, 3, 2]);
 
     bst = new Plus.BST('number');
-    bst.insert([23, 24, 25, 30, 33]);
-    console.log(bst.root);
-    // expect(bst.insert(5.42).root.left.val).toBe(5.42);
-    // bst.insert([43, 200, 444]);
-    // expect(bst.root.right.val).toBe(43);
-    // expect(bst.root.right.right.val).toBe(200);
+    bst.insert([50, 40, 30]);
+    solHelper(bst.getValuesTraversal(), [30, 50, 40]);
+    bst.insert([32, 34]);
+    solHelper(bst.getValuesTraversal(), [30, 34, 32, 50, 40]);
+    bst.insert(38);
+    solHelper(bst.getValuesTraversal(), [30, 32, 38, 50, 40, 34]);
+    bst.insert([39, 38.5]);
+    solHelper(bst.getValuesTraversal(), [30, 32, 38, 39, 38.5, 50, 40, 34]);
+    bst.insert(39);
+    solHelper(bst.getValuesTraversal(), [30, 32, 38, 39, 38.5, 50, 40, 34]);
+    
+    // date cases
+    bst = new Plus.BST('date');
 
-    // bst = new Plus.BST('date');
+    bst.insert([new Date('October 13, 2019'), new Date('October 14, 2020'), new Date('October 15, 2018')]);
+    solDateHelper(bst.getValuesTraversal(), ["Mon Oct 15 2018 00:00:00 GMT-0400 (EDT)", "Wed Oct 14 2020 00:00:00 GMT-0400 (EDT)", "Sun Oct 13 2019 00:00:00 GMT-0400 (EDT)"])
+    
+    // string cases
+    bst = new Plus.BST('string');
+    bst.insert(['str', 'string', 'coal', 'MINING SUCKS']);
+    solHelper(bst.getValuesTraversal(), ["MINING SUCKS", "coal", "string", "str"]);
 
-    // // invalid cases
-    // expect(bst.insert(23).root.val).toBe(null);
-    // expect(bst.insert({ yes: 'yes'}).root.val).toBe(null);
-
-    // // valid cases
-    // expect(bst.insert(new Date("October 13, 2013")).root.val.toString()).toBe("Sun Oct 13 2013 00:00:00 GMT-0400 (EDT)");
-    // bst.insert(new Date('October 14, 2013'));
-    // expect(bst.root.right.val.toString()).toBe("Mon Oct 14 2013 00:00:00 GMT-0400 (EDT)");
-
-    // bst = new Plus.BST('object', { compareFunction: sortById, key: 'id', keyType: 'number' });
-
-    // // invalid cases
-    // expect(bst.insert(12).root.val).toBe(null);
-    // expect(bst.insert({ one: 'more' }).root.val).toBe(null);
-
-    // // valid cases
-    // expect(bst.insert({ id: 14 }).root.val.id).toBe(14);
-    // bst.insert([{id: 15}, {id: 13}]);
-    // expect(bst.root.left.val.id).toBe(13);
-    // expect(bst.root.right.val.id).toBe(15);
-    // bst.insert([{id: 22}, {id: 26}]);
-    // expect(bst.root.right.right.val.id).toBe(22);
-    // expect(bst.root.right.right.right.val.id).toBe(26);
+    // object cases
+    bst = new Plus.BST('object', { compareFunction: sortById, key: 'id', keyType: 'number' });
+    bst.insert([{ id: 1 }, { id: 2 }, { id: 3}, { id: 4 }]);
+    solObjHelper(bst.getValuesTraversal(), [1, 4, 3, 2]);
   });
 
-  // it('should return height of passed node', () => {
-  //   let bst = new Plus.BST('number');
-  //   bst.insert([12, 18, 20]);
-  //   expect(bst.heightOf(bst.root)).toBe(2);
-  //   bst.insert(23);
-  //   expect(bst.heightOf(bst.root)).toBe(3);
-  // });
+  it('should remove elements and rebalance', () => {
+    let bst = new Plus.BST('number');
+    expect(bst.remove()).toBe(undefined);
+    expect(bst.remove(3)).toBe(bst);
 
-  // it('should return BF object of passed node', () => {
-  //   let bst = new Plus.BST('number');
-  //   bst.insert([12, 18, 20]);
-  //   let res = bst.getBF(bst.root);
-  //   expect(res.BF).toBe(-2);
-  //   expect(res.nodeHeight).toBe(2);
-  //   expect(res.node).toBe(bst.root);
+    bst.insert([23, 24, 25, 30, 33]);
+    bst.remove(33);
+    let res = bst.getValuesTraversal();
+    let sol = [23, 25, 30, 24];
+    res.forEach((val, i) => expect(val === sol[i]).toBe(true));
 
-  //   bst.insert(23);
-  //   res = bst.getBF(bst.root);
-  //   console.log(bst.root);
-  //   expect(res.BF).toBe(-3);
-  //   expect(res.nodeHeight).toBe(3);
-  //   expect(res.node).toBe(bst.root); 
+    bst = new Plus.BST('number');
+    bst.insert([10, 12, 13, 9]);
+    bst.remove(10);
+    res = bst.getValuesTraversal();
+    sol = [9, 13, 12];
+    res.forEach((val, i) => expect(val === sol[i]).toBe(true));
 
-  //   bst.insert([1, 5]);
-  //   res = bst.getBF(bst.root);
-  //   console.log(bst.root);
-  //   expect(res.BF).toBe(2);
-  //   expect(res.nodeHeight).toBe(3);
-  //   expect(res.node).toBe(bst.root);  
-  // });
+    bst = new Plus.BST('number');
+    bst.insert([10, 12, 14, 13]);
+    bst.remove(14);
+    res = bst.getValuesTraversal();
+    sol = [10, 13, 12];
+    res.forEach((val, i) => expect(val === sol[i]).toBe(true));
 
-  // it('should rebalance tree during insertion', () => {
-  //   let bst = new Plus.BST('number');
-  //   bst.insert([1, 3, 5]);
-  //   console.log(bst.root);
-  //   expect(bst.root.val).toBe(3);
-  //   expect(bst.root.left.val).toBe(1);
-  //   expect(bst.root.right.val).toBe(5);
-  // });
+    bst = new Plus.BST('number');
+    bst.insert([10, 12, 14, 9, 11, 8]);
+    bst.remove(10);
+    res = bst.getValuesTraversal();
+    sol = [8, 11, 14, 12, 9];
+    res.forEach((val, i) => expect(val === sol[i]).toBe(true));
+
+    bst = new Plus.BST('number'); 
+    bst.insert([0, 1, 2, 3, 4]);
+    bst.remove([4, 0]);
+    res = bst.getValuesTraversal();
+    sol = [2, 3, 1];
+    res.forEach((val, i) => expect(val === sol[i]).toBe(true));
+
+    bst = new Plus.BST('number');
+    bst.insert([50, 40, 30, 32, 38, 38.5, 34, 27, 98, 54]);
+  });
+
+  it('should reassign node with removal', () => {
+    let node = new Plus.TreeNode(1);
+    let bst = new Plus.BST('number');
+    node.right = new Plus.TreeNode(2);
+    node.right.right = new Plus.TreeNode(3);
+    node = bst.reassignRemoval(node);
+    expect(node.val).toBe(2);
+    node.left = new Plus.TreeNode(1);
+    node = bst.reassignRemoval(node);
+    expect(node.val).toBe(1);
+  });
 });

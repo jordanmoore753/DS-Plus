@@ -676,8 +676,8 @@ Plus.BinaryTree = class {
 // Node Prototype
 
 Plus.TreeNode = class {
-  constructor(val, left, right) {
-    this.val = val || null;
+  constructor(val = null, left, right) {
+    this.val = val;
     this.left = null;
     this.right = null;
     this.duplicates = 0;
@@ -834,7 +834,7 @@ Plus.BST = class {
   insert(value) {
     let queue = new Plus.Queue();
 
-    if (!value) {
+    if (value === undefined) {
       return;
     } else if (Array.isArray(value)) {
       value.forEach((val) => queue.enqueue(val));
@@ -871,7 +871,7 @@ Plus.BST = class {
       root.left = this.insertHelper(root.left, node);
 
       if (root.left !== null && this.getBF(root) > 1) {
-        if (!this.compareFunction(node.val, root.left.val)) {
+        if (this.compareFunction(node.val, root.left.val)) {
           root = this.rotationLeftLeft(root);
         } else {
           root = this.rotationLeftRight(root);
@@ -890,6 +890,154 @@ Plus.BST = class {
     }
 
     return root;
+  }
+
+  remove(value) {
+    let queue = new Plus.Queue();
+
+    if (!value) {
+      return;
+    } else if (Array.isArray(value)) {
+      value.forEach((val) => queue.enqueue(val));
+    } else {
+      queue.enqueue(value);
+    }
+
+    let currentValue;
+    let newNode;
+    let res;
+
+    while (queue.data.length > 0) {
+      currentValue = queue.dequeue();
+
+      if (this.validData(currentValue)) {
+        res = this.removeHelper(this.root, currentValue);
+
+        if (res !== 0) { this.root = res; } 
+      }
+    }
+
+    return this;
+  }
+
+  removeHelper(root, value) {
+    if (root === null) {
+      return 0; // value not found, no removal
+    } else if (value === root.val) {
+      // remove the node here
+      root = this.reassignRemoval(root);
+    } else if (this.compareFunction(value, root.val)) {
+      // search left
+      root.left = this.removeHelper(root.left, value);
+
+      if (root.left !== null && this.getBF(root) > 1) {
+        if (this.compareFunction(value, root.left.val)) {
+          root = this.rotationLeftLeft(root);
+        } else {
+          root = this.rotationLeftRight(root);
+        }
+      }
+    } else if (!this.compareFunction(value, root.val)) {
+      // search right
+      root.right = this.removeHelper(root.right, value);
+
+      if (root.right !== null && this.getBF(root) < -1) {
+        if (!this.compareFunction(value, root.right.val)) {
+          root = this.rotationRightRight(root);
+        } else {
+          root = this.rotationRightLeft(root);
+        }
+      }
+    }
+
+    return root;
+  }
+
+  reassignRemoval(node) {
+    let newHead;
+    let queue = new Plus.Queue();
+    let currentNode;
+
+    if (node.left === null && node.right === null) {
+      newHead = null;
+    } else if (node.left && node.right === null) {
+      newHead = node.left;
+    } else if (node.right && node.left === null) {
+      newHead = node.right;
+    } else {
+      if (this.getHeight(node.left) >= this.getHeight(node.right)) {
+        newHead = node.left; // left replaces node
+
+        if (newHead.right === null) {
+          newHead.right = node.right;
+          return newHead;
+        }
+
+        queue.enqueue(newHead.right)
+        
+        while (queue.data.length > 0) {
+          currentNode = queue.dequeue();
+
+          if (currentNode.right === null) {
+            currentNode.right = node.right; // attach former right node of former node to new head
+            break;
+          }
+
+          queue.enqueue(currentNode.right);
+        }
+      } else {
+        newHead = node.right; // right replaces node
+
+        if (newHead.left === null) {
+          newHead.left = node.left;
+          return newHead;
+        }
+
+        queue.enqueue(newHead.left)
+        
+        while (queue.data.length > 0) {
+          currentNode = queue.dequeue();
+
+          if (currentNode.left === null) {
+            currentNode.left = node.left; // attach former left node of former node to new head
+            break;
+          }
+
+          queue.enqueue(currentNode.left);
+        }
+      }
+    }
+
+    return newHead;
+  }
+
+  getValuesTraversal(type = 'post') {
+    const acceptable = ['post', 'pre', 'in'];
+    const traverse = (node) => {
+      if (node === undefined || node.val === null) {
+        return;
+      }
+
+      if (type === 'pre') { data.push(node.val); }
+
+      if (node.left) {
+        traverse(node.left);
+      }
+
+      if (type === 'in') { data.push(node.val); }
+
+      if (node.right) {
+        traverse(node.right);
+      }
+
+      if (type === 'post') { data.push(node.val); }
+    };
+
+    if (!acceptable.includes(type)) { return 0; }
+
+    let data = [];
+    traverse(this.root);
+    return data;
   }
 
   rotationLeftLeft(node) {
@@ -916,10 +1064,6 @@ Plus.BST = class {
     return this.rotationRightRight(node);
   }
 
-  remove(key) {
-
-  }
-
   search(key) {
 
   }
@@ -933,10 +1077,6 @@ Plus.BST = class {
   }
 
   validData(value) {
-    if (!value) {
-      return false;
-    }
-
     switch (this.type) {
       case 'string':
         return Util.isString(value);
