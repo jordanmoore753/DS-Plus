@@ -681,9 +681,47 @@ Plus.TreeNode = class {
     this.left = null;
     this.right = null;
     this.duplicates = 0;
-    this.height = 0;
-    this.bf = 0;
   }
+
+  // insert(node = this, value, compareFunction) {
+  //   console.log(value);
+  //   if (node === null) {
+  //     return new Plus.TreeNode(value);
+  //   } else if (node.val === null) {
+  //     node.val = value;
+  //   } else if (node.val === value) {
+  //     return node;
+  //   } else if (compareFunction(value, node.val)) {
+  //     node.left = this.insert(node.left, value, compareFunction);
+  //   } else {
+  //     node.right = this.insert(node.right, value, compareFunction);
+  //   }
+
+  //   let lh, rh;
+  //   lh = !node.left ? -1 : node.getHeight(node.left);
+  //   rh = !node.right ? -1 : node.getHeight(node.right);
+
+  //   node.height = 1 + Math.max(lh, rh);
+  //   console.log(node);
+  //   // this is actually inserting into the correct position
+  //   // adjust the height
+  //   // get the balance
+  //   // do what you need to do
+  //   // be calm
+  //   // it is not inserting anything beyond a single nested node
+  //   // it is a giant piece of shit but its your job to fix it
+  // }
+
+  // getHeight(node) {
+  //   if (node === null) {
+  //     return -1;
+  //   }
+
+  //   let left = this.getHeight(node.left);
+  //   let right = this.getHeight(node.right);
+
+  //   return 1 + Math.max(left, right);
+  // }
 };
 
 // BST Prototype
@@ -774,108 +812,108 @@ Plus.BST = class {
     this.key = options['key'];
     this.keyType = options['keyType'];
     this.duplicates = 0;
-    this.root = new Plus.TreeNode();
+    this.root = null;
+  }
+
+  getBF(node) {
+    return this.getHeight(node.left) - this.getHeight(node.right);
+  }
+
+  getHeight(node) {
+    let h = 0;
+
+    if (node === null || !node) {
+      h = -1;
+    } else {
+      h = Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
+    }
+
+    return h;
   }
 
   insert(value) {
-    const traverseAndInsert = function(node, value) {
-      if (node === null) {
-        return new Plus.TreeNode();
-      }
-
-      let res = this.compareFunction(value, node.val);
-
-      if (res) {
-        traverseAndInsert.call(this, node.left, value);
-      } else {
-        traverseAndInsert.call(this, node.right, value);
-      }
-
-      this.update.call(this, node);
-      return this.balance.call(this, node);
-    };
-
     let queue = new Plus.Queue();
-    let currentValue;
 
     if (!value) {
-      return this;
+      return;
     } else if (Array.isArray(value)) {
       value.forEach((val) => queue.enqueue(val));
     } else {
       queue.enqueue(value);
     }
 
+    let currentValue;
+    let newNode;
+
     while (queue.data.length > 0) {
       currentValue = queue.dequeue();
-      traverseAndInsert.call(this, this.root, currentValue);
+
+      if (this.validData(currentValue)) {
+        newNode = new Plus.TreeNode(currentValue);
+
+        if (this.root === null) {
+          this.root = newNode;
+        } else {
+          this.root = this.insertHelper(this.root, newNode);
+        }
+      }
     }
 
     return this;
-  }
+  } 
 
-  update(node) {
-    let lh, rh;
-    [lh, rh] = -[1, -1];
+  insertHelper(root, node) {
+    if (root === null) {
+      root = node;
+    } else if (node.val === root.val) {
+      root.duplicates += 1;
+    } else if (this.compareFunction(node.val, root.val)) {
+      root.left = this.insertHelper(root.left, node);
 
-    if (node.left !== null) {
-      lh = this.heightOf.call(this, node.left);
+      if (root.left !== null && this.getBF(root) > 1) {
+        if (!this.compareFunction(node.val, root.left.val)) {
+          root = this.rotationLeftLeft(root);
+        } else {
+          root = this.rotationLeftRight(root);
+        }
+      }
+    } else if (!this.compareFunction(node.val, root.val)) {
+      root.right = this.insertHelper(root.right, node);
+
+      if (root.right !== null && this.getBF(root) < -1) {
+        if (!this.compareFunction(node.val, root.right.val)) {
+          root = this.rotationRightRight(root);
+        } else {
+          root = this.rotationRightLeft(root);
+        }
+      }
     }
 
-    if (node.right !== null) {
-      rh = this.heightOf.call(this, node.right);
-    }
-
-    node.height = 1 + Math.max(lh, rh);
-    node.bf = rh - lh;
-    return;
+    return root;
   }
 
-  balance(node) {
-    const leftLeftCase = function(node) {
-      return rightRotation(node);
-    };
+  rotationLeftLeft(node) {
+    let newHead = node.left;
+    node.left = newHead.right;
+    newHead.right = node;
+    return newHead;
+  }
 
-    const leftRightCase = function(node) {
-      leftRotation(node.left);
-      return leftLeftCase(node);
-    };
+  rotationLeftRight(node) {
+    node.left = this.rotationRightRight(node.left);
+    return this.rotationLeftLeft(node);
+  }
 
-    const rightRightCase = function(node) {
-      return leftRotation(node);
-    };
+  rotationRightRight(node) {
+   let newHead = node.right;
+   node.right = newHead.left;
+   newHead.left = node;
+   return newHead;
+  }
 
-    const rightLeftCase = function(node) {
-      rightRotation(node.right);
-      return rightRightCase(node);
-    };
-
-    const leftRotation = function(node) {
-      let b = node.left;
-      console.log(node);
-      node.left = b ? b.right : null;
-      b.right = node;
-      console.log(b);
-      return b;
-    };
-
-    const rightRotation = function(node) {
-      let b = node.right;
-      node.right = b.left;
-      b.left = node;
-      console.log(b);
-      return b;
-    };
-
-    // let obj = this.getBF(node);
-    // console.log(obj.BF);
-    // if (obj.BF >= 2) {
-    //   return this.getBF(node.left) >= 0 ? leftLeftCase(node) : leftRightCase(node);
-    // } else if (obj.BF <= -2) {
-    //   return this.getBF(node.left) <= 0 ? rightRightCase(node) : rightLeftCase(node);
-    // }
-
-    // return node;
+  rotationRightLeft(node) {
+    node.right = this.rotationLeftLeft(node.right);
+    return this.rotationRightRight(node);
   }
 
   remove(key) {
@@ -909,28 +947,6 @@ Plus.BST = class {
       default:
         return Util.isObject.call(this, value);
     }
-  }
-
-  heightOf(node) {
-    if (node === null) {
-      return -1;
-    }
-
-    let left = this.heightOf(node.left);
-    let right = this.heightOf(node.right);
-
-    return 1 + Math.max(left, right);
-  }
-
-  getBF(node) {
-    let leftHeight = this.heightOf(node.left);
-    let rightHeight = this.heightOf(node.right);
-
-    return {
-      BF: leftHeight - rightHeight,
-      nodeHeight: Math.max(leftHeight, rightHeight) + 1,
-      node: node
-    };
   }
 
   sorter() {
