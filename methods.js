@@ -680,48 +680,44 @@ Plus.TreeNode = class {
     this.val = val;
     this.left = null;
     this.right = null;
-    this.duplicates = 0;
+    this.height = 0;
   }
 
-  // insert(node = this, value, compareFunction) {
-  //   console.log(value);
-  //   if (node === null) {
-  //     return new Plus.TreeNode(value);
-  //   } else if (node.val === null) {
-  //     node.val = value;
-  //   } else if (node.val === value) {
-  //     return node;
-  //   } else if (compareFunction(value, node.val)) {
-  //     node.left = this.insert(node.left, value, compareFunction);
-  //   } else {
-  //     node.right = this.insert(node.right, value, compareFunction);
-  //   }
+  leftHeight() {
+    if (!this.left) {
+      return -1;
+    }
 
-  //   let lh, rh;
-  //   lh = !node.left ? -1 : node.getHeight(node.left);
-  //   rh = !node.right ? -1 : node.getHeight(node.right);
+    return this.left.height;
+  }
 
-  //   node.height = 1 + Math.max(lh, rh);
-  //   console.log(node);
-  //   // this is actually inserting into the correct position
-  //   // adjust the height
-  //   // get the balance
-  //   // do what you need to do
-  //   // be calm
-  //   // it is not inserting anything beyond a single nested node
-  //   // it is a giant piece of shit but its your job to fix it
-  // }
+  rightHeight() {
+    if (!this.right) {
+      return -1;
+    }
 
-  // getHeight(node) {
-  //   if (node === null) {
-  //     return -1;
-  //   }
+    return this.right.height;
+  }
 
-  //   let left = this.getHeight(node.left);
-  //   let right = this.getHeight(node.right);
+  rotateRight() {
+    let temp = this.left;
+    this.left = temp.right;
+    temp.right = this; 
 
-  //   return 1 + Math.max(left, right);
-  // }
+    this.height = Math.max(this.leftHeight(), this.rightHeight()) + 1;
+    temp.height = Math.max(this.leftHeight(), this.height) + 1;
+    return temp;
+  }
+
+  rotateLeft() {
+    let temp = this.right;
+    this.right = temp.left;
+    temp.left = this; 
+
+    this.height = Math.max(this.leftHeight(), this.rightHeight()) + 1;
+    temp.height = Math.max(this.rightHeight(), this.height) + 1;
+    return temp;
+  }
 };
 
 // BST Prototype
@@ -811,204 +807,126 @@ Plus.BST = class {
     this.compareFunction = options['compareFunction'] || Util.defaultComparison;
     this.key = options['key'];
     this.keyType = options['keyType'];
-    this.duplicates = 0;
+    this.duplicates = {};
     this.root = null;
+    this.size = 0;
+  }
+
+  insert(values) {
+    let queue = new Plus.Queue();
+
+    if (values === undefined) {
+      return;
+    } else if (Array.isArray(values)) {
+      values.forEach((val) => queue.enqueue(val));
+    } else {
+      queue.enqueue(values);
+    }
+
+    let currentValue;
+
+    while (queue.data.length > 0) {
+      currentValue = queue.dequeue();
+
+      if (this.validData(currentValue) && !this.duplicates[JSON.stringify(currentValue)]) {
+        this.root = this.insertHelper(currentValue, this.root);
+        this.size += 1;
+      }
+    }
+
+    return this;
+  }
+
+  insertHelper(value, root) {
+    if (root === null) {
+      this.duplicates[JSON.stringify(value)] = true;
+      return new Plus.TreeNode(value);
+    }
+
+    if (this.compareFunction(value, root.val)) {
+      root.left = this.insertHelper(value, root.left);
+    } else {
+      root.right = this.insertHelper(value, root.right);
+    }
+
+    root.height = Math.max(root.leftHeight(), root.rightHeight()) + 1;
+    let balance = this.getBF(root);
+
+    if (balance === 5) {
+      if (this.compareFunction(value, root.left.val)) {
+        root = root.rotateRight();
+      } else {
+        root.left = root.left.rotateLeft();
+        return root.rotateRight();
+      }
+    } else if (balance === 1) {
+      if (this.compareFunction(value, root.right.val)) {
+        root.right = root.right.rotateRight();
+        return root.rotateLeft();
+      } else {
+        root = root.rotateLeft();
+      }
+    }
+
+    return root;
   }
 
   getBF(node) {
-    return this.getHeight(node.left) - this.getHeight(node.right);
+    const diff = node.leftHeight() - node.rightHeight();
+
+    switch (diff) {
+      case -2:
+        return 1;
+      case -1:
+        return 2;
+      case 1:
+        return 4;
+      case 2:
+        return 5;
+      default:
+        return 3;
+    }
   }
 
   getHeight(node) {
-    let h = 0;
-
-    if (node === null || !node) {
-      h = -1;
-    } else {
-      h = Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
+    if (node === null) {
+      return -1;
     }
 
-    return h;
+    return node.height;
   }
 
-  insert(value) {
-    let queue = new Plus.Queue();
+  search(key) {
 
-    if (value === undefined) {
-      return;
-    } else if (Array.isArray(value)) {
-      value.forEach((val) => queue.enqueue(val));
-    } else {
-      queue.enqueue(value);
-    }
-
-    let currentValue;
-    let newNode;
-
-    while (queue.data.length > 0) {
-      currentValue = queue.dequeue();
-
-      if (this.validData(currentValue)) {
-        newNode = new Plus.TreeNode(currentValue);
-
-        if (this.root === null) {
-          this.root = newNode;
-        } else {
-          this.root = this.insertHelper(this.root, newNode);
-        }
-      }
-    }
-
-    return this;
-  } 
-
-  insertHelper(root, node) {
-    if (root === null) {
-      root = node;
-    } else if (node.val === root.val) {
-      root.duplicates += 1;
-    } else if (this.compareFunction(node.val, root.val)) {
-      root.left = this.insertHelper(root.left, node);
-
-      if (root.left !== null && this.getBF(root) > 1) {
-        if (this.compareFunction(node.val, root.left.val)) {
-          root = this.rotationLeftLeft(root);
-        } else {
-          root = this.rotationLeftRight(root);
-        }
-      }
-    } else if (!this.compareFunction(node.val, root.val)) {
-      root.right = this.insertHelper(root.right, node);
-
-      if (root.right !== null && this.getBF(root) < -1) {
-        if (!this.compareFunction(node.val, root.right.val)) {
-          root = this.rotationRightRight(root);
-        } else {
-          root = this.rotationRightLeft(root);
-        }
-      }
-    }
-
-    return root;
   }
 
-  remove(value) {
-    let queue = new Plus.Queue();
+  collect() {
 
-    if (!value) {
-      return;
-    } else if (Array.isArray(value)) {
-      value.forEach((val) => queue.enqueue(val));
-    } else {
-      queue.enqueue(value);
-    }
-
-    let currentValue;
-    let newNode;
-    let res;
-
-    while (queue.data.length > 0) {
-      currentValue = queue.dequeue();
-
-      if (this.validData(currentValue)) {
-        res = this.removeHelper(this.root, currentValue);
-
-        if (res !== 0) { this.root = res; } 
-      }
-    }
-
-    return this;
   }
 
-  removeHelper(root, value) {
-    if (root === null) {
-      return 0; // value not found, no removal
-    } else if (value === root.val) {
-      // remove the node here
-      root = this.reassignRemoval(root);
-    } else if (this.compareFunction(value, root.val)) {
-      // search left
-      root.left = this.removeHelper(root.left, value);
+  betweenBounds() {
 
-      if (root.left !== null && this.getBF(root) > 1) {
-        if (this.compareFunction(value, root.left.val)) {
-          root = this.rotationLeftLeft(root);
-        } else {
-          root = this.rotationLeftRight(root);
-        }
-      }
-    } else if (!this.compareFunction(value, root.val)) {
-      // search right
-      root.right = this.removeHelper(root.right, value);
-
-      if (root.right !== null && this.getBF(root) < -1) {
-        if (!this.compareFunction(value, root.right.val)) {
-          root = this.rotationRightRight(root);
-        } else {
-          root = this.rotationRightLeft(root);
-        }
-      }
-    }
-
-    return root;
   }
 
-  reassignRemoval(node) {
-    let newHead;
-    let queue = new Plus.Queue();
-    let currentNode;
-
-    if (node.left === null && node.right === null) {
-      newHead = null;
-    } else if (node.left && node.right === null) {
-      newHead = node.left;
-    } else if (node.right && node.left === null) {
-      newHead = node.right;
-    } else {
-      if (this.getHeight(node.left) >= this.getHeight(node.right)) {
-        newHead = node.left; // left replaces node
-
-        if (newHead.right === null) {
-          newHead.right = node.right;
-          return newHead;
-        }
-
-        queue.enqueue(newHead.right)
-        
-        while (queue.data.length > 0) {
-          currentNode = queue.dequeue();
-
-          if (currentNode.right === null) {
-            currentNode.right = node.right; // attach former right node of former node to new head
-            break;
-          }
-
-          queue.enqueue(currentNode.right);
-        }
-      } else {
-        newHead = node.right; // right replaces node
-
-        if (newHead.left === null) {
-          newHead.left = node.left;
-          return newHead;
-        }
-
-        queue.enqueue(newHead.left)
-        
-        while (queue.data.length > 0) {
-          currentNode = queue.dequeue();
-
-          if (currentNode.left === null) {
-            currentNode.left = node.left; // attach former left node of former node to new head
-            break;
-          }
-
-          queue.enqueue(currentNode.left);
-        }
-      }
+  validData(value) {
+    if (this.duplicates[value]) {
+      return false;
     }
 
-    return newHead;
+    switch (this.type) {
+      case 'string':
+        return Util.isString(value);
+      case 'date':
+        return Util.isDate(value);
+      case 'number':
+        return Util.isNumber(value);
+      default:
+        return Util.isObject.call(this, value);
+    }
+  }
+
+  sorter() {
+
   }
 
   getValuesTraversal(type = 'post') {
@@ -1039,61 +957,10 @@ Plus.BST = class {
     traverse(this.root);
     return data;
   }
-
-  rotationLeftLeft(node) {
-    let newHead = node.left;
-    node.left = newHead.right;
-    newHead.right = node;
-    return newHead;
-  }
-
-  rotationLeftRight(node) {
-    node.left = this.rotationRightRight(node.left);
-    return this.rotationLeftLeft(node);
-  }
-
-  rotationRightRight(node) {
-   let newHead = node.right;
-   node.right = newHead.left;
-   newHead.left = node;
-   return newHead;
-  }
-
-  rotationRightLeft(node) {
-    node.right = this.rotationLeftLeft(node.right);
-    return this.rotationRightRight(node);
-  }
-
-  search(key) {
-
-  }
-
-  collect() {
-
-  }
-
-  betweenBounds() {
-
-  }
-
-  validData(value) {
-    switch (this.type) {
-      case 'string':
-        return Util.isString(value);
-      case 'date':
-        return Util.isDate(value);
-      case 'number':
-        return Util.isNumber(value);
-      default:
-        return Util.isObject.call(this, value);
-    }
-  }
-
-  sorter() {
-
-  }
 };
 
 // Graph Prototype
+
+
 
 module.exports = Plus;

@@ -15,7 +15,7 @@ exports.isObject = function(value) {
     return false; 
   }
 
-  return typeof value === 'object' && !Array.isArray(value) && value[this.key] && typeof value[this.key] === this.keyType;
+  return typeof value === 'object' && !Array.isArray(value) && typeof value[this.key] === this.keyType;
 };
 
 exports.defaultComparison = function(childNodeValue, parentNodeValue) {
