@@ -718,6 +718,10 @@ Plus.TreeNode = class {
     temp.height = Math.max(this.rightHeight(), this.height) + 1;
     return temp;
   }
+
+  remove(value) {
+
+  }
 };
 
 // BST Prototype
@@ -871,6 +875,91 @@ Plus.BST = class {
     return root;
   }
 
+  remove(values) {
+    let queue = new Plus.Queue();
+
+    if (values === undefined) {
+      return;
+    } else if (Array.isArray(values)) {
+      values.forEach((val) => queue.enqueue(val));
+    } else {
+      queue.enqueue(values);
+    }
+
+    let currentValue;
+
+    while (queue.data.length > 0) {
+      currentValue = queue.dequeue();
+
+      if (this.validData(currentValue)) {
+        this.root = this.removeHelper(currentValue, this.root);
+      }
+    }
+
+    return this;
+  }
+
+  removeHelper(value, root) {
+    if (root === null) {
+      return root;
+    }
+
+    if (root.val === value) {
+      let successor;
+
+      if (root.left === null && root.right === null) {
+        root = null;
+      } else if (root.left && root.right === null) {
+        root = root.left;
+      } else if (root.left === null && root.right) {
+        root = root.right;
+      } else {
+        // both left and right are not leaf
+        successor = this.maxValueNode(root.left);
+        root.val = successor.val;
+        root.left = this.removeHelper(successor.val, root.left);
+      }
+
+      this.duplicates[value] = false;
+      this.size -= 1;
+    } else if (this.compareFunction(value, root.val)) {
+      root.left = this.removeHelper(value, root.left);
+    } else {
+      root.right = this.removeHelper(value, root.right);
+    }
+
+    if (root === null) {
+      return root;
+    }
+
+    root.height = Math.max(root.leftHeight(), root.rightHeight()) + 1;
+    let balance = this.getBF(root);
+
+    if (balance === 5) {
+      if (this.getBF(root.left) === 3 || this.getBF(root.left) === 4) {
+        root = root.rotateRight();
+      }
+
+      if (this.getBF(root.left) === 2) {
+        root.left = root.left.rotateLeft();
+        return root.rotateRight();
+      }
+    } 
+
+    if (balance === 1) {
+      if (this.getBF(root.right) === 3 || this.getBF(root.right) === 2) {
+        root = root.rotateLeft();
+      }
+
+      if (this.getBF(root.right) === 4) {
+        root.right = root.right.rotateRight();
+        return root.rotateLeft();
+      }
+    }   
+
+    return root; 
+  }
+
   getBF(node) {
     const diff = node.leftHeight() - node.rightHeight();
 
@@ -888,12 +977,14 @@ Plus.BST = class {
     }
   }
 
-  getHeight(node) {
-    if (node === null) {
-      return -1;
+  maxValueNode(root) {
+    let current = root;
+
+    while (current.right) {
+      current = current.right;
     }
 
-    return node.height;
+    return current;
   }
 
   search(key) {
@@ -909,10 +1000,6 @@ Plus.BST = class {
   }
 
   validData(value) {
-    if (this.duplicates[value]) {
-      return false;
-    }
-
     switch (this.type) {
       case 'string':
         return Util.isString(value);
@@ -932,7 +1019,7 @@ Plus.BST = class {
   getValuesTraversal(type = 'post') {
     const acceptable = ['post', 'pre', 'in'];
     const traverse = (node) => {
-      if (node === undefined || node.val === null) {
+      if (node === null) {
         return;
       }
 
