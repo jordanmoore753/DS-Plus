@@ -1413,6 +1413,12 @@ describe('BST', () => {
                                              'Wed Jul 04 2029 00:00:00 GMT-0400 (EDT)',
                                              'Fri Dec 25 2020 00:00:00 GMT-0500 (EST)',
                                              'Sun Nov 15 2020 00:00:00 GMT-0500 (EST)']);
+
+    bst.remove(new Date('December 25, 2020'));
+    solDateHelper(bst.getValuesTraversal(), ['Wed Mar 25 2020 00:00:00 GMT-0400 (EDT)',
+                                             'Sun Oct 13 2019 00:00:00 GMT-0400 (EDT)',
+                                             'Wed Jul 04 2029 00:00:00 GMT-0400 (EDT)',
+                                             'Sun Nov 15 2020 00:00:00 GMT-0500 (EST)']);
     // string
 
     bst = new Plus.BST('string');
@@ -1467,7 +1473,7 @@ describe('BST', () => {
 
     node.right = new Plus.TreeNode(5);
     node.right.right = new Plus.TreeNode(6);
-    expect(bst.maxValueNode(node).val).toBe(6);
+    expect(bst.maxValue(node).val).toBe(6);
   });
 
   it('should return sought after node with given value', () => {
@@ -1546,5 +1552,44 @@ describe('BST', () => {
 
     bst.insert([{ id: 1 }, { id: 2 }]);
     expect(bst.length()).toBe(2);
+  });
+
+  it('should get minimum value from root or given node', () => {
+    bst = new Plus.BST('object', {
+      compareFunction: sortById,
+      key: 'id',
+      keyType: 'number'
+    });
+
+    bst.insert([{ id: 1 }, { id: 2 }, { id: 3 }, { id: -1 }, { id: 0 }, { id: -2 }]);
+    let n = bst.search({ id: 1 });
+
+    expect(bst.minValue(n).val.id).toBe(1);
+    expect(bst.minValue().val.id).toBe(-2);
+  });
+
+  it('should get maximum value from root or given node', () => {
+    bst = new Plus.BST('object', {
+      compareFunction: sortById,
+      key: 'id',
+      keyType: 'number'
+    });
+
+    bst.insert([{ id: 1 }, { id: 2 }, { id: 3 }, { id: -1 }, { id: 0 }, { id: -2 }]);
+    let n = bst.search({ id: 1 });
+
+    expect(bst.maxValue(n).val.id).toBe(1);
+    expect(bst.maxValue().val.id).toBe(3);
+
+    // string
+
+    bst = new Plus.BST('string');
+    bst.insert(['coal', 'mining', 'sucks', 'now', 'believe', 'me!', 'magnets!']);
+    let b = bst.search('coal');
+
+    expect(bst.maxValue().val).toBe('sucks');
+    expect(bst.maxValue(b).val).toBe('me!');
+    expect(bst.minValue(b).val).toBe('believe');
+    expect(bst.minValue().val).toBe('believe');
   });
 });

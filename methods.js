@@ -911,7 +911,7 @@ Plus.BST = class {
         root = root.right;
       } else {
         // both left and right are not leaf
-        successor = this.maxValueNode(root.left);
+        successor = this.maxValue(root.left);
         root.val = successor.val;
         root.left = this.removeHelper(successor.val, root.left);
       }
@@ -978,11 +978,21 @@ Plus.BST = class {
     }
   }
 
-  maxValueNode(root) {
+  maxValue(root = this.root) {
     let current = root;
 
     while (current.right) {
       current = current.right;
+    }
+
+    return current;
+  }
+
+  minValue(root = this.root) {
+    let current = root;
+
+    while (current.left) {
+      current = current.left;
     }
 
     return current;
