@@ -22,3 +22,12 @@ exports.defaultComparison = function(childNodeValue, parentNodeValue) {
   return childNodeValue < parentNodeValue;
 };
 
+exports.defaultEqual = function(value, nodeValue, type, key) {
+  if (type === 'number' || type === 'string') {
+    return value === nodeValue;
+  } else if (type === 'date') {
+    return value.toString() === nodeValue.toString();
+  } else {
+    return JSON.stringify(value) === JSON.stringify(nodeValue);
+  }
+};

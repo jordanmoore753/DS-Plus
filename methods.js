@@ -718,10 +718,6 @@ Plus.TreeNode = class {
     temp.height = Math.max(this.rightHeight(), this.height) + 1;
     return temp;
   }
-
-  remove(value) {
-
-  }
 };
 
 // BST Prototype
@@ -904,7 +900,7 @@ Plus.BST = class {
       return root;
     }
 
-    if (root.val === value) {
+    if (Util.defaultEqual(value, root.val, this.type)) {
       let successor;
 
       if (root.left === null && root.right === null) {
@@ -920,7 +916,12 @@ Plus.BST = class {
         root.left = this.removeHelper(successor.val, root.left);
       }
 
-      this.duplicates[value] = false;
+      if (this.type === 'object') {
+        this.duplicates[JSON.stringify(value)] = false;
+      } else {
+        this.duplicates[value] = false;        
+      }
+
       this.size -= 1;
     } else if (this.compareFunction(value, root.val)) {
       root.left = this.removeHelper(value, root.left);
@@ -987,12 +988,32 @@ Plus.BST = class {
     return current;
   }
 
-  search(key) {
+  search(value, root = this.root) {
+    if (!value) {
+      return null;
+    }
 
+    if (root === null || Util.defaultEqual(value, root.val, this.type)) {
+      return root;
+    }
+
+    if (this.compareFunction(value, root.val)) {
+      return this.search(value, root.left);
+    } else {
+      return this.search(value, root.right);
+    }
   }
 
-  collect() {
+  length() {
+    return this.size;
+  }
 
+  contains(value) {
+    if (this.type === 'object') {
+      return this.duplicates[JSON.stringify(value)] === undefined ? false : true;
+    }
+
+    return this.duplicates[value] === undefined ? false : true;
   }
 
   betweenBounds() {
@@ -1010,10 +1031,6 @@ Plus.BST = class {
       default:
         return Util.isObject.call(this, value);
     }
-  }
-
-  sorter() {
-
   }
 
   getValuesTraversal(type = 'post') {

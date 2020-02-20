@@ -1392,11 +1392,59 @@ describe('BST', () => {
       0, -23, 922, 921, 911, 243, 34, 543, 87, 231, 762, 81, 819]);
     expect(bst.root).toBe(null);
 
-    // date, string
+    // date
 
     bst = new Plus.BST('date');
+    bst.insert([new Date('October 13, 2019'), new Date('October 14, 2020'), new Date('October 15, 2021')]);
+    solDateHelper(bst.getValuesTraversal(), ['Sun Oct 13 2019 00:00:00 GMT-0400 (EDT)',
+                                             'Fri Oct 15 2021 00:00:00 GMT-0400 (EDT)',
+                                             'Wed Oct 14 2020 00:00:00 GMT-0400 (EDT)']);
+    bst.remove(new Date('October 14, 2020'));
+    solDateHelper(bst.getValuesTraversal(), ['Fri Oct 15 2021 00:00:00 GMT-0400 (EDT)',
+                                             'Sun Oct 13 2019 00:00:00 GMT-0400 (EDT)']);
+
+    bst.insert([new Date('November 15, 2020'),
+                new Date('December 25, 2020'),
+                new Date('March 25, 2020'),
+                new Date('July 4, 2029')]);
+    bst.remove(new Date('October 15, 2021'));
+    solDateHelper(bst.getValuesTraversal(), ['Wed Mar 25 2020 00:00:00 GMT-0400 (EDT)',
+                                             'Sun Oct 13 2019 00:00:00 GMT-0400 (EDT)',
+                                             'Wed Jul 04 2029 00:00:00 GMT-0400 (EDT)',
+                                             'Fri Dec 25 2020 00:00:00 GMT-0500 (EST)',
+                                             'Sun Nov 15 2020 00:00:00 GMT-0500 (EST)']);
+    // string
+
+    bst = new Plus.BST('string');
+    bst.insert(['coal', 'mining', 'SUCKS']);
+    solHelper(bst.getValuesTraversal(), ['SUCKS', 'mining', 'coal']);
+
+    bst.remove('coal');
+    solHelper(bst.getValuesTraversal(), ['mining', 'SUCKS']);
 
     // object
+
+    bst = new Plus.BST('object', {
+      compareFunction: sortById,
+      key: 'id',
+      keyType: 'number'
+    });
+
+    bst.insert([{ id: 1 }, { id: 2 }, { id: 3 }]);
+    bst.remove({ id: 2 });
+    solObjHelper(bst.getValuesTraversal(), [3, 1]);
+
+    bst.insert([{ id: 2 }, { id: 4 }]);
+    solObjHelper(bst.getValuesTraversal(), [1, 4, 3, 2]);
+
+    bst.remove({ id: 1 });
+    solObjHelper(bst.getValuesTraversal(), [2, 4, 3]);
+
+    bst.insert([{ id: 5 },
+                { id: 6 },
+                { id: 7 }]);
+    bst.remove(3);
+    solObjHelper(bst.getValuesTraversal(), [2, 4, 3, 7, 6, 5]);
   });
 
   it('should return values based on parameter', () => {
@@ -1422,19 +1470,81 @@ describe('BST', () => {
     expect(bst.maxValueNode(node).val).toBe(6);
   });
 
-  it('should reassign node with removal', () => {
-    // let node = new Plus.TreeNode(1);
-    // let bst = new Plus.BST('number');
-    // node.right = new Plus.TreeNode(2);
-    // node.right.right = new Plus.TreeNode(3);
-    // node = bst.reassignRemoval(node);
-    // expect(node.val).toBe(2);
-    // node.left = new Plus.TreeNode(1);
-    // node = bst.reassignRemoval(node);
-    // expect(node.val).toBe(1);
-    // node.left = new Plus.TreeNode(2);
-    // node.left.left = new Plus.TreeNode(0.5);
-    // node.right = new Plus.TreeNode(5);
-    // node = bst.reassignRemoval(node);
+  it('should return sought after node with given value', () => {
+    let bst = new Plus.BST('number');
+
+    expect(bst.search()).toBe(null);
+    expect(bst.search(3)).toBe(null);
+
+    // left case
+    bst.insert([3, 1, 2]);
+    expect(bst.search(1).val).toBe(1);
+
+    // right case
+    bst.insert(4);
+    expect(bst.search(4).val).toBe(4);
+    expect(bst.search(3).val).toBe(3);
+
+    // root case
+    expect(bst.search(2).val).toBe(2);
+    expect(bst.search(2)).toBe(bst.root);
+  });
+
+  it('should return boolean on if value is in tree', () => {
+    let bst = new Plus.BST('number');
+
+    expect(bst.contains()).toBe(false);
+    expect(bst.contains(3)).toBe(false);
+
+    // left side
+    bst.insert([1, 2, 3, 4, 0]);
+
+    expect(bst.contains(0)).toBe(true);
+    expect(bst.contains(1)).toBe(true);
+
+    // right side
+    expect(bst.contains(3)).toBe(true);
+    expect(bst.contains(4)).toBe(true);
+
+    // root
+    expect(bst.contains(2)).toBe(true);
+
+    // object
+    bst = new Plus.BST('object', {
+      compareFunction: sortById,
+      key: 'id',
+      keyType: 'number'
+    });
+
+    bst.insert([{ id: 1 }, { id: 2 }]);
+    expect(bst.contains({ id: 1 })).toBe(true);
+    expect(bst.contains({ id: 3 })).toBe(false);
+  });
+
+  it('should return number of nodes', () => {
+    let bst = new Plus.BST('date');
+
+    expect(bst.length()).toBe(0);
+
+    bst.insert([new Date('October 13, 2019'), new Date('October 14, 2020'), new Date('October 15, 2021')])
+    expect(bst.length()).toBe(3);
+
+    bst.insert(new Date('November 18, 2020'));
+    expect(bst.length()).toBe(4);
+
+    bst.remove([new Date('October 13, 2019'), new Date('October 14, 2020'), new Date('October 15, 2021')]);
+    expect(bst.length()).toBe(1);
+
+    bst.remove(new Date('November 18, 2020'));
+    expect(bst.length()).toBe(0);
+
+    bst = new Plus.BST('object', {
+      compareFunction: sortById,
+      key: 'id',
+      keyType: 'number'
+    });
+
+    bst.insert([{ id: 1 }, { id: 2 }]);
+    expect(bst.length()).toBe(2);
   });
 });
