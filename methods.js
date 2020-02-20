@@ -1048,6 +1048,4 @@ Plus.BST = class {
 
 // Graph Prototype
 
-
-
 module.exports = Plus;

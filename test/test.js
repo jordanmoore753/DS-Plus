@@ -1325,6 +1325,20 @@ describe('BST', () => {
     bst = new Plus.BST('object', { compareFunction: sortById, key: 'id', keyType: 'number' });
     bst.insert([{ id: 1 }, { id: -1 }, { id: 0 }, { id: 0 }]);
     solObjHelper(bst.getValuesTraversal(), [-1, 1, 0]);
+
+    // date
+
+    bst = new Plus.BST('date');
+    bst.insert([new Date('October 13, 2019'), new Date('October 14, 2020'), new Date('October 15, 2021')]);
+    solDateHelper(bst.getValuesTraversal(), ['Sun Oct 13 2019 00:00:00 GMT-0400 (EDT)',
+                                             'Fri Oct 15 2021 00:00:00 GMT-0400 (EDT)',
+                                             'Wed Oct 14 2020 00:00:00 GMT-0400 (EDT)']);
+
+    // string
+
+    bst = new Plus.BST('string');
+    bst.insert(['coal', 'mining', 'SUCKS']);
+    solHelper(bst.getValuesTraversal(), ['SUCKS', 'mining', 'coal']);
   });
 
   it('should remove elements and rebalance', () => {
@@ -1343,7 +1357,7 @@ describe('BST', () => {
     // invalid type test
     bst.remove('none');
     solHelper(bst.getValuesTraversal(), [3,2]);
-    
+
     bst = new Plus.BST('number');
     bst.insert([10, 14, 18, 12]);
     bst.remove(10);
@@ -1379,6 +1393,8 @@ describe('BST', () => {
     expect(bst.root).toBe(null);
 
     // date, string
+
+    bst = new Plus.BST('date');
 
     // object
   });
