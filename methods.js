@@ -87,7 +87,7 @@ Plus.Stack = class {
     return 1;
   }
 
-  pop(newData) {
+  pop() {
     if (this.ll) {
       return this.data.removeByTail();
     } else {
@@ -329,7 +329,7 @@ Plus.LinkedList = class {
       if (headNode.val === value) {
         return {
           node: headNode,
-          index: i
+          index: i - 1
         };
       }
 

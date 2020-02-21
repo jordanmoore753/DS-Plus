@@ -166,7 +166,7 @@ describe('Queue with Linked List', () => {
   });
 
   it('should find and return object with value and index', () => {
-    let queue = new Plus.Queue();
+    let queue = new Plus.Queue('linkedlist');
 
     expect(queue.search()).toBe(null);
     expect(queue.search(3)).toBe(null);
@@ -175,7 +175,7 @@ describe('Queue with Linked List', () => {
 
     let res = queue.search(true);
 
-    expect(res.val).toBe(true);
+    expect(res.node.val).toBe(true);
     expect(res.index).toBe(1);
 
     res = queue.search(99);
@@ -255,6 +255,23 @@ describe('Stack with Array', () => {
 
     expect(s.isEmpty()).toBe(true);    
   });
+
+  it('should find and return object with value and index', () => {
+    let s = new Plus.Stack();
+
+    expect(s.search()).toBe(null);
+    expect(s.search(3)).toBe(null);
+
+    s.push(12, true, false);
+    let res = s.search(true);
+
+    expect(res.val).toBe(true);
+    expect(res.index).toBe(1);
+
+    res = s.search(99);
+
+    expect(res).toBe(null);
+  });
 });
 
 describe('Stack with Linked List', () => {
@@ -317,6 +334,23 @@ describe('Stack with Linked List', () => {
 
     r.pop();
     expect(r.isEmpty()).toBe(true);
+  });
+
+  it('should find and return object with value and index', () => {
+    let s = new Plus.Stack('linkedlist');
+
+    expect(s.search()).toBe(null);
+    expect(s.search(3)).toBe(null);
+
+    s.push(12, true, false);
+    let res = s.search(true);
+
+    expect(res.node.val).toBe(true);
+    expect(res.index).toBe(1);
+
+    res = s.search(99);
+
+    expect(res).toBe(null);
   });
 });
 
@@ -592,12 +626,12 @@ describe('Linked List', () => {
     let grabObj = ll.getNodeIndexByValue(obj);
 
     expect(grabObj.node.val).toBe(obj);
-    expect(grabObj.index).toBe(5); 
+    expect(grabObj.index).toBe(4); 
 
     let grab3 = ll.getNodeIndexByValue(3);
 
     expect(grab3.node.val).toBe(3);
-    expect(grab3.index).toBe(2);
+    expect(grab3.index).toBe(1);
 
     let nope = ll.getNodeIndexByValue(null);
 
