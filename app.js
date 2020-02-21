@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 const Util = require('./utility-methods.js');
 
 let Plus = {};
@@ -180,7 +182,6 @@ Plus.LinkedList = class {
     });
 
     let tail = this.tail();
-    let currentNode;
 
     while (nodes.length > 0) {
       tail.next = nodes[0]; // forms link between data and tail
@@ -210,7 +211,6 @@ Plus.LinkedList = class {
     }
 
     let nextNode = tail.next;
-    let currentNode;
 
     while (nodes.length > 0) {
       tail.next = nodes[0]; // forms link between data and tail
@@ -346,7 +346,7 @@ Plus.LinkedList = class {
 
     while (headNode !== null) {
       nodes.push(headNode);
-      headNode = headNode.next
+      headNode = headNode.next;
     }
 
     return nodes[Math.ceil((nodes.length - 1) / 2)];
@@ -628,7 +628,6 @@ Plus.BinaryTree = class {
     let oldNodes;
     let newNodes;
     let node;
-    let correctNode;
 
     queue.enqueue([this.root]);
 
@@ -712,7 +711,6 @@ Plus.BinaryTree = class {
     let deleteNode;
     let lastNode;
     let node;
-    let i = 0;
 
     queue.enqueue([this.root]);
 
@@ -836,7 +834,7 @@ Plus.BST = class {
           }
         }
 
-        if (options['compareFunction'] && !isFunction(options['compareFunction'])) {
+        if (options.compareFunction && !isFunction(options.compareFunction)) {
           throw `object[compareFunction] is not a valid function.`;
         }
 
@@ -858,15 +856,15 @@ Plus.BST = class {
           }
         }
 
-        if (!options['compareFunction'] || !isFunction(options['compareFunction'])) {
+        if (!options.compareFunction || !isFunction(options.compareFunction)) {
           throw `object[compareFunction] is not a valid function or is not present.`;
         }
 
-        if (!options['key'] || typeof options['key'] !== 'string') {
+        if (!options.key || typeof options.key !== 'string') {
           throw `'key' property must be a string value and be present for object data type.`;
         }
 
-        if (!options['keyType'] || validKeyTypes.indexOf(options['keyType']) === -1) {
+        if (!options.keyType || validKeyTypes.indexOf(options.keyType) === -1) {
           throw `'keyType' property must be present and of 'string', 'number', or 'date' value for object data.`;
         }
 
@@ -884,9 +882,9 @@ Plus.BST = class {
     }
 
     this.type = dataType;
-    this.compareFunction = options['compareFunction'] || Util.defaultComparison;
-    this.key = options['key'];
-    this.keyType = options['keyType'];
+    this.compareFunction = options.compareFunction || Util.defaultComparison;
+    this.key = options.key;
+    this.keyType = options.keyType;
     this.duplicates = {};
     this.root = null;
     this.size = 0;
