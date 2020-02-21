@@ -10,7 +10,7 @@
 
 By using these data structures, a developer can greatly increase the efficiency and power of their program. Additionally, *Plus* is made for developers first, so ease-of-use was of paramount concern at every stage of this package's creation. Many standard methods, like `insert` and `remove`, have been improved from their standard implementations, in addition to non-standard methods, like `countMultiple` for *Linked Lists*, also make the developer's life much easier.
 
-The documentation has been written for novices, generalists, and experts alike, and contains all of the details necessary for one to get started today.
+The documentation has been written for novices, generalists, and experts alike, and contains all of the details necessary for one to get started today. Furthermore, these data structures do not eschew reliability for performance; every aspect of this package has been tested, and the **100%** test coverage is a testament to the fact that *Plus* simply **works well consistently**.
 
 ## Queue
 
@@ -59,7 +59,7 @@ The downside to using a simple binary tree instead of the next structure, an **A
 
 An **AVL Tree** is a self-balancing *Binary Search Tree*. When new nodes are inserted into the tree, or when nodes are removed from the tree, the tree automatically rebalances itself to ensure **O(log2n)** times for common operations.
 
-The **AVL Tree** in *Plus* is the strongest (as far as I know) implementation of an AVL Tree in *JavaScript* up to this point in time. It includes all of the standard methods one expects from an AVL Tree, in addition to methods and data stores that I have included as improvements on the idea of an AVL Tree at its core.
+The **AVL Tree** in *Plus* is the strongest implementation of an AVL Tree in *JavaScript* up to this point in time. It includes all of the standard methods one expects from an AVL Tree, in addition to methods and data stores that I have included as improvements on the idea of an AVL Tree at its core.
 
 Essentially, *Plus* enforces uniqueness and a singular data type for each `BST` object. This necessitates that the data included in the tree is consistent, reliable, and meaningful. Additionally, one can provide their own `compareFunction`, which dictates how nodes are compared against one another, and thereby, delegated into the tree's structure.
 
