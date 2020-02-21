@@ -7,8 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "NODE_ENV=test jest --testTimeout=10000 --coverage",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "test": "NODE_ENV=test jest --testTimeout=10000 --coverage"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,5 @@
   "dependencies": {
     "jest": "^25.1.0"
   },
-  "devDependencies": {
-    "coveralls": "^3.0.9"
-  }
+  "devDependencies": {}
 }
