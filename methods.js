@@ -31,7 +31,7 @@ Plus.Queue = class {
       if (this.data.length > 0) {
         return this.data.shift();
       } else {
-        return 0;
+        return null;
       }
     }
   }
@@ -42,6 +42,26 @@ Plus.Queue = class {
 
   rear() {
     return this.ll ? this.data.tail() : this.data[this.data.length - 1];
+  }
+
+  search(value) {
+    if (value === undefined) {
+      return null;
+    }
+
+    let self = this;
+
+    if (this.ll) {
+      return this.data.getNodeIndexByValue(value);
+    } else {
+      for (let i = 0; i < self.data.length; i += 1) {
+        if (self.data[i] === value) {
+          return { val: value, index: i };
+        }
+      }
+
+      return null;
+    }
   }
 };
 
@@ -89,6 +109,26 @@ Plus.Stack = class {
     } else {
       return this.data.length > 0 ? false : true;
     } 
+  }
+
+  search(value) {
+    if (value === undefined) {
+      return null;
+    }
+
+    let self = this;
+
+    if (this.ll) {
+      return this.data.getNodeIndexByValue(value);
+    } else {
+      for (let i = 0; i < self.data.length; i += 1) {
+        if (self.data[i] === value) {
+          return { val: value, index: i };
+        }
+      }
+
+      return null;
+    }
   }
 };
 
@@ -182,6 +222,23 @@ Plus.LinkedList = class {
     return 1;
   }
 
+  toArray() {
+    let values = [];
+
+    let headNode = this.head;
+
+    if (headNode.val === undefined) {
+      return values;
+    }
+
+    while (headNode !== null) {
+      values.push(headNode.val);
+      headNode = headNode.next;
+    }
+
+    return values;
+  }
+
   removeByValue(value) {
     if (!value) { return 0; }
 
@@ -258,7 +315,7 @@ Plus.LinkedList = class {
 
   getNodeIndexByValue(value) {
     if (value === undefined) {
-      return 0;
+      return null;
     }
 
     if (this.head.val === value) {
@@ -280,7 +337,7 @@ Plus.LinkedList = class {
       i += 1;
     }
 
-    return 0;
+    return null;
   }
 
   getMiddleNode() {
@@ -380,6 +437,29 @@ Plus.LinkedList = class {
     }
 
     return count;
+  }
+
+  clear() {
+    this.head = {
+      val: undefined,
+      next: null
+    };
+
+    return this;
+  }
+
+  contains(value) {
+    let headNode = this.head;
+
+    while (headNode !== null) {
+      if (headNode.val === value) {
+        return true;
+      }
+
+      headNode = headNode.next;
+    }
+
+    return false;
   }
 };
 
@@ -910,7 +990,6 @@ Plus.BST = class {
       } else if (root.left === null && root.right) {
         root = root.right;
       } else {
-        // both left and right are not leaf
         successor = this.maxValue(root.left);
         root.val = successor.val;
         root.left = this.removeHelper(successor.val, root.left);
@@ -1026,10 +1105,6 @@ Plus.BST = class {
     return this.duplicates[value] === undefined ? false : true;
   }
 
-  betweenBounds() {
-
-  }
-
   validData(value) {
     switch (this.type) {
       case 'string':
@@ -1070,6 +1145,10 @@ Plus.BST = class {
     let data = [];
     traverse(this.root);
     return data;
+  }
+
+  isEmpty() {
+    return this.root === null;
   }
 };
 

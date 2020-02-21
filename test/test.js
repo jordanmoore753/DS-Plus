@@ -47,7 +47,7 @@ describe('Queue With Array', () => {
     queue.dequeue();
     queue.dequeue();
 
-    expect(queue.dequeue()).toBe(0);
+    expect(queue.dequeue()).toBe(null);
 
   });
 
@@ -84,6 +84,26 @@ describe('Queue With Array', () => {
     queue.dequeue();
 
     expect(last === queue.data[1]).toBe(true);   
+  });
+
+  it('should find and return object with value and index', () => {
+    let queue = new Plus.Queue();
+
+    expect(queue.search()).toBe(null);
+    expect(queue.search(3)).toBe(null);
+
+    queue.enqueue(12, true, false);
+
+    let res = queue.search(true);
+
+    expect(res).toEqual({
+      val: true,
+      index: 1
+    });
+
+    res = queue.search(99);
+
+    expect(res).toBe(null);
   });
 })
 
@@ -143,6 +163,24 @@ describe('Queue with Linked List', () => {
     let obj = { one: '1' };
     queue.enqueue(2, 3, 4, obj);
     expect(queue.rear().val).toBe(obj);
+  });
+
+  it('should find and return object with value and index', () => {
+    let queue = new Plus.Queue();
+
+    expect(queue.search()).toBe(null);
+    expect(queue.search(3)).toBe(null);
+
+    queue.enqueue(12, true, false);
+
+    let res = queue.search(true);
+
+    expect(res.val).toBe(true);
+    expect(res.index).toBe(1);
+
+    res = queue.search(99);
+
+    expect(res).toBe(null);
   });
 });
 
@@ -317,6 +355,57 @@ describe('Linked List', () => {
     expect(ll.tail().next).toBe(null);
     expect(ll.getNodeAtIndex(2).val).toBe(29);
     expect(ll.getNodeAtIndex(4).val).toBe(true);
+  });
+
+  it('should return true or false if value is contained in any node', () => {
+    let ll = new Plus.LinkedList(4);
+    expect(ll.contains(1)).toBe(false);
+    expect(ll.contains(4)).toBe(true);
+
+    ll.insert(1,2,3,4,5);
+    expect(ll.contains(3)).toBe(true);
+    expect(ll.contains(5)).toBe(true);
+
+    ll.removeByValue(4);
+    expect(ll.contains(4)).toBe(true);
+
+    ll.removeByValue(4);
+    expect(ll.contains(4)).toBe(false);
+  });
+
+  it('should return array of all values from linked list', () => {
+    let ll = new Plus.LinkedList();
+    expect(ll.toArray()).toEqual([]);
+
+    ll.assignHeadValue(4);
+    expect(ll.toArray()).toEqual([4]);
+
+    ll.insert(1, 2, 3, 4);
+    expect(ll.toArray()).toEqual([4,1,2,3,4]);
+
+    ll.removeByValue(4);
+    expect(ll.toArray()).toEqual([1,2,3,4]);
+
+    ll.removeByIndex(2);
+    expect(ll.toArray()).toEqual([1,2,4]);
+  });
+
+  it('should clear a linked list of all nodes', () => {
+    let ll = new Plus.LinkedList();
+    ll.clear();
+
+    expect(ll.head.val).toBe(undefined);
+
+    ll.assignHeadValue(4);
+    expect(ll.head.val).toBe(4);
+
+    ll.clear();
+
+    expect(ll.head.val).toBe(undefined);
+    expect(ll.head).toEqual({
+      val: undefined,
+      next: null
+    });
   });
 
   it('should insert single or multiple elements at index', () => {
@@ -496,7 +585,7 @@ describe('Linked List', () => {
     let badReq = ll.getNodeIndexByValue();
     let obj = { one: 'more' };
 
-    expect(badReq).toBe(0);
+    expect(badReq).toBe(null);
 
     ll.insert(2, 3, 4, 5, obj);
 
@@ -512,7 +601,7 @@ describe('Linked List', () => {
 
     let nope = ll.getNodeIndexByValue(null);
 
-    expect(nope).toBe(0);
+    expect(nope).toBe(null);
   });
 
   it('should get middle node', () => {
@@ -1428,6 +1517,14 @@ describe('BST', () => {
     bst.remove('coal');
     solHelper(bst.getValuesTraversal(), ['mining', 'SUCKS']);
 
+    bst = new Plus.BST('string');
+    bst.insert(['coal', 'mining', 'SUCKS', 'nooo', 'sandwich', 'sleePer']);
+    solHelper(bst.getValuesTraversal(), ['SUCKS', 'mining', 'coal', 'sleePer', 'sandwich', 'nooo']);
+    bst.remove('nooo');
+    solHelper(bst.getValuesTraversal(), ['SUCKS', 'coal', 'sleePer', 'sandwich', 'mining']);
+    bst.remove(['SUCKS', 'coal']);
+    solHelper(bst.getValuesTraversal(), ['mining', 'sleePer', 'sandwich'])
+    
     // object
 
     bst = new Plus.BST('object', {
@@ -1591,5 +1688,51 @@ describe('BST', () => {
     expect(bst.maxValue(b).val).toBe('me!');
     expect(bst.minValue(b).val).toBe('believe');
     expect(bst.minValue().val).toBe('believe');
+  });
+
+  it('should return true or false for tree being empty', () => {
+    let bst = new Plus.BST('number');
+
+    expect(bst.isEmpty()).toBe(true);
+
+    bst.insert([1,2,3]);
+    expect(bst.isEmpty()).toBe(false);
+
+    bst.remove([1,2,3]);
+    expect(bst.isEmpty()).toBe(true);
+
+    // date
+
+    bst = new Plus.BST('date');
+    expect(bst.isEmpty()).toBe(true);
+
+    bst.insert(new Date('October 13, 2012'));
+    expect(bst.isEmpty()).toBe(false);
+
+    bst.remove(new Date('October 13, 2012'));
+    expect(bst.isEmpty()).toBe(true);
+
+    // object
+
+    bst = new Plus.BST('object', {
+      compareFunction: sortById,
+      key: 'id',
+      keyType: 'number'
+    });
+
+    expect(bst.isEmpty()).toBe(true);
+    bst.insert([{ id: 1 }, { id: 2 }, { id: 3 }, { id: -1 }, { id: 0 }, { id: -2 }]);
+    
+    expect(bst.isEmpty()).toBe(false);
+    // string
+
+    bst = new Plus.BST('string');
+    expect(bst.isEmpty()).toBe(true);
+
+    bst.insert('string');
+    expect(bst.isEmpty()).toBe(false);
+
+    bst.remove('string');
+    expect(bst.isEmpty()).toBe(true);
   });
 });
