@@ -1,4 +1,4 @@
-const Plus = require('../methods.js');
+const Plus = require('../app.js');
 
 describe('Queue With Array', () => {
   it('should have data be an array', () => {

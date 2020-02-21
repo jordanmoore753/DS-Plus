@@ -57,7 +57,7 @@ The downside to using a simple binary tree instead of the next structure, an **A
 
 ## AVL Tree
 
-An **AVL Tree** is a self-balancing *Binary Search Tree*. When new nodes are inserted into the tree, or when nodes are removed from the tree, the tree automatically rebalances itself to ensure **O(log2n)** times for common operations.
+An **AVL Tree** is a self-balancing *Binary Search Tree*. When new nodes are inserted into the tree, or when nodes are removed from the tree, the tree automatically rebalances itself to ensure **O(log2n)** time for common operations.
 
 The **AVL Tree** in *Plus* is the strongest implementation of an AVL Tree in *JavaScript* up to this point in time. It includes all of the standard methods one expects from an AVL Tree, in addition to methods and data stores that I have included as improvements on the idea of an AVL Tree at its core.
 
