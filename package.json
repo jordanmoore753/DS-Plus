@@ -1,0 +1,26 @@
+{
+  "name": "plus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test jest --testTimeout=10000 --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordanmoore753/Plus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordanmoore753/Plus/issues"
+  },
+  "homepage": "https://github.com/jordanmoore753/Plus#readme",
+  "dependencies": {
+    "jest": "^25.1.0"
+  },
+  "devDependencies": {}
+}
