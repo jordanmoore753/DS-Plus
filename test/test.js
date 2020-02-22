@@ -838,6 +838,7 @@ describe('Binary Tree', () => {
     let arrTwo = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
     let treeTwo = new Plus.BinaryTree(arrTwo);
 
+    console.log(treeTwo.root);
     expect(treeTwo.root.left.right.left.val).toBe(8);
     expect(treeTwo.root.left.left.left.val).toBe(null);
 

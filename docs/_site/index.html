@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=3f3c70837781505f72395c57bc83e4342949e2d8">
+    <link rel="stylesheet" href="/assets/css/style.css?v=8dc6a8af3b7ab02029726be1c5cc48a735523150">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
@@ -412,7 +412,82 @@
 </section>
 <hr>
 <section id="bt" class="doc-section">
-  <h1>Binary Tree</h1>
+<h1 class="ds-heading">Binary Tree</h1>
+  <p>The difference between <code class="code">BinaryTree</code> and <code class="code">BST</code> objects are that the former have no data constraints. This means that <strong>any</strong> data can be inserted into the tree; however, the <code class="code">BST</code> object enforces data consistency which creates <code class="parameter">O(log2n)</code> search, insert, and removal times.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">constructor(data)</code>
+  <p class="method-p">Initialize a new <code class="parameter">BinaryTree</code> object. Possible parameter value(s) are: <code class="parameter">[]</code>.</p>
+  <p class="method-p">Use <code class="parameter">undefined</code> for nodes in the tree which should be <code class="parameter">null</code>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">BinaryTree</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BinaryTree</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="kd">let</span> <span class="nx">BinaryTree</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BinaryTree</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">8</span><span class="p">]);</span></code></pre></figure>
+  <p class="method-p">The returned <code class="parameter">BinaryTree</code> object has the following structure:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// 1</span>
+
+<span class="p">{</span>
+  <span class="nl">root</span><span class="p">:</span> <span class="p">{</span> 
+          <span class="nl">val</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> 
+          <span class="nx">left</span><span class="p">:</span> <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">left</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">right</span><span class="p">:</span> <span class="kc">null</span><span class="p">},</span> 
+          <span class="nx">right</span><span class="p">:</span> <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">left</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">right</span><span class="p">:</span> <span class="kc">null</span> <span class="p">}</span>
+        <span class="p">}</span> 
+<span class="p">}</span>
+
+<span class="c1">// 2</span>
+<span class="p">{</span>
+  <span class="nl">root</span><span class="p">:</span> <span class="p">{</span> 
+    <span class="nl">val</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="nx">left</span><span class="p">:</span> 
+       <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+         <span class="nx">left</span><span class="p">:</span> <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">left</span><span class="p">:</span> <span class="p">[</span><span class="nb">Object</span><span class="p">],</span> <span class="nx">right</span><span class="p">:</span> <span class="p">[</span><span class="nb">Object</span><span class="p">],</span> <span class="nx">height</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+         <span class="nx">right</span><span class="p">:</span> <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nx">left</span><span class="p">:</span> <span class="p">[</span><span class="nb">Object</span><span class="p">],</span> <span class="nx">right</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">height</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+         <span class="nx">height</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+      <span class="nx">right</span><span class="p">:</span> 
+       <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+         <span class="nx">left</span><span class="p">:</span> <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nx">left</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">right</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">height</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+         <span class="nx">right</span><span class="p">:</span> <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">left</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">right</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">height</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+         <span class="nx">height</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+      <span class="nx">height</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Pay attention to the placement of null nodes.</span></code></pre></figure>
+  <p class="method-p"><strong>Nodes</strong> are inserted in <strong>level-order</strong>, meaning that the number of nodes possible for a given level dictates where each node is placed. The first level, the <strong>root</strong>, has one possible node, so the first element of <code class="parameter">[1, 2, 3, undefined...]</code> is converted to a node in that level. The next level has <strong>two</strong> possible nodes, so the next two values in the array are the <code class="parameter">left</code> and <code class="parameter">right</code> nodes of the <code class="parameter">root</code> node. Each level doubles in size.</p>
+  <p class="method-p">Since the placement of nodes is entirely up the <code class="parameter">[]</code> passed in as the parameter, it is possible that the binary tree will have nodes attached to a node with a <code class="parameter">null</code> value. This may cause problems with searching for values in certain cases. For absolute certainty in the validity of the tree structure, use the <code class="code">BST</code> object.</p>
+  <p class="separator">. . . . .</p>
+  <code class="code">enqueue(...arguments)</code>
+  <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">{</span> <span class="na">one</span><span class="p">:</span> <span class="dl">'</span><span class="s1">more</span><span class="dl">'</span> <span class="p">});</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">dequeue()</code>
+  <p class="method-p">Removes and returns the first element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// 1</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// null</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">front()</code>
+  <p class="method-p">Returns the first element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>              <span class="c1">// 1</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>    <span class="c1">// { val: 1, next: null }</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">rear()</code>
+  <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>                  <span class="c1">// 2</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>        <span class="c1">// { val: 2, next: null }</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">search(value)</code>
+  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>              <span class="c1">// 1</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>              <span class="c1">// null</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
 <section id="bst" class="doc-section">

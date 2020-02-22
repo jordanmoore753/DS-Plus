@@ -357,7 +357,97 @@ LinkedList.countMultiple(4, 3, 'one', 'two', 2, { one: 'yes' }, ['one']);
 </section>
 <hr>
 <section id="bt" class="doc-section">
-  <h1>Binary Tree</h1>
+<h1 class="ds-heading">Binary Tree</h1>
+  <p>The difference between <code class="code">BinaryTree</code> and <code class="code">BST</code> objects are that the former have no data constraints. This means that <strong>any</strong> data can be inserted into the tree; however, the <code class="code">BST</code> object enforces data consistency which creates <code class="parameter">O(log2n)</code> search, insert, and removal times.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">constructor(data)</code>
+  <p class="method-p">Initialize a new <code class="parameter">BinaryTree</code> object. Possible parameter value(s) are: <code class="parameter">[]</code>.</p>
+  <p class="method-p">Use <code class="parameter">undefined</code> for nodes in the tree which should be <code class="parameter">null</code>.</p>
+{% highlight javascript %}
+let BinaryTree = new Plus.BinaryTree([2, 1, 3]);
+let BinaryTree = new Plus.BinaryTree([1, 2, 3, 4, 5, 6, undefined, undefined, undefined, 8]);
+{% endhighlight %}
+  <p class="method-p">The returned <code class="parameter">BinaryTree</code> object has the following structure:</p>
+{% highlight javascript %}
+
+// 1
+
+{
+  root: { 
+          val: 2, 
+          left: { val: 1, left: null, right: null}, 
+          right: { val: 3, left: null, right: null }
+        } 
+}
+
+// 2
+{
+  root: { 
+    val: 1,
+      left: 
+       { val: 2,
+         left: { val: 4, left: [Object], right: [Object], height: 0 },
+         right: { val: 5, left: [Object], right: null, height: 0 },
+         height: 0 },
+      right: 
+       { val: 3,
+         left: { val: 6, left: null, right: null, height: 0 },
+         right: { val: null, left: null, right: null, height: 0 },
+         height: 0 },
+      height: 0 }
+}
+
+// Pay attention to the placement of null nodes.
+{% endhighlight %}
+  <p class="method-p"><strong>Nodes</strong> are inserted in <strong>level-order</strong>, meaning that the number of nodes possible for a given level dictates where each node is placed. The first level, the <strong>root</strong>, has one possible node, so the first element of <code class="parameter">[1, 2, 3, undefined...]</code> is converted to a node in that level. The next level has <strong>two</strong> possible nodes, so the next two values in the array are the <code class="parameter">left</code> and <code class="parameter">right</code> nodes of the <code class="parameter">root</code> node. Each level doubles in size.</p>
+  <p class="method-p">Since the placement of nodes is entirely up the <code class="parameter">[]</code> passed in as the parameter, it is possible that the binary tree will have nodes attached to a node with a <code class="parameter">null</code> value. This may cause problems with searching for values in certain cases. For absolute certainty in the validity of the tree structure, use the <code class="code">BST</code> object.</p>
+  <p class="separator">. . . . .</p>
+  <code class="code">enqueue(...arguments)</code>
+  <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.enqueue(2, 3, 4);
+Queue.enqueue('string', true, [1, 2, 3], { one: 'more' });
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">dequeue()</code>
+  <p class="method-p">Removes and returns the first element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.dequeue();  // 1
+Queue.dequeue();  // null
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">front()</code>
+  <p class="method-p">Returns the first element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.front();              // 1
+LinkedListQueue.enqueue(1);
+LinkedListQueue.front();    // { val: 1, next: null }
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">rear()</code>
+  <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+{% highlight javascript %}
+Queue.enqueue(1, 2);
+Queue.rear();                  // 2
+LinkedListQueue.enqueue(1, 2);
+LinkedListQueue.rear();        // { val: 2, next: null }
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">search(value)</code>
+  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.search(1);              // 1
+Queue.search(3);              // null
+LinkedListQueue.enqueue(1);
+LinkedListQueue.search(1);    // { val: 1, next: null }
+LinkedListQueue.search(3);    // null
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
 <section id="bst" class="doc-section">
