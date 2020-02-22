@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=38d7745c0ccf965f955fa97292bee9b704676990">
+    <link rel="stylesheet" href="/assets/css/style.css?v=e3107897f7bfccb45c89f9838f2281987cfa245b">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
@@ -57,14 +57,35 @@
         margin-top: 15px;
       }
 
-      .link-class-item {
+      .link-class-item a {
         font-size: 1rem;
+        color: black;
+        text-shadow: #bd9702 1px 1px;
+        list-style-type: circle;
+      }
+
+      ul {
+        color: #bd9702;
+        list-style-type: circle;
       }
 
       .doc-section {
         margin: 0;
         padding: 0;
         margin-bottom: 30px;
+      }
+
+      .separator {
+        text-align: center;
+      }
+
+      body {
+        background-color: white;
+        color: black;
+      }
+
+      h1,h2,h3,h4,h5,h6 {
+        color: black;
       }
     </style>
   </head>
@@ -80,12 +101,12 @@
       <section>
         <div id="title" style="margin-bottom: 0px;">
           <h1>Plus</h1>
-          <p>Implement non-native data structures in JavaScript in style.</p>
+          <p style="color: black;">Implement non-native data structures in JavaScript in style.</p>
           <hr>
         </div>
 
         <p>Sometimes, the native data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
-<p>Fear not. <em>Plus</em> gives developers useful, fast, and reliable non-native <em>JavaScript</em> data structures.</p>
+<p>Fear not. <em>Plus</em> gives developers fast and reliable non-native <em>JavaScript</em> data structures.</p>
 <p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword.</p>
 <p>Click on any of the following links to view the documentation for a given <code class="code">class</code>.</p>
 <ul id="links-classes">
@@ -119,28 +140,33 @@
   <span class="nl">data</span><span class="p">:</span> <span class="p">[]</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Linked List</span><span class="dl">'</span><span class="p">,</span>
   <span class="nx">ll</span><span class="p">:</span> <span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span>
 <span class="p">}</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
   <code class="code">enqueue(...arguments)</code>
   <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
 <span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">{</span> <span class="na">one</span><span class="p">:</span> <span class="dl">'</span><span class="s1">more</span><span class="dl">'</span> <span class="p">});</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
   <code class="code">dequeue()</code>
   <p class="method-p">Removes and returns the first element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// 1</span>
 <span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// null</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
   <code class="code">front()</code>
   <p class="method-p">Returns the first element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nx">Queue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>              <span class="c1">// 1</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>    <span class="c1">// { val: 1, next: null }</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
   <code class="code">rear()</code>
   <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="nx">Queue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>                  <span class="c1">// 2</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>        <span class="c1">// { val: 2, next: null }</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
   <code class="code">search(value)</code>
   <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
@@ -149,10 +175,59 @@
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
+<a href="#title">Back to Top</a>
 </section>
 <hr>
 <section id="stack" class="doc-section">
-    <h1>Stack</h1>
+  <h1 class="ds-heading">Stack</h1>
+  <p>Stacks are almost identical to the <code class="code">Queue</code> objects in <em>Plus</em>. There are also only two initialization options for the data storage in the queue: an array, or a linked list.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">initialize(data = null)</code>
+  <p class="method-p">Initialize a new <code class="parameter">Stack</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Stack</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Stack</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">Stack</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Stack</span><span class="p">(</span><span class="dl">'</span><span class="s1">linkedlist</span><span class="dl">'</span><span class="p">);</span></code></pre></figure>
+  <p class="method-p">The returned <code class="parameter">Stack</code> object has the following structure:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+  <span class="nl">data</span><span class="p">:</span> <span class="p">[]</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Linked List</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">ll</span><span class="p">:</span> <span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span>
+<span class="p">}</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">push(...arguments)</code>
+  <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">{</span> <span class="na">one</span><span class="p">:</span> <span class="dl">'</span><span class="s1">more</span><span class="dl">'</span> <span class="p">});</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">pop()</code>
+  <p class="method-p">Removes and returns the last element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>  <span class="c1">// 1</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>  <span class="c1">// null</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">peek()</code>
+  <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">peek</span><span class="p">();</span>              <span class="c1">// 2</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">peek</span><span class="p">();</span>    <span class="c1">// { val: 2, next: null }</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">isEmpty()</code>
+  <p class="method-p">Returns <code>true || false</code> based on whether the <code class="parameter">data</code> property has data or not.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">();</span>  <span class="c1">// false</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">();</span>  <span class="c1">// true</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">search(value)</code>
+  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>              <span class="c1">// 1</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>              <span class="c1">// null</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
+<a href="#title">Back to Top</a>
 </section>
 <hr>
 <section id="linkedlist" class="doc-section">

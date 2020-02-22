@@ -44,14 +44,35 @@
         margin-top: 15px;
       }
 
-      .link-class-item {
+      .link-class-item a {
         font-size: 1rem;
+        color: black;
+        text-shadow: #bd9702 1px 1px;
+        list-style-type: circle;
+      }
+
+      ul {
+        color: #bd9702;
+        list-style-type: circle;
       }
 
       .doc-section {
         margin: 0;
         padding: 0;
         margin-bottom: 30px;
+      }
+
+      .separator {
+        text-align: center;
+      }
+
+      body {
+        background-color: white;
+        color: black;
+      }
+
+      h1,h2,h3,h4,h5,h6 {
+        color: black;
       }
     </style>
   </head>
@@ -71,7 +92,7 @@
       <section>
         <div id="title" style="margin-bottom: 0px;">
           <h1>{{ site.title | default: site.github.repository_name }}</h1>
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <p style="color: black;">{{ site.description | default: site.github.project_tagline }}</p>
           <hr>
         </div>
 
