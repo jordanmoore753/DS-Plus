@@ -24,7 +24,7 @@
   <h1 class="ds-heading">Queue</h1>
   <p>Queues are very easy to implement with <em>Plus</em>. There are two initialization options for the data storage in the queue: an array, or a linked list.</p>
   <h2 class="method-heading">Methods</h2>
-  <code class="code">initialize(data = null)</code>
+  <code class="code">constructor(data = null)</code>
   <p class="method-p">Initialize a new <code class="parameter">Queue</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
 {% highlight javascript %}
 let Queue = new Plus.Queue();
@@ -82,14 +82,15 @@ LinkedListQueue.enqueue(1);
 LinkedListQueue.search(1);    // { val: 1, next: null }
 LinkedListQueue.search(3);    // null
 {% endhighlight %}
-<a href="#title">Back to Top</a>
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
 <section id="stack" class="doc-section">
   <h1 class="ds-heading">Stack</h1>
   <p>Stacks are almost identical to the <code class="code">Queue</code> objects in <em>Plus</em>. There are also only two initialization options for the data storage in the queue: an array, or a linked list.</p>
   <h2 class="method-heading">Methods</h2>
-  <code class="code">initialize(data = null)</code>
+  <code class="code">constructor(data = null)</code>
   <p class="method-p">Initialize a new <code class="parameter">Stack</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
 {% highlight javascript %}
 let Stack = new Plus.Stack();
@@ -129,7 +130,7 @@ LinkedListStack.peek();    // { val: 2, next: null }
 {% endhighlight %}
   <p class="separator">. . . . .</p>
   <code class="code">isEmpty()</code>
-  <p class="method-p">Returns <code>true || false</code> based on whether the <code class="parameter">data</code> property has data or not.</p>
+  <p class="method-p">Returns <code class="parameter">true || false</code> based on whether the <code class="parameter">data</code> property has data or not.</p>
 {% highlight javascript %}
 Stack.push(1, 2);
 Stack.isEmpty();  // false
@@ -148,19 +149,113 @@ LinkedListStack.push(1);
 LinkedListStack.search(1);    // { val: 1, next: null }
 LinkedListStack.search(3);    // null
 {% endhighlight %}
-<a href="#title">Back to Top</a>
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
+
 <section id="linkedlist" class="doc-section">
-    <h1>Linked List</h1>
+  <h1 class="ds-heading">Linked List</h1>
+  <p>The <code class="code">Linked List</code> object is exactly what a developer would expect: a head <strong>node</strong> with a single <code class="parameter">next</code> pointer to the next <strong>node</strong> or <code class="parameter">null</code>.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">constructor(value = null)</code>
+  <p class="method-p">Initialize a new <code class="parameter">Linked List</code> object. Possible parameter(s) are any valid data in <em>JavaScript</em>. May or may not be initialized with a value.</p>
+{% highlight javascript %}
+let NoValueLinkedList = new Plus.LinkedList(); // { head: { val: null, next: null }}
+let LinkedList = new Plus.LinkedList(3);       // { head: { val: 3, next: null }}
+{% endhighlight %}
+  <p class="method-p">The returned <code class="parameter">Linked List</code> object has the following structure:</p>
+{% highlight javascript %}
+{
+  head: {
+    val: null,
+    next: null
+  }
+}
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">assignHeadValue(value = null)</code>
+  <p class="method-p">Assigns the head node's value to the passed parameter. This method can be used in the case that the <code class="parameter">Linked List</code> object is initialized without a value, or when the first node's value should be changed.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);                  // { head: { val: 4, next: null }}
+LinkedListWithData.assignHeadValue([1, 2, 3]);  // { head: { val: [1, 2, 3], next: [Object] }}
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">insert(...newData)</code>
+  <p class="method-p">Inserts elements of <code class="parameter">...newData</code> as nodes to the <strong>tail</strong> of the linked list. Returns <code class="parameter">this</code> for daisy-chaining.</p>
+{% highlight javascript %}
+LinkedList.insert(1); // { head: { val: 2, next: { val: 1, next: null }}}
+LinkedList.insert(2, 3); 
+/* 
+{ head: { 
+      val: 2, next: { 
+        val: 1, next: {
+          val: 2, next: {
+            val: 3, next: null
+        }
+      } 
+    }
+  }
+}
+*/
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">insertAtIndex(index, ...newData)</code>
+  <p class="method-p">Inserts elements of <code class="parameter">...newData</code> as nodes at the passed <strong>index</strong> of the linked list. Does not overwrite nodes already in the linked list. Returns <code class="parameter">this</code> for daisy-chaining.</p>
+{% highlight javascript %}
+LinkedList = new Plus.LinkedList(4);
+LinkedList.insertAtIndex(0, 2, true); // { head: val: 4, next: { val: 2, next: { val: true, next: null }}}
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">removeByValue(value)</code>
+  <p class="method-p">Removes the <strong>first</strong> node with given <strong>value</strong> and returns <code class="parameter">value</code>. Returns <code class="parameter">null</code> if the value is not found.</p>
+{% highlight javascript %}
+LinkedList.insert(2, 3, 4);
+LinkedList.removeByValue(3); // 3
+LinkedList.removeByValue(3); // null
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">removeByIndex(index)</code>
+  <p class="method-p">Removes the <strong>first</strong> node with given <strong>value</strong> and returns <code class="parameter">value</code>. Returns <code class="parameter">null</code> if the index is not found, the index is not a number, or the index is less than <code class="parameter">-1</code>.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.removeByIndex(-1);   // null
+LinkedList.removeByIndex('0');  // null
+LinkedList.removeByIndex(0);    // 4
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">getNodeAtIndex(index)</code>
+  <p class="method-p">Returns the <strong>node</strong> at the given <strong>index</strong>. Returns <code class="parameter">null</code> if the index is not found.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.getNodeAtIndex(1);   // null
+LinkedList.getNodeAtIndex(0);   // { val: 4, next: null }
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">getNodeIndexByValue(value)</code>
+  <p class="method-p">Returns the <strong>first node</strong> and <strong>index</strong> for the given <strong>value</strong>.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.getNodeIndexByValue(1);   // null
+LinkedList.getNodeIndexByValue(4);   // { node: { val: 4, next: null }, index: 0 }
+{% endhighlight %}
+  <p class="method-p">The returned <code class="parameter">object</code> has the following structure:</p>
+{% highlight javascript %}
+{ 
+  node: { val: null, next: null }, // this is the returned node
+  index: null                      // this is the index of that node
+}
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
 <section id="bt" class="doc-section">
-    <h1>Binary Tree</h1>
+  <h1>Binary Tree</h1>
 </section>
 <hr>
 <section id="bst" class="doc-section">
-    <h1>Binary Search Tree</h1>
+  <h1>Binary Search Tree</h1>
 </section>
 {% highlight javascript %}
 console.log('alert');

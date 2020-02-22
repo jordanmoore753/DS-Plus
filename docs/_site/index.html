@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=e3107897f7bfccb45c89f9838f2281987cfa245b">
+    <link rel="stylesheet" href="/assets/css/style.css?v=084af543c27e6fb99398ccd256c04aacbfb23438">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
@@ -60,8 +60,12 @@
       .link-class-item a {
         font-size: 1rem;
         color: black;
-        text-shadow: #bd9702 1px 1px;
         list-style-type: circle;
+        transition: .4s;
+      }
+
+      .link-class-item a:hover {
+        color: #a38302;
       }
 
       ul {
@@ -86,6 +90,18 @@
 
       h1,h2,h3,h4,h5,h6 {
         color: black;
+      }
+
+      .topper {
+        color: black;
+        font-size: 1rem;
+        transition: .4s;
+        text-align: center;
+        display: block;
+      }
+
+      .topper:hover {
+        color: #a38302;
       }
     </style>
   </head>
@@ -131,7 +147,7 @@
   <h1 class="ds-heading">Queue</h1>
   <p>Queues are very easy to implement with <em>Plus</em>. There are two initialization options for the data storage in the queue: an array, or a linked list.</p>
   <h2 class="method-heading">Methods</h2>
-  <code class="code">initialize(data = null)</code>
+  <code class="code">constructor(data = null)</code>
   <p class="method-p">Initialize a new <code class="parameter">Queue</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Queue</span><span class="p">();</span>
 <span class="kd">let</span> <span class="nx">Queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Queue</span><span class="p">(</span><span class="dl">'</span><span class="s1">linkedlist</span><span class="dl">'</span><span class="p">);</span></code></pre></figure>
@@ -175,14 +191,15 @@
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
-<a href="#title">Back to Top</a>
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
 <section id="stack" class="doc-section">
   <h1 class="ds-heading">Stack</h1>
   <p>Stacks are almost identical to the <code class="code">Queue</code> objects in <em>Plus</em>. There are also only two initialization options for the data storage in the queue: an array, or a linked list.</p>
   <h2 class="method-heading">Methods</h2>
-  <code class="code">initialize(data = null)</code>
+  <code class="code">constructor(data = null)</code>
   <p class="method-p">Initialize a new <code class="parameter">Stack</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Stack</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Stack</span><span class="p">();</span>
 <span class="kd">let</span> <span class="nx">Stack</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Stack</span><span class="p">(</span><span class="dl">'</span><span class="s1">linkedlist</span><span class="dl">'</span><span class="p">);</span></code></pre></figure>
@@ -212,7 +229,7 @@
 <span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">peek</span><span class="p">();</span>    <span class="c1">// { val: 2, next: null }</span></code></pre></figure>
   <p class="separator">. . . . .</p>
   <code class="code">isEmpty()</code>
-  <p class="method-p">Returns <code>true || false</code> based on whether the <code class="parameter">data</code> property has data or not.</p>
+  <p class="method-p">Returns <code class="parameter">true || false</code> based on whether the <code class="parameter">data</code> property has data or not.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="nx">Stack</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">();</span>  <span class="c1">// false</span>
 <span class="nx">Stack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
@@ -227,19 +244,93 @@
 <span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
 <span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
-<a href="#title">Back to Top</a>
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
+
 <section id="linkedlist" class="doc-section">
-    <h1>Linked List</h1>
+  <h1 class="ds-heading">Linked List</h1>
+  <p>The <code class="code">Linked List</code> object is exactly what a developer would expect: a head <strong>node</strong> with a single <code class="parameter">next</code> pointer to the next <strong>node</strong> or <code class="parameter">null</code>.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">constructor(value = null)</code>
+  <p class="method-p">Initialize a new <code class="parameter">Linked List</code> object. Possible parameter(s) are any valid data in <em>JavaScript</em>. May or may not be initialized with a value.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">NoValueLinkedList</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">LinkedList</span><span class="p">();</span> <span class="c1">// { head: { val: null, next: null }}</span>
+<span class="kd">let</span> <span class="nx">LinkedList</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">LinkedList</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>       <span class="c1">// { head: { val: 3, next: null }}</span></code></pre></figure>
+  <p class="method-p">The returned <code class="parameter">Linked List</code> object has the following structure:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+  <span class="nl">head</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">val</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nx">next</span><span class="p">:</span> <span class="kc">null</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">assignHeadValue(value = null)</code>
+  <p class="method-p">Assigns the head node's value to the passed parameter. This method can be used in the case that the <code class="parameter">Linked List</code> object is initialized without a value, or when the first node's value should be changed.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">LinkedList</span><span class="p">.</span><span class="nx">assignHeadValue</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>                  <span class="c1">// { head: { val: 4, next: null }}</span>
+<span class="nx">LinkedListWithData</span><span class="p">.</span><span class="nx">assignHeadValue</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>  <span class="c1">// { head: { val: [1, 2, 3], next: [Object] }}</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">insert(...newData)</code>
+  <p class="method-p">Inserts elements of <code class="parameter">...newData</code> as nodes to the <strong>tail</strong> of the linked list. Returns <code class="parameter">this</code> for daisy-chaining.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">LinkedList</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// { head: { val: 2, next: { val: 1, next: null }}}</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> 
+<span class="cm">/* 
+{ head: { 
+      val: 2, next: { 
+        val: 1, next: {
+          val: 2, next: {
+            val: 3, next: null
+        }
+      } 
+    }
+  }
+}
+*/</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">insertAtIndex(index, ...newData)</code>
+  <p class="method-p">Inserts elements of <code class="parameter">...newData</code> as nodes at the passed <strong>index</strong> of the linked list. Does not overwrite nodes already in the linked list. Returns <code class="parameter">this</code> for daisy-chaining.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">LinkedList</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">LinkedList</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">insertAtIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">// { head: val: 4, next: { val: 2, next: { val: true, next: null }}}</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">removeByValue(value)</code>
+  <p class="method-p">Removes the <strong>first</strong> node with given <strong>value</strong> and returns <code class="parameter">value</code>. Returns <code class="parameter">null</code> if the value is not found.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">LinkedList</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">removeByValue</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// 3</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">removeByValue</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// null</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">removeByIndex(index)</code>
+  <p class="method-p">Removes the <strong>first</strong> node with given <strong>value</strong> and returns <code class="parameter">value</code>. Returns <code class="parameter">null</code> if the index is not found, the index is not a number, or the index is less than <code class="parameter">-1</code>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">LinkedList</span><span class="p">.</span><span class="nx">assignHeadValue</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">removeByIndex</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>   <span class="c1">// null</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">removeByIndex</span><span class="p">(</span><span class="dl">'</span><span class="s1">0</span><span class="dl">'</span><span class="p">);</span>  <span class="c1">// null</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">removeByIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>    <span class="c1">// 4</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">getNodeAtIndex(index)</code>
+  <p class="method-p">Returns the <strong>node</strong> at the given <strong>index</strong>. Returns <code class="parameter">null</code> if the index is not found.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">LinkedList</span><span class="p">.</span><span class="nx">assignHeadValue</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">getNodeAtIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>   <span class="c1">// null</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">getNodeAtIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>   <span class="c1">// { val: 4, next: null }</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">getNodeIndexByValue(value)</code>
+  <p class="method-p">Returns the <strong>first node</strong> and <strong>index</strong> for the given <strong>value</strong>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">LinkedList</span><span class="p">.</span><span class="nx">assignHeadValue</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">getNodeIndexByValue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>   <span class="c1">// null</span>
+<span class="nx">LinkedList</span><span class="p">.</span><span class="nx">getNodeIndexByValue</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>   <span class="c1">// { node: { val: 4, next: null }, index: 0 }</span></code></pre></figure>
+  <p class="method-p">The returned <code class="parameter">object</code> has the following structure:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span> 
+  <span class="nl">node</span><span class="p">:</span> <span class="p">{</span> <span class="nl">val</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">next</span><span class="p">:</span> <span class="kc">null</span> <span class="p">},</span> <span class="c1">// this is the returned node</span>
+  <span class="nx">index</span><span class="p">:</span> <span class="kc">null</span>                      <span class="c1">// this is the index of that node</span>
+<span class="p">}</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>
 <section id="bt" class="doc-section">
-    <h1>Binary Tree</h1>
+  <h1>Binary Tree</h1>
 </section>
 <hr>
 <section id="bst" class="doc-section">
-    <h1>Binary Search Tree</h1>
+  <h1>Binary Search Tree</h1>
 </section>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">alert</span><span class="dl">'</span><span class="p">);</span></code></pre></figure>
 

@@ -146,7 +146,7 @@ Plus.LinkedList = class {
     this.head = headNode;
   }
 
-  assignHeadValue(value) {
+  assignHeadValue(value = null) {
     this.head.val = value;
     return 1;
   }
@@ -189,12 +189,12 @@ Plus.LinkedList = class {
       nodes.shift();        // removes recently added data front front of queue
     }
 
-    return 1;
+    return this;
   }
 
   insertAtIndex(index, ...newData) {
     if (index === undefined || typeof index !== 'number' || index < 0) {
-      return 0;
+      return null;
     }
 
     let nodes = newData.map(function(data) {
@@ -207,7 +207,7 @@ Plus.LinkedList = class {
     let tail = this.getNodeAtIndex(index);
 
     if (tail === 0) {
-      return 0;
+      return this;
     }
 
     let nextNode = tail.next;
@@ -219,7 +219,7 @@ Plus.LinkedList = class {
     }
 
     tail.next = nextNode;
-    return 1;
+    return this; 
   }
 
   toArray() {
@@ -243,39 +243,46 @@ Plus.LinkedList = class {
     if (!value) { return 0; }
 
     let headNode = this.head;
+    let val;
 
     if (headNode.val === value) {
       if (this.head.next === null) {
-        return 0;
+        return null;
       }
 
+      val = this.head.val;
       this.head = this.head.next;
-      return 1;
+      return val;
     }
 
     while (headNode.next !== null) {
       if (headNode.next.val === value) {
+        val = headNode.next.val;
         headNode.next = headNode.next.next;
-        return 1;
+        return val;
       }
 
       headNode = headNode.next;
     }
 
-    return 0;
+    return null;
   }
 
   removeByIndex(index) {
-    if (index === undefined || typeof index !== 'number') { return 0; }
+    if (index === undefined || typeof index !== 'number' || index < 0) { return null; }
+
+    let val;
 
     if (index === 0) {
+      val = this.head.val;
+
       if (this.head.next === null) {
         this.head = null;
       } else {
         this.head = this.head.next;
       }
 
-      return 1;
+      return val;
     }
 
     let headNode = this.head;
@@ -283,13 +290,15 @@ Plus.LinkedList = class {
  
     while (headNode.next !== null) {
       if (i === index - 1) {
+        val = this.head.next.val;
+
         if (headNode.next.next === null) {
           headNode.next = null;
         } else {
           headNode.next = headNode.next.next;
         }
         
-        return 1;
+        return val;
       }
 
       headNode = headNode.next;
@@ -404,7 +413,7 @@ Plus.LinkedList = class {
     }
 
     this.head = prev;
-    return 1;
+    return this;
   }
 
   countMultiple(...values) {

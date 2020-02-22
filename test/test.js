@@ -129,18 +129,18 @@ describe('Queue with Linked List', () => {
     let queue = new Plus.Queue('linkedlist');
     queue.data.assignHeadValue(4);
 
-    expect(queue.dequeue()).toBe(1);
+    expect(queue.dequeue()).toBe(4);
     expect(queue.data.head).toBe(null);
 
     queue = new Plus.Queue('linkedlist');
     queue.data.assignHeadValue(4);    
     queue.enqueue(2, 3, 5);
 
-    expect(queue.dequeue()).toBe(1);
+    expect(queue.dequeue()).toBe(4);
     expect(queue.data.head.val).toBe(2);
-    expect(queue.dequeue()).toBe(1);
+    expect(queue.dequeue()).toBe(2);
     expect(queue.data.head.val).toBe(3);
-    expect(queue.dequeue()).toBe(1);
+    expect(queue.dequeue()).toBe(3);
     expect(queue.front().val).toBe(5);
   });
 
@@ -371,6 +371,9 @@ describe('Linked List', () => {
 
     ll.assignHeadValue(3);
     expect(ll.head.val).toBe(3);
+
+    ll.assignHeadValue();
+    expect(ll.head.val).toBe(null);
   });
 
   it('should insert single or multiple elements at tail end by default', () => {
@@ -478,16 +481,16 @@ describe('Linked List', () => {
     expect(ll.getNodeAtIndex(6).val).toBe(true); 
 
     let invalid = ll.insertAtIndex(33939, 'la');
-    expect(invalid).toBe(0);
+    expect(invalid).toBe(ll);
 
     let i2 = ll.insertAtIndex(undefined, 'la');
-    expect(i2).toBe(0);
+    expect(i2).toBe(null);
 
     i2 = ll.insertAtIndex('kdkdk', 'la');
-    expect(i2).toBe(0);
+    expect(i2).toBe(null);
 
     i2 = ll.insertAtIndex(-1, 'la');
-    expect(i2).toBe(0);
+    expect(i2).toBe(null);
   });
 
   it('should remove the first node with matching value', () => {
@@ -538,7 +541,7 @@ describe('Linked List', () => {
 
     let res = ll.removeByIndex('one');
 
-    expect(res).toBe(0);
+    expect(res).toBe(null);
 
     ll.insert(2, 3, 4, 5);
     ll.removeByIndex(0);
