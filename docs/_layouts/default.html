@@ -15,7 +15,45 @@
     <link rel="stylesheet" href="{{ '/assets/css/ie.css' | relative_url }}">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style type="text/css">
+      .code {
+        background-color: #ffcc00;
+        border-radius: 3px;
+        color: black;
+      }
 
+      .ds-heading {
+        margin: 30px 0;
+      }
+
+      .method-heading {
+        margin: 30px 0;
+      }
+
+      .parameter {
+        background: lightgray;
+        color: black;
+        border-radius: 3px;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .method-p {
+        margin-top: 15px;
+      }
+
+      .link-class-item {
+        font-size: 1rem;
+      }
+
+      .doc-section {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 30px;
+      }
+    </style>
   </head>
   <body>
       <div id="header">
@@ -29,15 +67,15 @@
         </nav>
       </div><!-- end header -->
 
-    <div class="wrapper">
+    <div class="wrapper" style="margin-bottom: 0px;">
       <section>
-        <div id="title">
+        <div id="title" style="margin-bottom: 0px;">
           <h1>{{ site.title | default: site.github.repository_name }}</h1>
           <p>{{ site.description | default: site.github.project_tagline }}</p>
           <hr>
         </div>
 
-        {{ content }}
+        {% include main.html %}
 
       </section>
 

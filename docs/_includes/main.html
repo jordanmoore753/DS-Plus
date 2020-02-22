@@ -1,0 +1,99 @@
+<p>Sometimes, the native data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
+<p>Fear not. <em>Plus</em> gives developers useful, fast, and reliable non-native <em>JavaScript</em> data structures.</p>
+<p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword.</p>
+<p>Click on any of the following links to view the documentation for a given <code class="code">class</code>.</p>
+<ul id="links-classes">
+  <li class="link-class-item">
+    <a href="#queue">Queue</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#stack">Stack</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#linkedlist">Linked List</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#bt">Binary Tree</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#bst">Binary Search Tree</a>
+  </li>
+</ul>
+<hr>
+<section id="queue" class="doc-section">
+  <h1 class="ds-heading">Queue</h1>
+  <p>Queues are very easy to implement with <em>Plus</em>. There are two initialization options for the data storage in the queue: an array, or a linked list.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">initialize(data = null)</code>
+  <p class="method-p">Initialize a new <code class="parameter">Queue</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
+{% highlight javascript %}
+let Queue = new Plus.Queue();
+let Queue = new Plus.Queue('linkedlist');
+{% endhighlight %}
+  <p class="method-p">The returned <code class="parameter">Queue</code> object has the following structure:</p>
+{% highlight javascript %}
+{
+  data: [] || 'Linked List',
+  ll: true || false
+}
+{% endhighlight %}
+  <code class="code">enqueue(...arguments)</code>
+  <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.enqueue(2, 3, 4);
+Queue.enqueue('string', true, [1, 2, 3], { one: 'more' });
+{% endhighlight %}
+  <code class="code">dequeue()</code>
+  <p class="method-p">Removes and returns the first element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.dequeue();  // 1
+Queue.dequeue();  // null
+{% endhighlight %}
+  <code class="code">front()</code>
+  <p class="method-p">Returns the first element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.front();              // 1
+LinkedListQueue.enqueue(1);
+LinkedListQueue.front();    // { val: 1, next: null }
+{% endhighlight %}
+  <code class="code">rear()</code>
+  <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+{% highlight javascript %}
+Queue.enqueue(1, 2);
+Queue.rear();                  // 2
+LinkedListQueue.enqueue(1, 2);
+LinkedListQueue.rear();        // { val: 2, next: null }
+{% endhighlight %}
+  <code class="code">search(value)</code>
+  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.search(1);              // 1
+Queue.search(3);              // null
+LinkedListQueue.enqueue(1);
+LinkedListQueue.search(1);    // { val: 1, next: null }
+LinkedListQueue.search(3);    // null
+{% endhighlight %}
+</section>
+<hr>
+<section id="stack" class="doc-section">
+    <h1>Stack</h1>
+</section>
+<hr>
+<section id="linkedlist" class="doc-section">
+    <h1>Linked List</h1>
+</section>
+<hr>
+<section id="bt" class="doc-section">
+    <h1>Binary Tree</h1>
+</section>
+<hr>
+<section id="bst" class="doc-section">
+    <h1>Binary Search Tree</h1>
+</section>
+{% highlight javascript %}
+console.log('alert');
+{% endhighlight %}

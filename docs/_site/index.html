@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Plus | Implement non-native data structures in JavaScript in style.</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Plus" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Implement non-native data structures in JavaScript in style." />
+<meta property="og:description" content="Implement non-native data structures in JavaScript in style." />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="Plus" />
+<script type="application/ld+json">
+{"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=38d7745c0ccf965f955fa97292bee9b704676990">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style type="text/css">
+      .code {
+        background-color: #ffcc00;
+        border-radius: 3px;
+        color: black;
+      }
+
+      .ds-heading {
+        margin: 30px 0;
+      }
+
+      .method-heading {
+        margin: 30px 0;
+      }
+
+      .parameter {
+        background: lightgray;
+        color: black;
+        border-radius: 3px;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .method-p {
+        margin-top: 15px;
+      }
+
+      .link-class-item {
+        font-size: 1rem;
+      }
+
+      .doc-section {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/jordanmoore753/Plus">View On GitHub</a></li>
+          
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper" style="margin-bottom: 0px;">
+      <section>
+        <div id="title" style="margin-bottom: 0px;">
+          <h1>Plus</h1>
+          <p>Implement non-native data structures in JavaScript in style.</p>
+          <hr>
+        </div>
+
+        <p>Sometimes, the native data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
+<p>Fear not. <em>Plus</em> gives developers useful, fast, and reliable non-native <em>JavaScript</em> data structures.</p>
+<p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword.</p>
+<p>Click on any of the following links to view the documentation for a given <code class="code">class</code>.</p>
+<ul id="links-classes">
+  <li class="link-class-item">
+    <a href="#queue">Queue</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#stack">Stack</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#linkedlist">Linked List</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#bt">Binary Tree</a>
+  </li>
+  <li class="link-class-item">
+    <a href="#bst">Binary Search Tree</a>
+  </li>
+</ul>
+<hr>
+<section id="queue" class="doc-section">
+  <h1 class="ds-heading">Queue</h1>
+  <p>Queues are very easy to implement with <em>Plus</em>. There are two initialization options for the data storage in the queue: an array, or a linked list.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">initialize(data = null)</code>
+  <p class="method-p">Initialize a new <code class="parameter">Queue</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Queue</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">Queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Queue</span><span class="p">(</span><span class="dl">'</span><span class="s1">linkedlist</span><span class="dl">'</span><span class="p">);</span></code></pre></figure>
+  <p class="method-p">The returned <code class="parameter">Queue</code> object has the following structure:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+  <span class="nl">data</span><span class="p">:</span> <span class="p">[]</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Linked List</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">ll</span><span class="p">:</span> <span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span>
+<span class="p">}</span></code></pre></figure>
+  <code class="code">enqueue(...arguments)</code>
+  <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">{</span> <span class="na">one</span><span class="p">:</span> <span class="dl">'</span><span class="s1">more</span><span class="dl">'</span> <span class="p">});</span></code></pre></figure>
+  <code class="code">dequeue()</code>
+  <p class="method-p">Removes and returns the first element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// 1</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// null</span></code></pre></figure>
+  <code class="code">front()</code>
+  <p class="method-p">Returns the first element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>              <span class="c1">// 1</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>    <span class="c1">// { val: 1, next: null }</span></code></pre></figure>
+  <code class="code">rear()</code>
+  <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>                  <span class="c1">// 2</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>        <span class="c1">// { val: 2, next: null }</span></code></pre></figure>
+  <code class="code">search(value)</code>
+  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>              <span class="c1">// 1</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>              <span class="c1">// null</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
+</section>
+<hr>
+<section id="stack" class="doc-section">
+    <h1>Stack</h1>
+</section>
+<hr>
+<section id="linkedlist" class="doc-section">
+    <h1>Linked List</h1>
+</section>
+<hr>
+<section id="bt" class="doc-section">
+    <h1>Binary Tree</h1>
+</section>
+<hr>
+<section id="bst" class="doc-section">
+    <h1>Binary Search Tree</h1>
+</section>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">alert</span><span class="dl">'</span><span class="p">);</span></code></pre></figure>
+
+      </section>
+
+    </div>
+
+    
+    <div class="wrapper">
+      <hr>
+      <span class="credits left" style="text-align: center; display: block;">Project maintained by <a href="https://github.com/jordanmoore753">jordanmoore753</a></span>
+    </div>
+  </body>
+</html>
