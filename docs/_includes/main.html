@@ -247,6 +247,71 @@ LinkedList.getNodeIndexByValue(4);   // { node: { val: 4, next: null }, index: 0
 }
 {% endhighlight %}
   <p class="separator">. . . . .</p>
+  <code class="code">updateValueAtIndex(index, value)</code>
+  <p class="method-p">Updates the <code class="parameter">val</code> property of the <strong>node</strong> at the given <code class="parameter">index</code>. Returns <code class="parameter">this || null</code> depending on the success of the invocation.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.updateValueAtIndex(0, true);  // { head: { val: true, next: null }}
+LinkedList.updateValueAtIndex(4, false); // null
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">getMiddleNode()</code>
+  <p class="method-p">Returns the <strong>node</strong> in the middle of the <code class="parameter">Linked List</code> object. Returns <code class="parameter">undefined</code> for a list with no middle.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.insert(1, 2, 3, 5);
+LinkedList.getMiddleNode(); // { val: 2, next: [Object] }
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">tail()</code>
+  <p class="method-p">Returns the <strong>last node</strong> in the <code class="parameter">Linked List</code> object.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.tail(); // { val: 4, next: null }
+LinkedList.insert(2);
+LinkedList.tail(); // { val: 2, next: null }
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">removeByTail()</code>
+  <p class="method-p">Removes the <strong>last node</strong> in the <code class="parameter">Linked List</code> object. Returns <code class="parameter">value</code> from deleted node.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.removeByTail(); // 4
+LinkedList.assignHeadValue(4).insert(1, 2);
+LinkedList.removeByTail(); // 2
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">toArray()</code>
+  <p class="method-p">Returns <code class="parameter">[]</code> comprised of the <strong>values</strong> from the nodes in the <code class="parameter">Linked List</code> object, starting from the <strong>head</strong> and ending with the <strong>tail</strong>.</p>
+{% highlight javascript %}
+LinkedListEmpty.toArray(); // [];
+LinkedList.assignHeadValue(4);
+LinkedList.toArray();      // [4];
+LinkedList.insert(2, 3);   // [4, 2, 3];
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">reverse()</code>
+  <p class="method-p">Returns <code class="parameter">this</code> and <strong>destructively</strong> reverses the nodes in the <code class="parameter">Linked List</code> object, starting from the <strong>head</strong> and ending with the <strong>tail</strong>.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.insert(2, 3);
+LinkedList.reverse(); // { head: { val: 3, next: { val: 2, next: { val: 4, next: null }}}}
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">clear()</code>
+  <p class="method-p">Returns <code class="parameter">this</code> and <strong>destructively</strong> clears the nodes in the <code class="parameter">Linked List</code> object.</p>
+{% highlight javascript %}
+LinkedList.clear(); // { head: { val: undefined, next: null }}
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">contains(value)</code>
+  <p class="method-p">Returns <code class="parameter">true || false</code> depending on whether the passed <strong>value</strong> can be found in the <code class="parameter">Linked List</code> object.</p>
+{% highlight javascript %}
+LinkedList.assignHeadValue(4);
+LinkedList.contains(4); // true
+LinkedList.contains(1); // false
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
 <hr>

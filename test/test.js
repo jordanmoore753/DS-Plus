@@ -558,7 +558,7 @@ describe('Linked List', () => {
 
     ll.removeByIndex(2);
 
-    expect(ll.getNodeAtIndex(2)).toBe(0);
+    expect(ll.getNodeAtIndex(2)).toBe(null);
     expect(ll.tail().next).toBe(null);
     expect(ll.tail().val).toBe(3);
   });
@@ -591,9 +591,9 @@ describe('Linked List', () => {
     let nopeNode = ll.getNodeAtIndex('string');
     let noIndexNode = ll.getNodeAtIndex(-1);
 
-    expect(nonNode).toBe(0);
-    expect(nopeNode).toBe(0);
-    expect(noIndexNode).toBe(0);
+    expect(nonNode).toBe(null);
+    expect(nopeNode).toBe(null);
+    expect(noIndexNode).toBe(null);
     expect(node.val).toBe(4);
 
     ll.insert(2, 3, 4, 5);
@@ -719,15 +719,15 @@ describe('Linked List', () => {
 
     let invalid = ll.updateValueAtIndex(2222, 9);
 
-    expect(invalid).toBe(0);
+    expect(invalid).toBe(null);
 
     let secondInvalid = ll.updateValueAtIndex(-1, 9);
 
-    expect(secondInvalid).toBe(0);
+    expect(secondInvalid).toBe(null);
 
     let thirdInvalid = ll.updateValueAtIndex('one', 9);
 
-    expect(thirdInvalid).toBe(0);
+    expect(thirdInvalid).toBe(null);
   });
 
   it('should reverse the entire list destructively', () => {

@@ -206,7 +206,7 @@ Plus.LinkedList = class {
 
     let tail = this.getNodeAtIndex(index);
 
-    if (tail === 0) {
+    if (tail === null) {
       return this;
     }
 
@@ -307,13 +307,13 @@ Plus.LinkedList = class {
   }
 
   getNodeAtIndex(index) {
-    if (typeof index !== 'number' || index < 0) { return 0; }
+    if (typeof index !== 'number' || index < 0) { return null; }
 
     let headNode = this.head;
 
     for (let i = 0; i < index; i += 1) {
       if (headNode.next === null) {
-        return 0;
+        return null;
       } else {
         headNode = headNode.next;
       }
@@ -361,7 +361,7 @@ Plus.LinkedList = class {
     return nodes[Math.ceil((nodes.length - 1) / 2)];
   }
 
-  length() {
+  length() { // refactor to be O(1)
     let i = 1;
     let headNode = this.head;
 
@@ -389,15 +389,15 @@ Plus.LinkedList = class {
 
   updateValueAtIndex(index, value) {
     if (index === undefined || typeof index !== 'number' || index < 0) {
-      return 0;
+      return null;
     }
 
     let node = this.getNodeAtIndex(index);
 
-    if (node === 0) { return 0; }
+    if (node === null) { return null; }
 
     node.val = value;
-    return 1;
+    return this;
   }
 
   reverse() {
