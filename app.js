@@ -144,6 +144,7 @@ Plus.LinkedList = class {
     };
 
     this.head = headNode;
+    this.size = 1;
   }
 
   assignHeadValue(value = null) {
@@ -170,6 +171,7 @@ Plus.LinkedList = class {
 
     deletedValue = headNode.next.val;
     headNode.next = null;
+    this.size -= 1;
     return deletedValue;    
   }
 
@@ -184,6 +186,7 @@ Plus.LinkedList = class {
     let tail = this.tail();
 
     while (nodes.length > 0) {
+      this.size += 1;
       tail.next = nodes[0]; // forms link between data and tail
       tail = tail.next;     // next iteration, tail is the last added element
       nodes.shift();        // removes recently added data front front of queue
@@ -213,6 +216,7 @@ Plus.LinkedList = class {
     let nextNode = tail.next;
 
     while (nodes.length > 0) {
+      this.size += 1;
       tail.next = nodes[0]; // forms link between data and tail
       tail = tail.next;     // next iteration, tail is the last added element
       nodes.shift();        // removes recently added data front front of queue
@@ -247,16 +251,19 @@ Plus.LinkedList = class {
 
     if (headNode.val === value) {
       if (this.head.next === null) {
+        this.size -= 1;
         return null;
       }
 
       val = this.head.val;
       this.head = this.head.next;
+      this.size -= 1;
       return val;
     }
 
     while (headNode.next !== null) {
       if (headNode.next.val === value) {
+        this.size -= 1;
         val = headNode.next.val;
         headNode.next = headNode.next.next;
         return val;
@@ -282,6 +289,7 @@ Plus.LinkedList = class {
         this.head = this.head.next;
       }
 
+      this.size -= 1;
       return val;
     }
 
@@ -298,6 +306,7 @@ Plus.LinkedList = class {
           headNode.next = headNode.next.next;
         }
         
+        this.size -= 1;
         return val;
       }
 
@@ -362,15 +371,8 @@ Plus.LinkedList = class {
   }
 
   length() { // refactor to be O(1)
-    let i = 1;
-    let headNode = this.head;
-
-    while (headNode.next !== null) {
-      i += 1;
-      headNode = headNode.next;
-    }
-
-    return i;
+    this.adjustSize();
+    return this.size;
   }
 
   tail() {
@@ -420,7 +422,11 @@ Plus.LinkedList = class {
     let counts = {};
     let headNode = this.head;
 
-    values.forEach((property) => counts[property] = 0);
+    values.forEach(function(property) {
+      if (typeof property === 'number' || typeof property === 'string') {
+        counts[property] = 0
+      } 
+    });
 
     while (headNode !== null) {
       if (values.indexOf(headNode.val) !== -1) {
@@ -433,7 +439,11 @@ Plus.LinkedList = class {
     return counts;
   }
 
-  count(value) {
+  count(value = null) {
+    if (value === undefined || value === null) {
+      return null;
+    }
+
     let count = 0;
     let headNode = this.head;
 
@@ -454,6 +464,7 @@ Plus.LinkedList = class {
       next: null
     };
 
+    this.size = 1;
     return this;
   }
 
@@ -469,6 +480,14 @@ Plus.LinkedList = class {
     }
 
     return false;
+  }
+
+  adjustSize() {
+    if (this.size <= 0) {
+      this.size = 1;
+    }
+
+    return;
   }
 };
 

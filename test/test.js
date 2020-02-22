@@ -365,6 +365,22 @@ describe('Linked List', () => {
     [ll, ll2].forEach((obj) => expect(obj instanceof Plus.LinkedList).toBe(true));
   });
 
+  it('should get length of linked list object', () => {
+    let ll = new Plus.LinkedList(4);
+    expect(ll.length()).toBe(1);
+    ll.insert(1, 2, 3);
+    expect(ll.length()).toBe(4);
+    ll.removeByValue(4);
+    console.log(ll);
+    expect(ll.length()).toBe(3);
+    ll.removeByValue(1);
+    expect(ll.length()).toBe(2);
+    ll.removeByValue(2);
+    expect(ll.length()).toBe(1);
+    ll.removeByValue(3);
+    expect(ll.length()).toBe(1);
+  });
+
   it('should assign head value with method', () => {
     let ll = new Plus.LinkedList();
     expect(ll.head.val).toBe(undefined);
@@ -762,7 +778,7 @@ describe('Linked List', () => {
 
     ll.insert(4, 3, 2, 'one', 'one', 3, 'one', 'two');
 
-    let secondCount = ll.countMultiple(4, 3, 'one', 'two', 2);
+    let secondCount = ll.countMultiple(4, 3, 'one', 'two', 2, { one: 'yes' }, ['one']);
 
     expect(secondCount['4']).toBe(2);
     expect(secondCount['3']).toBe(2);
@@ -799,6 +815,7 @@ describe('Linked List', () => {
     fCount = ll.count([1, 3, 2]);
 
     expect(fCount).toBe(0);
+    expect(ll.count()).toBe(null);
   });
 });
 
