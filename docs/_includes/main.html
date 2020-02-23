@@ -525,10 +525,24 @@ BinaryTree.getValuesTraversal();       // [2, 3, 1]
   <code class="code">constructor(dataType, options)</code>
   <p class="method-p">Initialize a new <code class="parameter">BST</code> object.</p>
   <p>The <code class="parameter">dataType</code> parameter represents the single type of data that the initialized <code class="parameter">BST</code> object can store. The possible options are in the following array and correspond to the actual primitive and/or object in vanilla <em>JavaScript</em>: <code class="parameter">['number', 'string', 'date', 'object']</code>. Only pass <strong>one string</strong>, otherwise an error will be thrown.</p>
-  <p>The <code class="parameter">options</code> parameter represents an optional <strong>object</strong> which may be passed into the constructor function to further customize the way data is handled in the <code class="parameter">BST</code> object. The only properties available to this object are in the following arrays: <code class="parameter">['key', 'keyType', 'compareFunction']</code> for <code class="parameter">'object'</code> typed trees, and <code class="parameter">['compareFunction']</code> for <code class="parameter">['number', 'string', 'date']</code> typed trees.</p>  
-  <p><code class="parameter">key</code> represents the property that will be on <strong>every</strong> object passed into the <code class="parameter">BST</code> object. This key is then used to sort and balance the tree as elements are inserted and removed.</p>
+  <p>The <code class="parameter">options</code> parameter represents an optional <strong>object</strong> which may be passed into the constructor function to further customize the way data is handled in the <code class="parameter">BST</code> object. The only properties available to this object are in the following arrays: <code class="parameter">['key', 'keyType', 'compareFunction']</code> for <code class="parameter">'object'</code> typed trees, and <code class="parameter">['compareFunction']</code> for <code class="parameter">['number', 'string', 'date']</code> typed trees.</p>
+{% highlight javascript %}
+// For Date, String, or Number BSTs
+
+let options = { compareFunction: exampleFunc };
+
+// For Object
+
+let options = { 
+  key: 'bigId',
+  keyType: 'number',
+  compareFunction: sortByIdOrSomething 
+};
+
+{% endhighlight %}
+  <p><code class="parameter">key</code> represents the property that will be on <strong>every</strong> object passed into the <code class="parameter">BST</code> object. This key is then used to sort and balance the tree as elements are inserted and removed. This must be a <strong>string</strong>.</p>
   <p><code class="parameter">keyType</code> represents the type of primitive data that will be stored in the <code class="parameter">key</code> property of each object. The available options are in the following array: <code class="parameter">['string', 'number']</code>. Incorrect values will result in thrown errors.</p>
-  <p><code class="parameter">compareFunction</code> represents the function which will be used to determine if one value is less than another value. Using this, the tree will insert, remove, and rebalance itself.</p>
+  <p><code class="parameter">compareFunction</code> represents the function which will be used to determine if one value is less than another value. Using this, the tree will insert, remove, and rebalance itself. This can be passed with any data type, not just <code class="parameter">object</code>.</p>
   <p>The function must come in the following form:</p>
 {% highlight javascript %}
 // this example would work for strings
@@ -549,58 +563,132 @@ const sortByDivision = function(a, b) {
   return (a / 2) < (b / 3);  
 };
 
+// Notice that the expression must be: a < b.
 {% endhighlight %}
-  <p class="method-p">The returned <code class="parameter">Queue</code> object has the following structure:</p>
+  <p class="method-p"><code class="parameter">BST</code> objects may be instantiated as shown in the following code snippet:</p>
+{% highlight javascript %}
+let StringBST = new Plus.BST('string');
+let NumberBST = new Plus.BST('number');
+let DateBST = new Plus.BST('date', { compareFunction: sortByDay });
+let ObjectBST = new Plus.BST('object', {
+  key: 'id',
+  keyType: 'number',
+  compareFunction: sortById  
+});
+
+// String and Number BSTs can also be passed compareFunction.
+{% endhighlight %}
+  <p class="method-p">The returned <code class="parameter">BST</code> object has the following structure:</p>
 {% highlight javascript %}
 {
-  data: [] || 'Linked List',
-  ll: true || false
+  type: dataType,        // determines valid data
+  compareFunction: func, // for all data
+  key: undefined,        // for objects
+  keyType: undefined,    // for objects
+  duplicates: {},        // prevents duplicates
+  size: 0,               // allows for constant time tree size lookup
+  root: null             // this is where the tree is stored
 }
 {% endhighlight %}
   <p class="separator">. . . . .</p>
-  <code class="code">enqueue(...arguments)</code>
-  <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
+  <code class="code">insert(values)</code>
+  <p class="method-p">Inserts node(s) with the passed <code class="parameter">value</code> property. To pass several elements at once, pass an <code class="parameter">[]</code> with the elements separated with commas.</p>
 {% highlight javascript %}
-Queue.enqueue(1);
-Queue.enqueue(2, 3, 4);
-Queue.enqueue('string', true, [1, 2, 3], { one: 'more' });
+let NumberBST = new Plus.BST('number');
+NumberBST.insert(1); 
+NumberBST.insert([2, 3]).insert(5); // can chain methods, too
+/*
+{
+  root: {
+    val: 2,
+    left: { val: 1, left: null, right: null },
+    right: { val: 3, left: null, right: { val: 5, left: null, right: null }}
+  }
+}
+*/
 {% endhighlight %}
   <p class="separator">. . . . .</p>
-  <code class="code">dequeue()</code>
-  <p class="method-p">Removes and returns the first element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
+  <code class="code">remove(values)</code>
+  <p class="method-p">Removes node(s) with the passed <code class="parameter">value</code> property. To pass several elements at once, pass an <code class="parameter">[]</code> with the elements separated with commas. Returns <code class="parameter">this</code>, so methods can be chained after its invocation.</p>
 {% highlight javascript %}
-Queue.enqueue(1);
-Queue.dequeue();  // 1
-Queue.dequeue();  // null
+let DateBST = new Plus.BST('date');
+DateBST.insert([new Date('November 15, 2020'),
+                new Date('December 25, 2020'),
+                new Date('March 25, 2020'),
+                new Date('July 4, 2029')]);
+DateBST.remove(new Date('July 4, 2029'));
+/*
+{
+  root: {
+    val: December 25, 2020     // not real formatting
+    left: November 14, 2020,   // not real formatting
+    right: March 25,, 2020     // not real formatting
+  }
+}
+*/
 {% endhighlight %}
   <p class="separator">. . . . .</p>
-  <code class="code">front()</code>
-  <p class="method-p">Returns the first element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+  <code class="code">maxValue(root = this.root)</code>
+  <p class="method-p">Returns the node with the greatest <code class="parameter">val</code> property.</p>
 {% highlight javascript %}
-Queue.enqueue(1);
-Queue.front();              // 1
-LinkedListQueue.enqueue(1);
-LinkedListQueue.front();    // { val: 1, next: null }
+let ObjectBST = new Plus.BST('object', {
+  key: 'id',
+  keyType: 'number',
+  compareFunction: sortById  
+});
+
+ObjectBST.insert([
+  { id: 1 },
+  { id: 2 },
+  { id: 3 }
+]);
+
+ObjectBST.maxValue(); // { id: 3 }
 {% endhighlight %}
   <p class="separator">. . . . .</p>
-  <code class="code">rear()</code>
-  <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
+  <code class="code">minValue(root = this.root)</code>
+  <p class="method-p">Returns the node with the smallest <code class="parameter">val</code> property.</p>
 {% highlight javascript %}
-Queue.enqueue(1, 2);
-Queue.rear();                  // 2
-LinkedListQueue.enqueue(1, 2);
-LinkedListQueue.rear();        // { val: 2, next: null }
+let ObjectBST = new Plus.BST('object', {
+  key: 'id',
+  keyType: 'number',
+  compareFunction: sortById  
+});
+
+ObjectBST.insert([
+  { id: 1 },
+  { id: 2 },
+  { id: 3 }
+]);
+
+ObjectBST.minValue(); // { id: 1 }
 {% endhighlight %}
   <p class="separator">. . . . .</p>
-  <code class="code">search(value)</code>
-  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+  <code class="code">search(value, root = this.root)</code>
+  <p class="method-p">Returns the node from <code class="parameter">this.root</code> with the passed <code class="parameter">value</code> if it exists. Returns <code class="parameter">null</code> if there are no elements which match the passed value.</p>
+  <p class="method-p"><code class="parameter">Objects</code> will be matched with the <code class="parameter">toString()</code> method, so deep equality is <strong>not necessary</strong> for the <code class="parameter">search</code> method to return the correct node.</p>
 {% highlight javascript %}
-Queue.enqueue(1);
-Queue.search(1);              // 1
-Queue.search(3);              // null
-LinkedListQueue.enqueue(1);
-LinkedListQueue.search(1);    // { val: 1, next: null }
-LinkedListQueue.search(3);    // null
+let ObjectBST = new Plus.BST('object', {
+  key: 'id',
+  keyType: 'number',
+  compareFunction: sortById  
+});
+
+ObjectBST.insert([
+  { id: 1 },
+  { id: 2 },
+  { id: 3 }
+]);
+
+ObjectBST.search({ id: 1 }); // { id: 1 }
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">length()</code>
+  <p class="method-p">Returns <code class="parameter">this.size</code>, which is the number of nodes in the tree.</p>
+{% highlight javascript %}
+let StringBST = new Plus.BST('string');
+StringBST.insert(['coal', 'mining', 'is', 'no', 'fun']);
+StringBST.length(); // 5
 {% endhighlight %}
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>

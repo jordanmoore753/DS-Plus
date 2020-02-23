@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=6da3864baf2389411d09f0975e5b802492f0204a">
+    <link rel="stylesheet" href="/assets/css/style.css?v=86f6e293ca6e56cf9e086834b33859b248787efa">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
@@ -562,10 +562,21 @@
   <code class="code">constructor(dataType, options)</code>
   <p class="method-p">Initialize a new <code class="parameter">BST</code> object.</p>
   <p>The <code class="parameter">dataType</code> parameter represents the single type of data that the initialized <code class="parameter">BST</code> object can store. The possible options are in the following array and correspond to the actual primitive and/or object in vanilla <em>JavaScript</em>: <code class="parameter">['number', 'string', 'date', 'object']</code>. Only pass <strong>one string</strong>, otherwise an error will be thrown.</p>
-  <p>The <code class="parameter">options</code> parameter represents an optional <strong>object</strong> which may be passed into the constructor function to further customize the way data is handled in the <code class="parameter">BST</code> object. The only properties available to this object are in the following arrays: <code class="parameter">['key', 'keyType', 'compareFunction']</code> for <code class="parameter">'object'</code> typed trees, and <code class="parameter">['compareFunction']</code> for <code class="parameter">['number', 'string', 'date']</code> typed trees.</p>  
-  <p><code class="parameter">key</code> represents the property that will be on <strong>every</strong> object passed into the <code class="parameter">BST</code> object. This key is then used to sort and balance the tree as elements are inserted and removed.</p>
+  <p>The <code class="parameter">options</code> parameter represents an optional <strong>object</strong> which may be passed into the constructor function to further customize the way data is handled in the <code class="parameter">BST</code> object. The only properties available to this object are in the following arrays: <code class="parameter">['key', 'keyType', 'compareFunction']</code> for <code class="parameter">'object'</code> typed trees, and <code class="parameter">['compareFunction']</code> for <code class="parameter">['number', 'string', 'date']</code> typed trees.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// For Date, String, or Number BSTs</span>
+
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> <span class="na">compareFunction</span><span class="p">:</span> <span class="nx">exampleFunc</span> <span class="p">};</span>
+
+<span class="c1">// For Object</span>
+
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> 
+  <span class="na">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">bigId</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">keyType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">compareFunction</span><span class="p">:</span> <span class="nx">sortByIdOrSomething</span> 
+<span class="p">};</span></code></pre></figure>
+  <p><code class="parameter">key</code> represents the property that will be on <strong>every</strong> object passed into the <code class="parameter">BST</code> object. This key is then used to sort and balance the tree as elements are inserted and removed. This must be a <strong>string</strong>.</p>
   <p><code class="parameter">keyType</code> represents the type of primitive data that will be stored in the <code class="parameter">key</code> property of each object. The available options are in the following array: <code class="parameter">['string', 'number']</code>. Incorrect values will result in thrown errors.</p>
-  <p><code class="parameter">compareFunction</code> represents the function which will be used to determine if one value is less than another value. Using this, the tree will insert, remove, and rebalance itself.</p>
+  <p><code class="parameter">compareFunction</code> represents the function which will be used to determine if one value is less than another value. Using this, the tree will insert, remove, and rebalance itself. This can be passed with any data type, not just <code class="parameter">object</code>.</p>
   <p>The function must come in the following form:</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// this example would work for strings</span>
 
@@ -583,47 +594,118 @@
 
 <span class="kd">const</span> <span class="nx">sortByDivision</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span><span class="nx">a</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nx">b</span> <span class="o">/</span> <span class="mi">3</span><span class="p">);</span>  
-<span class="p">};</span></code></pre></figure>
-  <p class="method-p">The returned <code class="parameter">Queue</code> object has the following structure:</p>
+<span class="p">};</span>
+
+<span class="c1">// Notice that the expression must be: a &lt; b.</span></code></pre></figure>
+  <p class="method-p"><code class="parameter">BST</code> objects may be instantiated as shown in the following code snippet:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">StringBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">NumberBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">DateBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">date</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">compareFunction</span><span class="p">:</span> <span class="nx">sortByDay</span> <span class="p">});</span>
+<span class="kd">let</span> <span class="nx">ObjectBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">keyType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">compareFunction</span><span class="p">:</span> <span class="nx">sortById</span>  
+<span class="p">});</span>
+
+<span class="c1">// String and Number BSTs can also be passed compareFunction.</span></code></pre></figure>
+  <p class="method-p">The returned <code class="parameter">BST</code> object has the following structure:</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
-  <span class="nl">data</span><span class="p">:</span> <span class="p">[]</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Linked List</span><span class="dl">'</span><span class="p">,</span>
-  <span class="nx">ll</span><span class="p">:</span> <span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="nx">dataType</span><span class="p">,</span>        <span class="c1">// determines valid data</span>
+  <span class="nx">compareFunction</span><span class="p">:</span> <span class="nx">func</span><span class="p">,</span> <span class="c1">// for all data</span>
+  <span class="nx">key</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span>        <span class="c1">// for objects</span>
+  <span class="nx">keyType</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span>    <span class="c1">// for objects</span>
+  <span class="nx">duplicates</span><span class="p">:</span> <span class="p">{},</span>        <span class="c1">// prevents duplicates</span>
+  <span class="nx">size</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>               <span class="c1">// allows for constant time tree size lookup</span>
+  <span class="nx">root</span><span class="p">:</span> <span class="kc">null</span>             <span class="c1">// this is where the tree is stored</span>
 <span class="p">}</span></code></pre></figure>
   <p class="separator">. . . . .</p>
-  <code class="code">enqueue(...arguments)</code>
-  <p class="method-p">Appends element(s) to the end of the <code class="parameter">data</code> property. To pass several elements at once, simply separate each element by a comma.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">{</span> <span class="na">one</span><span class="p">:</span> <span class="dl">'</span><span class="s1">more</span><span class="dl">'</span> <span class="p">});</span></code></pre></figure>
+  <code class="code">insert(values)</code>
+  <p class="method-p">Inserts node(s) with the passed <code class="parameter">value</code> property. To pass several elements at once, pass an <code class="parameter">[]</code> with the elements separated with commas.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">NumberBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> 
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]).</span><span class="nx">insert</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// can chain methods, too</span>
+<span class="cm">/*
+{
+  root: {
+    val: 2,
+    left: { val: 1, left: null, right: null },
+    right: { val: 3, left: null, right: { val: 5, left: null, right: null }}
+  }
+}
+*/</span></code></pre></figure>
   <p class="separator">. . . . .</p>
-  <code class="code">dequeue()</code>
-  <p class="method-p">Removes and returns the first element from the <code class="parameter">data</code> property. Returns <code class="parameter">null</code> if the store is empty.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// 1</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>  <span class="c1">// null</span></code></pre></figure>
+  <code class="code">remove(values)</code>
+  <p class="method-p">Removes node(s) with the passed <code class="parameter">value</code> property. To pass several elements at once, pass an <code class="parameter">[]</code> with the elements separated with commas. Returns <code class="parameter">this</code>, so methods can be chained after its invocation.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">DateBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">date</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">DateBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="dl">'</span><span class="s1">November 15, 2020</span><span class="dl">'</span><span class="p">),</span>
+                <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="dl">'</span><span class="s1">December 25, 2020</span><span class="dl">'</span><span class="p">),</span>
+                <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="dl">'</span><span class="s1">March 25, 2020</span><span class="dl">'</span><span class="p">),</span>
+                <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="dl">'</span><span class="s1">July 4, 2029</span><span class="dl">'</span><span class="p">)]);</span>
+<span class="nx">DateBST</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="dl">'</span><span class="s1">July 4, 2029</span><span class="dl">'</span><span class="p">));</span>
+<span class="cm">/*
+{
+  root: {
+    val: December 25, 2020     // not real formatting
+    left: November 14, 2020,   // not real formatting
+    right: March 25,, 2020     // not real formatting
+  }
+}
+*/</span></code></pre></figure>
   <p class="separator">. . . . .</p>
-  <code class="code">front()</code>
-  <p class="method-p">Returns the first element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>              <span class="c1">// 1</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">front</span><span class="p">();</span>    <span class="c1">// { val: 1, next: null }</span></code></pre></figure>
+  <code class="code">maxValue(root = this.root)</code>
+  <p class="method-p">Returns the node with the greatest <code class="parameter">val</code> property.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">ObjectBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">keyType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">compareFunction</span><span class="p">:</span> <span class="nx">sortById</span>  
+<span class="p">});</span>
+
+<span class="nx">ObjectBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="nx">ObjectBST</span><span class="p">.</span><span class="nx">maxValue</span><span class="p">();</span> <span class="c1">// { id: 3 }</span></code></pre></figure>
   <p class="separator">. . . . .</p>
-  <code class="code">rear()</code>
-  <p class="method-p">Returns the last element or node from the <code class="parameter">data</code> property. Returns <code class="parameter">undefined</code> or <code class="parameter">null</code> if there are no elements.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>                  <span class="c1">// 2</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">rear</span><span class="p">();</span>        <span class="c1">// { val: 2, next: null }</span></code></pre></figure>
+  <code class="code">minValue(root = this.root)</code>
+  <p class="method-p">Returns the node with the smallest <code class="parameter">val</code> property.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">ObjectBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">keyType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">compareFunction</span><span class="p">:</span> <span class="nx">sortById</span>  
+<span class="p">});</span>
+
+<span class="nx">ObjectBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="nx">ObjectBST</span><span class="p">.</span><span class="nx">minValue</span><span class="p">();</span> <span class="c1">// { id: 1 }</span></code></pre></figure>
   <p class="separator">. . . . .</p>
-  <code class="code">search(value)</code>
-  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>              <span class="c1">// 1</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>              <span class="c1">// null</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
+  <code class="code">search(value, root = this.root)</code>
+  <p class="method-p">Returns the node from <code class="parameter">this.root</code> with the passed <code class="parameter">value</code> if it exists. Returns <code class="parameter">null</code> if there are no elements which match the passed value.</p>
+  <p class="method-p"><code class="parameter">Objects</code> will be matched with the <code class="parameter">toString()</code> method, so deep equality is <strong>not necessary</strong> for the <code class="parameter">search</code> method to return the correct node.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">ObjectBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">keyType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">compareFunction</span><span class="p">:</span> <span class="nx">sortById</span>  
+<span class="p">});</span>
+
+<span class="nx">ObjectBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="nx">ObjectBST</span><span class="p">.</span><span class="nx">search</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span> <span class="c1">// { id: 1 }</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">length()</code>
+  <p class="method-p">Returns <code class="parameter">this.size</code>, which is the number of nodes in the tree.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">StringBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">StringBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span><span class="dl">'</span><span class="s1">coal</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">mining</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">is</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">no</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fun</span><span class="dl">'</span><span class="p">]);</span>
+<span class="nx">StringBST</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span> <span class="c1">// 5</span></code></pre></figure>
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>

@@ -1606,6 +1606,20 @@ describe('BST', () => {
     // root case
     expect(bst.search(2).val).toBe(2);
     expect(bst.search(2)).toBe(bst.root);
+
+    bst = new Plus.BST('object', {
+      key: 'id',
+      keyType: 'number',
+      compareFunction: sortById
+    });
+
+    bst.insert([
+      { id: 1 },
+      { id: 2 },
+      { id: 3 }
+    ]);
+
+    expect(bst.search({ id: 1 }).val.id).toBe(1);
   });
 
   it('should return boolean on if value is in tree', () => {
