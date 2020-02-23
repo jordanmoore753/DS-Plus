@@ -371,7 +371,6 @@ describe('Linked List', () => {
     ll.insert(1, 2, 3);
     expect(ll.length()).toBe(4);
     ll.removeByValue(4);
-    console.log(ll);
     expect(ll.length()).toBe(3);
     ll.removeByValue(1);
     expect(ll.length()).toBe(2);
@@ -838,10 +837,11 @@ describe('Binary Tree', () => {
     let arrTwo = [1, 2, 3, undefined, 5, 6, undefined, undefined, undefined, 8];
     let treeTwo = new Plus.BinaryTree(arrTwo);
 
-    console.log(treeTwo.root);
     expect(treeTwo.root.left.right.left.val).toBe(8);
     expect(treeTwo.root.left.left.left.val).toBe(null);
 
+    tree = new Plus.BinaryTree();
+    expect(tree.root.val).toBe(1);
   });
 
   it('should find max depth for self', () => {
@@ -876,9 +876,11 @@ describe('Binary Tree', () => {
   it('should insert nodes one at a time', () => {
     let arr = [1, 2, 3, 4, undefined, 6, 7];
     let tree = new Plus.BinaryTree(arr);  
-    tree.insert(5);
 
-    expect(tree.root.left.right.val).toBe(5);
+    tree.insert(8).insert(9).insert(10);
+    tree.insert(11).insert(12).insert(13);
+
+    expect(tree.getValuesTraversal('post')).toEqual([8,9,4,11,12,10,2,13,6,7,3,1]);
 
     let two = [];
     let treeTwo = new Plus.BinaryTree(two);
@@ -898,18 +900,17 @@ describe('Binary Tree', () => {
 
     expect(tree4.root.left.left.val).toBe(77);
 
-    let arr5 = [1, 2, 3, 4, 5, 6, 7, 8, undefined];
-    let tree5 = new Plus.BinaryTree(arr5);
-    let res5 = tree5.insert('srrr');
-
-    expect(res5).toBe(tree5);
-    expect(tree5.root.left.left.right.val).toBe('srrr');
-
     let arr6 = [1, 2, undefined];
     let tree6 = new Plus.BinaryTree(arr6);
     tree6.insert(12);
-
     expect(tree6.root.right.val).toBe(12);
+
+    tree6 = new Plus.BinaryTree([1]);
+    tree6.insert(2).insert(3).insert(4);
+
+    expect(tree6.root.val).toBe(1);
+    expect(tree6.root.left.val).toBe(2);
+    expect(tree6.root.right.val).toBe(3);
   });
 
   it('should remove a single node of n value', () => {
@@ -919,59 +920,18 @@ describe('Binary Tree', () => {
     tree.remove(1);
 
     let res = tree.getValuesTraversal('pre');
-    expect(res[0]).toBe(3);
-    expect(res[1]).toBe(2);
-    expect(res.length).toBe(2);
+    expect(tree.getValuesTraversal()).toEqual([2, 3, 1]);
 
-    arr = [1];
-    tree = new Plus.BinaryTree(arr);
-    sol = [1];
-    tree.remove(1);
+    tree = new Plus.BinaryTree([1]);
+    tree.insert(2).insert(3).remove(3);
+    expect(tree.getValuesTraversal('post')).toEqual([2, 1]);
 
-    expect(tree.getValuesTraversal('pre')[0]).toBe(1);
-    expect(tree.getValuesTraversal('pre').length).toBe(1);
+    tree = new Plus.BinaryTree([1, 2, 3, 4, 5]);
+    tree.insert(6).remove(3);
+    expect(tree.getValuesTraversal()).toEqual([4, 5, 2, 1]);
 
-    arr = [];
-    tree = new Plus.BinaryTree(arr);
-    sol = [];
-    tree.remove(1);
-
-    expect(tree.getValuesTraversal('pre').length).toBe(0);
-
-    arr = [13, 12, 10, 4, 19, 16, 9];
-    tree = new Plus.BinaryTree(arr);
-    sol = [4, 9, 19, 13, 16, 10];
-    tree.remove(12);
-    res = tree.getValuesTraversal('in');
-    res.forEach((num, i) => expect(num === sol[i]).toBe(true));
-
-    arr = [10, 20, 30, undefined, undefined, undefined, 40];
-    tree = new Plus.BinaryTree(arr);
-    sol = [40, 10, 30];
-    tree.remove(20);
-    res = tree.getValuesTraversal('in');
-    res.forEach((num, i) => expect(num === sol[i]).toBe(true));
-
-    arr = [10, 20, 30, undefined, undefined, undefined, 40];
-    tree = new Plus.BinaryTree(arr);
-    sol = [20, 10, 30];
-    tree.remove(40);
-    res = tree.getValuesTraversal('in');
-    res.forEach((num, i) => expect(num === sol[i]).toBe(true));
-
-    arr = [10, 20, 30, undefined, undefined, undefined, 40];
-    tree = new Plus.BinaryTree(arr);
-    sol = [20, 10, 40];
-    tree.remove(30);
-    res = tree.getValuesTraversal('in');
-    res.forEach((num, i) => expect(num === sol[i]).toBe(true));  
-
-    arr = [10, 20, 30, undefined, undefined, undefined, 40];
-    tree = new Plus.BinaryTree(arr);
-    sol = [20, 10, 30, 40];
-    tree.remove(60);
-    res = tree.getValuesTraversal('in');
-    res.forEach((num, i) => expect(num === sol[i]).toBe(true));  
+    tree.remove(34);
+    expect(tree.getValuesTraversal()).toEqual([4, 5, 2, 1]);
   });
 
   it('should return a node of n value', () => {
@@ -992,7 +952,7 @@ describe('Binary Tree', () => {
     arr = [];
     tree = new Plus.BinaryTree(arr);
     node = tree.getNode(30);
-    expect(node).toBe(0);
+    expect(node).toBe(null);
 
     arr = [1];
     tree = new Plus.BinaryTree(arr);
@@ -1004,7 +964,7 @@ describe('Binary Tree', () => {
     arr = [1, 2, 3, 4];
     tree = new Plus.BinaryTree(arr);
     node = tree.getNode(100);
-    expect(node).toBe(0);    
+    expect(node).toBe(null);    
   });
 
   it('should return height of given node', () => {

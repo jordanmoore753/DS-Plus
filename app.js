@@ -495,7 +495,7 @@ Plus.LinkedList = class {
 
 Plus.BinaryTree = class {
   constructor(array) {
-    const insertLevelOrder = (array, root, index) => {
+    const insertLevelOrder = (array = [1], root, index) => {
       if (index < array.length) {
         let temp = new Plus.TreeNode(array[index]);
         root = temp;
@@ -511,7 +511,7 @@ Plus.BinaryTree = class {
   }
 
   findHeight(node) {
-    if (!node) {
+    if (!node || !node instanceof Plus.TreeNode) {
       throw 'Parameter is not a node.';
     }
 
@@ -649,7 +649,7 @@ Plus.BinaryTree = class {
 
   getNode(value) {
     if (!this.root.val) {
-      return 0;
+      return null;
     }
 
     let queue = new Plus.Queue();
@@ -681,15 +681,18 @@ Plus.BinaryTree = class {
       queue.enqueue(newNodes);
     }
 
-    return 0;
+    return null;
   }
 
   insert(value) {
     if (!this.root.val) {
       this.root.val = value;
       return this;
-    } else if (!this.root.left) {
+    } else if (!this.root.left || this.root.left.val === null) {
       this.root.left = new Plus.TreeNode(value);
+      return this;
+    } else if (!this.root.right || this.root.right.val === null) {
+      this.root.right = new Plus.TreeNode(value);
       return this;
     }
 
@@ -699,7 +702,7 @@ Plus.BinaryTree = class {
     let newNodes;
     let node;
 
-    queue.enqueue([this.root.left, this.root.right]);
+    queue.enqueue([this.root]);
     valueQueue.enqueue(value);
 
     while (valueQueue.data.length > 0) {
@@ -709,15 +712,20 @@ Plus.BinaryTree = class {
       for (let i = 0; i < oldNodes.length; i += 1) {
         node = oldNodes[i];
 
-        if (!node) {
-          node = new Plus.TreeNode(valueQueue.dequeue());
-          return this;
-        }
-
         if (!node.val) {
           node.val = valueQueue.dequeue();
           return this;
         } 
+
+        if (!node.left) {
+          node.left = new Plus.TreeNode(valueQueue.dequeue());
+          return this;
+        }
+
+        if (!node.right) {
+          node.right = new Plus.TreeNode(valueQueue.dequeue());
+          return this;
+        }
 
         newNodes.push(node.left);
         newNodes.push(node.right);
@@ -728,51 +736,26 @@ Plus.BinaryTree = class {
   }
 
   remove(value) {
-    if (!this.root.val) {
-      return 0;
+    return this.removeHelper(value, this.root);
+  }
+
+  removeHelper(value, root) {
+    if (root.left && root.left.val === value) {
+      root.left = null;
+      return this;
     }
 
-    let queue = new Plus.Queue();
-    let foundMatch = false;
-    let oldNodes;
-    let newNodes;
-    let deleteNode;
-    let lastNode;
-    let node;
-
-    queue.enqueue([this.root]);
-
-    while (queue.data[0].length > 0) {
-      oldNodes = queue.dequeue();
-      newNodes = [];
-
-      for (let i = 0; i < oldNodes.length; i += 1) {
-        node = oldNodes[i];
-
-        if (node.val === value && !foundMatch) {
-          foundMatch = true;
-          deleteNode = node;
-        } 
-
-        if (node.val !== value) {
-          lastNode = node;
-        }
-
-        if (node.left) {
-          newNodes.push(node.left);
-        }
-
-        if (node.right) {
-          newNodes.push(node.right);
-        }
-      }
-
-      queue.enqueue(newNodes);
+    if (root.right && root.right.val === value) {
+      root.right = null;
+      return this;
     }
 
-    if (deleteNode && lastNode) {
-      deleteNode.val = lastNode.val;
-      lastNode.val = null;      
+    if (root.left) {
+      this.removeHelper(value, root.left); 
+    }
+
+    if (root.right) {
+      this.removeHelper(value, root.right); 
     }
 
     return this;
