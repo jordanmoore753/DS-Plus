@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=86f6e293ca6e56cf9e086834b33859b248787efa">
+    <link rel="stylesheet" href="/assets/css/style.css?v=7cc830f2f2cd6d98408d0d7d1d4ba410c06c20b1">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
@@ -27,6 +27,42 @@
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="/assets/css/ie.css">
     <![endif]-->
+    <script type="text/javascript">
+      $(function() {
+        let controller = {
+          init: function() {
+            this.hideAll();
+            this.binder();
+          },
+
+          hideAll: function() {
+            $('#queue').hide();
+            $('#stack').hide();
+            $('#linkedlist').hide();
+            $('#bt').hide();
+            $('#bst').hide();
+            $('#holder-links hr').hide();
+          },
+
+          binder: function() {
+            $('#links-classes a').on('click', $.proxy(this.show, this));
+          },
+
+          show: function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            this.hideAll();
+            let id = '#' + $(e.target).attr('data-id');
+
+            $('#holder-links hr').fadeIn(200);
+            $(id).fadeIn(200);
+          }
+        };
+
+        controller.init();
+      });
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <style type="text/css">
       .code {
@@ -37,10 +73,14 @@
 
       .ds-heading {
         margin: 30px 0;
+        text-align: center;
+        font-size: 2rem;
       }
 
       .method-heading {
+        text-align: center;
         margin: 30px 0;
+        text-decoration: underline;
       }
 
       .parameter {
@@ -90,6 +130,10 @@
         color: black;
       }
 
+      .wrapper section {
+        padding-bottom: 0px;
+      }
+
       h1,h2,h3,h4,h5,h6 {
         color: black;
       }
@@ -103,6 +147,10 @@
       }
 
       .topper:hover {
+        color: #a38302;
+      }
+
+      #my-name {
         color: #a38302;
       }
     </style>
@@ -123,28 +171,31 @@
           <hr>
         </div>
 
-        <p>Sometimes, the built-in data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
-<p>Fear not. <em>Plus</em> gives developers fast and reliable data structures.</p>
-<p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword and a constructor function.</p>
-<p>Click on any of the following links to view the documentation for a given <code class="code">class</code>.</p>
-<ul id="links-classes">
-  <li class="link-class-item">
-    <a href="#queue">Queue</a>
-  </li>
-  <li class="link-class-item">
-    <a href="#stack">Stack</a>
-  </li>
-  <li class="link-class-item">
-    <a href="#linkedlist">Linked List</a>
-  </li>
-  <li class="link-class-item">
-    <a href="#bt">Binary Tree</a>
-  </li>
-  <li class="link-class-item">
-    <a href="#bst">Binary Search Tree</a>
-  </li>
-</ul>
-<hr>
+        <div id="holder-links">
+  <p>Sometimes, the built-in data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
+  <p>Fear not. <em>Plus</em> gives developers fast and reliable data structures.</p>
+  <p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword and a constructor function.</p>
+  <p>Click on any of the following links to view the documentation for a given <code class="code">class</code>.</p>
+  <ul id="links-classes">
+    <li class="link-class-item">
+      <a href="#queue" data-id='queue'>Queue</a>
+    </li>
+    <li class="link-class-item">
+      <a data-id='stack' href="#stack">Stack</a>
+    </li>
+    <li class="link-class-item">
+      <a data-id='linkedlist' href="#linkedlist">Linked List</a>
+    </li>
+    <li class="link-class-item">
+      <a data-id='bt' href="#bt">Binary Tree</a>
+    </li>
+    <li class="link-class-item">
+      <a data-id='bst' href="#bst">Binary Search Tree</a>
+    </li>
+  </ul>
+  <hr>
+</div>
+
 <section id="queue" class="doc-section">
   <h1 class="ds-heading">Queue</h1>
   <p>Queues are very easy to implement with <em>Plus</em>. There are two initialization options for the data storage in the queue: an array, or a linked list.</p>
@@ -196,7 +247,7 @@
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
-<hr>
+
 <section id="stack" class="doc-section">
   <h1 class="ds-heading">Stack</h1>
   <p>Stacks are almost identical to the <code class="code">Queue</code> objects in <em>Plus</em>. There are also only two initialization options for the data storage in the queue: an array, or a linked list.</p>
@@ -249,7 +300,7 @@
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
-<hr>
+
 
 <section id="linkedlist" class="doc-section">
   <h1 class="ds-heading">Linked List</h1>
@@ -410,7 +461,7 @@
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
-<hr>
+
 <section id="bt" class="doc-section">
 <h1 class="ds-heading">Binary Tree</h1>
   <p>The main difference between <code class="code">BinaryTree</code> and <code class="code">BST</code> objects are that the former have no data constraints. This means that <strong>any</strong> data can be inserted into the tree; however, the <code class="code">BST</code> object enforces data consistency which creates <code class="parameter">O(log2n)</code> search, insert, and removal times.</p>
@@ -552,7 +603,7 @@
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
-<hr>
+
 <section id="bst" class="doc-section">
   <h1 class="ds-heading">Binary Search Tree</h1>
   <p><code class="code">BST</code> objects are self-balancing, meaning that the difference in height between the <code class="parameter">left</code> and <code class="parameter">right</code> branches of a given node cannot be less than <strong>-1</strong> or greater than <strong>1</strong>.</p>
@@ -705,7 +756,32 @@
   <p class="method-p">Returns <code class="parameter">this.size</code>, which is the number of nodes in the tree.</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">StringBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">);</span>
 <span class="nx">StringBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span><span class="dl">'</span><span class="s1">coal</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">mining</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">is</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">no</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fun</span><span class="dl">'</span><span class="p">]);</span>
-<span class="nx">StringBST</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span> <span class="c1">// 5</span></code></pre></figure>
+<span class="nx">StringBST</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span> <span class="c1">// 5</span>
+<span class="nx">StringBST</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="dl">'</span><span class="s1">coal</span><span class="dl">'</span><span class="p">).</span><span class="nx">remove</span><span class="p">(</span><span class="dl">'</span><span class="s1">mining</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">StringBST</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span> <span class="c1">// 3</span>
+<span class="nx">StringBST</span><span class="p">.</span><span class="nx">remove</span><span class="p">([</span><span class="dl">'</span><span class="s1">is</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">no</span><span class="dl">'</span><span class="p">]);</span>
+<span class="nx">StringBST</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span> <span class="c1">// 1</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">contains(value)</code>
+  <p class="method-p">Returns <code class="parameter">true || false</code>, depending on if <code class="parameter">value</code> is a property on <code class="parameter">this.duplicates</code> with <code class="parameter">true</code> value.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">NumberBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="c1">// false</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// true</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">isEmpty()</code>
+  <p class="method-p">Returns <code class="parameter">true || false</code>, depending on if <code class="parameter">this.root</code> is <code class="parameter">null</code>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">NumberBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">();</span> <span class="c1">// true</span>
+
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">();</span> <span class="c1">// false</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">getValuesTraversal(type = 'post')</code>
+  <p class="method-p">Returns an <code class="parameter">[]</code> representing the elements in a certain order traversal. The possible options are in: <code class="parameter">['post', 'pre', 'in']</code>. Will <strong>not</strong> include <code class="parameter">null</code> values in the return value.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">NumberBST</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">BST</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span>
+<span class="nx">NumberBST</span><span class="p">.</span><span class="nx">getValuesTraversal</span><span class="p">();</span> <span class="c1">// [1, 4, 3, 2]</span></code></pre></figure>
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
@@ -717,7 +793,7 @@
     
     <div class="wrapper">
       <hr>
-      <span class="credits left" style="text-align: center; display: block;">Project maintained by <a href="https://github.com/jordanmoore753">jordanmoore753</a></span>
+      <span class="credits left" style="text-align: center; display: block;">Project maintained by <a id="my-name" href="https://github.com/jordanmoore753">jordanmoore753</a></span>
     </div>
   </body>
 </html>

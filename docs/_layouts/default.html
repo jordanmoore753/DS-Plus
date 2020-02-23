@@ -14,6 +14,42 @@
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="{{ '/assets/css/ie.css' | relative_url }}">
     <![endif]-->
+    <script type="text/javascript">
+      $(function() {
+        let controller = {
+          init: function() {
+            this.hideAll();
+            this.binder();
+          },
+
+          hideAll: function() {
+            $('#queue').hide();
+            $('#stack').hide();
+            $('#linkedlist').hide();
+            $('#bt').hide();
+            $('#bst').hide();
+            $('#holder-links hr').hide();
+          },
+
+          binder: function() {
+            $('#links-classes a').on('click', $.proxy(this.show, this));
+          },
+
+          show: function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            this.hideAll();
+            let id = '#' + $(e.target).attr('data-id');
+
+            $('#holder-links hr').fadeIn(200);
+            $(id).fadeIn(200);
+          }
+        };
+
+        controller.init();
+      });
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <style type="text/css">
       .code {
@@ -24,10 +60,14 @@
 
       .ds-heading {
         margin: 30px 0;
+        text-align: center;
+        font-size: 2rem;
       }
 
       .method-heading {
+        text-align: center;
         margin: 30px 0;
+        text-decoration: underline;
       }
 
       .parameter {
@@ -77,6 +117,10 @@
         color: black;
       }
 
+      .wrapper section {
+        padding-bottom: 0px;
+      }
+
       h1,h2,h3,h4,h5,h6 {
         color: black;
       }
@@ -90,6 +134,10 @@
       }
 
       .topper:hover {
+        color: #a38302;
+      }
+
+      #my-name {
         color: #a38302;
       }
     </style>
@@ -132,7 +180,7 @@
     {% endif %}
     <div class="wrapper">
       <hr>
-      <span class="credits left" style="text-align: center; display: block;">Project maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></span>
+      <span class="credits left" style="text-align: center; display: block;">Project maintained by <a id="my-name" href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></span>
     </div>
   </body>
 </html>
