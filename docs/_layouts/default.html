@@ -39,11 +39,22 @@
             e.preventDefault();
             e.stopPropagation();
 
-            this.hideAll();
             let id = '#' + $(e.target).attr('data-id');
 
-            $('#holder-links hr').fadeIn(200);
-            $(id).fadeIn(200);
+            if (this.findActive() !== $(id)[0]) {
+              this.hideAll();
+              $('#holder-links hr').fadeIn(200);
+              $(id).fadeIn(200);
+            } else {
+              $('#holder-links hr').hide();
+              $(id).hide();
+            }
+
+            return;
+          },
+
+          findActive: function() {
+            return $('.doc-section').filter(':visible')[0];
           }
         };
 
@@ -91,6 +102,7 @@
         color: black;
         list-style-type: circle;
         transition: .4s;
+        font-weight: 200;
       }
 
       .link-class-item a:hover {
@@ -99,7 +111,8 @@
 
       ul {
         color: #bd9702;
-        list-style-type: circle;
+        list-style-type: disc;
+        list-style-image: none;
       }
 
       .doc-section {
@@ -138,7 +151,11 @@
       }
 
       #my-name {
-        color: #a38302;
+        color: #856a00;
+      }
+
+      .left {
+        font-size: 1rem;
       }
     </style>
   </head>
@@ -180,7 +197,7 @@
     {% endif %}
     <div class="wrapper">
       <hr>
-      <span class="credits left" style="text-align: center; display: block;">Project maintained by <a id="my-name" href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></span>
+      <span class="credits left" style="text-align: center; display: block;">Project created and maintained by <a id="my-name" href="{{ site.github.owner_url }}">Jordan Moore</a></span>
     </div>
   </body>
 </html>

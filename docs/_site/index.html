@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=7cc830f2f2cd6d98408d0d7d1d4ba410c06c20b1">
+    <link rel="stylesheet" href="/assets/css/style.css?v=f8a51a128df4c4c1ef13dd6e757f08609a918e28">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
@@ -52,11 +52,22 @@
             e.preventDefault();
             e.stopPropagation();
 
-            this.hideAll();
             let id = '#' + $(e.target).attr('data-id');
 
-            $('#holder-links hr').fadeIn(200);
-            $(id).fadeIn(200);
+            if (this.findActive() !== $(id)[0]) {
+              this.hideAll();
+              $('#holder-links hr').fadeIn(200);
+              $(id).fadeIn(200);
+            } else {
+              $('#holder-links hr').hide();
+              $(id).hide();
+            }
+
+            return;
+          },
+
+          findActive: function() {
+            return $('.doc-section').filter(':visible')[0];
           }
         };
 
@@ -104,6 +115,7 @@
         color: black;
         list-style-type: circle;
         transition: .4s;
+        font-weight: 200;
       }
 
       .link-class-item a:hover {
@@ -112,7 +124,8 @@
 
       ul {
         color: #bd9702;
-        list-style-type: circle;
+        list-style-type: disc;
+        list-style-image: none;
       }
 
       .doc-section {
@@ -151,7 +164,11 @@
       }
 
       #my-name {
-        color: #a38302;
+        color: #856a00;
+      }
+
+      .left {
+        font-size: 1rem;
       }
     </style>
   </head>
@@ -250,7 +267,7 @@
 
 <section id="stack" class="doc-section">
   <h1 class="ds-heading">Stack</h1>
-  <p>Stacks are almost identical to the <code class="code">Queue</code> objects in <em>Plus</em>. There are also only two initialization options for the data storage in the queue: an array, or a linked list.</p>
+  <p>Stacks are almost identical to the <code class="code">Queue</code> objects in <em>Plus</em>. There are also only two initialization options for the data storage, just like in a <code class="code">Queue</code> object: an array, or a linked list.</p>
   <h2 class="method-heading">Methods</h2>
   <code class="code">constructor(data = null)</code>
   <p class="method-p">Initialize a new <code class="parameter">Stack</code> object. Possible parameter(s) are: <code class="parameter">'linkedlist'</code>.</p>
@@ -793,7 +810,7 @@
     
     <div class="wrapper">
       <hr>
-      <span class="credits left" style="text-align: center; display: block;">Project maintained by <a id="my-name" href="https://github.com/jordanmoore753">jordanmoore753</a></span>
+      <span class="credits left" style="text-align: center; display: block;">Project created and maintained by <a id="my-name" href="https://github.com/jordanmoore753">Jordan Moore</a></span>
     </div>
   </body>
 </html>
