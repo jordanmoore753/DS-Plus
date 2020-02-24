@@ -22,6 +22,7 @@
           init: function() {
             this.hideAll();
             this.binder();
+            $('#holder-links hr').hide();
           },
 
           hideAll: function() {
@@ -30,7 +31,6 @@
             $('#linkedlist').hide();
             $('#bt').hide();
             $('#bst').hide();
-            $('#holder-links hr').hide();
           },
 
           binder: function() {
@@ -45,8 +45,8 @@
 
             if (this.findActive() !== $(id)[0]) {
               this.hideAll();
-              $('#holder-links hr').fadeIn(200);
-              $(id).fadeIn(200);
+              $('#holder-links hr').show();
+              $(id).fadeIn(100);
             } else {
               $('#holder-links hr').hide();
               $(id).hide();
