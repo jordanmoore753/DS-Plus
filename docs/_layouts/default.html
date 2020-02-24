@@ -6,6 +6,7 @@
 
 {% seo %}
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
     <!--[if lt IE 9]>
@@ -157,6 +158,41 @@
       .left {
         font-size: 1rem;
       }
+
+      #out-links-list {
+        color: black;
+        font-size: 1rem;
+        list-style-type: none;
+        width: 100%;
+        margin: auto;
+        padding: 0;
+        text-align: center;
+        padding-bottom: 10px;
+      }
+
+      #out-links-list li {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      #out-links-list a {
+        font-size: 1rem;
+        color: black;
+        transition: .3s;
+      }
+
+      #out-links-list a:hover {
+        color: #a38302;
+      }
+
+      i {
+        padding: 0 5px;
+      }
+
+      #out-links-list div {
+        display: inline;
+        font-size: 1.1rem;
+      }
     </style>
   </head>
   <body>
@@ -197,7 +233,26 @@
     {% endif %}
     <div class="wrapper">
       <hr>
-      <span class="credits left" style="text-align: center; display: block;">Project created and maintained by <a id="my-name" href="{{ site.github.owner_url }}">Jordan Moore</a></span>
+      <ul id="out-links-list">
+        <li>
+          <div>
+            <i class="fa fa-github"></i>
+          </div>
+          <a href="{{ site.github.repository_url }}">Github</a>
+        </li>
+        <li>
+          <div>
+            <i class="fa fa-code"></i>
+          </div>
+          <a href="{{ site.github.repository_url }}">npm</a>
+        </li>
+        <li>
+          <div>
+            <i class="fa fa-user"></i>
+          </div>
+          <a href="{{ site.github.owner_url }}">Jordan Moore</a>
+        </li>
+      </ul>
     </div>
   </body>
 </html>
