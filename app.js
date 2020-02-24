@@ -196,6 +196,10 @@ Plus.LinkedList = class {
   }
 
   insert(...newData) {
+    if (newData.length === 0) {
+      return null;
+    }
+
     let nodes = newData.map(function(data) {
       return {
         val: data,
@@ -225,7 +229,7 @@ Plus.LinkedList = class {
   }
 
   insertAtIndex(index, ...newData) {
-    if (index === undefined || typeof index !== 'number' || index < 0) {
+    if (index === undefined || typeof index !== 'number' || index < 0 || newData.length === 0) {
       return null;
     }
 
@@ -276,7 +280,6 @@ Plus.LinkedList = class {
     if (!value) { return null; }
 
     let headNode = this.head;
-    let val;
 
     if (headNode.val === value) {
       if (this.head.next === null) {
@@ -459,7 +462,7 @@ Plus.LinkedList = class {
 
     values.forEach(function(property) {
       if (typeof property === 'number' || typeof property === 'string') {
-        counts[property] = 0
+        counts[property] = 0;
       } 
     });
 
@@ -1195,7 +1198,5 @@ Plus.BST = class {
     return this.root === null;
   }
 };
-
-// Graph Prototype
 
 module.exports = Plus;

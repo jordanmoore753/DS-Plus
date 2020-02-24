@@ -221,6 +221,8 @@ describe('BST', () => {
     bst = new Plus.BST('string');
     bst.insert(['coal', 'mining', 'SUCKS']);
     solHelper(bst.getValuesTraversal(), ['SUCKS', 'mining', 'coal']);
+    bst.insert(['VERY', 'MUCH']);
+    solHelper(bst.getValuesTraversal(), ['MUCH', 'VERY', 'SUCKS', 'mining', 'coal']);
   });
 
   it('should remove elements and rebalance', () => {

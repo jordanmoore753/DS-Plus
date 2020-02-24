@@ -18,6 +18,14 @@ describe('Queue With Array', () => {
     queue.enqueue({ one: 'more!' });
     expect(queue.data.length === 2).toBe(true);
     expect(queue.data[0]).toBe(3);   
+
+    queue.dequeue();
+    queue.dequeue();
+    queue.dequeue();
+    queue.enqueue(1);
+
+    expect(queue.length()).toBe(1);
+    expect(queue.front()).toBe(1);
   });
 
   it('should append several elements to end of data', () => {
@@ -47,8 +55,8 @@ describe('Queue With Array', () => {
     queue.dequeue();
     queue.dequeue();
 
+    expect(queue.length()).toBe(0);
     expect(queue.dequeue()).toBe(null);
-
   });
 
   it('should return the first element', () => {
@@ -162,6 +170,12 @@ describe('Queue with Linked List', () => {
     expect(queue.data.head.val).toBe(3);
     expect(queue.dequeue()).toBe(3);
     expect(queue.front().val).toBe(5);
+
+    queue.dequeue();
+    expect(queue.front().val).toBe(null);
+
+    queue.enqueue(1);
+    expect(queue.front().val).toBe(1);
   });
 
   it('should return the head node', () => {

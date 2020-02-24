@@ -24,6 +24,11 @@ describe('Linked List', () => {
     expect(ll.length()).toBe(1);
     ll.removeByValue(3);
     expect(ll.length()).toBe(1);
+
+    ll.insert(2, 3);
+    expect(ll.length()).toBe(3);
+    expect(ll.head.val).toBe(2);
+    expect(ll.head.next.val).toBe(3);
   });
 
   it('should assign head value with method', () => {
@@ -39,6 +44,8 @@ describe('Linked List', () => {
 
   it('should insert single or multiple elements at tail end by default', () => {
     let ll = new Plus.LinkedList(4);
+
+    expect(ll.insert()).toBe(null);
 
     ll.insert(3);
 
@@ -108,6 +115,8 @@ describe('Linked List', () => {
 
   it('should insert single or multiple elements at index', () => {
     let ll = new Plus.LinkedList(4);
+
+    expect(ll.insertAtIndex(0)).toBe(null);
 
     ll.insertAtIndex(0, 2, true);
 
@@ -255,6 +264,8 @@ describe('Linked List', () => {
   it('should get the node at specified index', () => {
     let ll = new Plus.LinkedList(4);
 
+    expect(ll.getNodeAtIndex()).toBe(null);
+    
     let node = ll.getNodeAtIndex(0);
     let nonNode = ll.getNodeAtIndex(10);
     let nopeNode = ll.getNodeAtIndex('string');
