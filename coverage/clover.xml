@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1582550251245" clover="3.2.0">
-  <project timestamp="1582550251245" name="All files">
+<coverage generated="1582555844119" clover="3.2.0">
+  <project timestamp="1582555844119" name="All files">
     <metrics statements="587" coveredstatements="587" conditionals="373" coveredconditionals="373" methods="86" coveredmethods="86" elements="1046" coveredelements="1046" complexity="0" loc="587" ncloc="587" packages="1" files="2" classes="2"/>
     <file name="app.js" path="/home/jordan/github/plus/app.js">
       <metrics statements="569" coveredstatements="569" conditionals="362" coveredconditionals="362" methods="80" coveredmethods="80"/>
