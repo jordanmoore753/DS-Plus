@@ -1,4 +1,4 @@
-# DS-Plus [![Build Status](https://travis-ci.com/jordanmoore753/DS-Plus.png?branch=master)](https://travis-ci.org/jordanmoore753/DS-Plus)
+# DS-Plus [![Build Status](https://travis-ci.com/jordanmoore753/DS-Plus.svg?branch=master)](https://travis-ci.org/jordanmoore753/DS-Plus)
 
 
 *DS-Plus* delivers non-native data structures to *JavaScript*. Included in this release of *DS-Plus* are the following:
