@@ -1,4 +1,4 @@
-# Plus [![Build Status](https://travis-ci.com/jordanmoore753/Plus.svg?branch=master)](https://travis-ci.org/{jordanmoore753}/{Plus})
+# Plus [![Build Status](https://travis-ci.com/jordanmoore753/Plus.svg?branch=master)](https://travis-ci.org/jordanmoore753/Plus)
 
 
 *Plus* delivers non-native data structures to *JavaScript*. Included in this release of *Plus* are the following:
