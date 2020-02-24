@@ -2,7 +2,7 @@
   <p>Sometimes, the built-in data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
   <p>Fear not. <em>Plus</em> gives developers fast and reliable data structures.</p>
   <p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword and a constructor function.</p>
-  <p>Click on any of the following links to view the documentation for a given <code class="code">class</code>.</p>
+  <p>Below, you may click on any of the links to view the documentation for a given <code class="code">class</code>.</p>
   <ul id="links-classes">
     <li class="link-class-item">
       <a href="#queue" data-id='queue'>Queue</a>
@@ -86,6 +86,19 @@ LinkedListQueue.search(1);    // { val: 1, next: null }
 LinkedListQueue.search(3);    // null
 {% endhighlight %}
   <p class="separator">. . . . .</p>
+  <code class="code">length()</code>
+  <p class="method-p">Returns the length of the <code class="parameter">data</code> property. If a <code class="parameter">LinkedList</code> object is empty, it will still have a length of <strong>1</strong>, since it still technically has a node: <code class="parameter">{ val: null, next: null }</code>.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.length();    // 1
+Queue.dequeue();
+Queue.length();    // 0
+LinkedListQueue.enqueue(1);
+LinkedListQueue.length();   // 2
+LinkedListQueue.dequeue();
+LinkedListQueue.length();   // 1
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
 
@@ -153,9 +166,21 @@ LinkedListStack.search(1);    // { val: 1, next: null }
 LinkedListStack.search(3);    // null
 {% endhighlight %}
   <p class="separator">. . . . .</p>
+  <code class="code">length()</code>
+  <p class="method-p">Returns the length of the <code class="parameter">data</code> property. If a <code class="parameter">LinkedList</code> object is empty, it will still have a length of <strong>1</strong>, since it still technically has a node: <code class="parameter">{ val: null, next: null }</code>.</p>
+{% highlight javascript %}
+Stack.push(1);
+Stack.length();    // 1
+Stack.pop();
+Stack.length();    // 0
+LinkedListStack.push(1);
+LinkedListStack.length();   // 2
+LinkedListStack.pop();
+LinkedListStack.length();   // 1
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
-
 
 <section id="linkedlist" class="doc-section">
   <h1 class="ds-heading">Linked List</h1>

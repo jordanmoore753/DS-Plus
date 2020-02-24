@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript in style.","headline":"Plus","@type":"WebSite","url":"http://localhost:4000/","name":"Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=dd93da8eb430dff141515f0d119335f31a6e411d">
+    <link rel="stylesheet" href="/assets/css/style.css?v=54bcb74c78a7f019485563d998741ef19b41c6ed">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
@@ -228,7 +228,7 @@
   <p>Sometimes, the built-in data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
   <p>Fear not. <em>Plus</em> gives developers fast and reliable data structures.</p>
   <p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword and a constructor function.</p>
-  <p>Click on any of the following links to view the documentation for a given <code class="code">class</code>.</p>
+  <p>Below, you may click on any of the links to view the documentation for a given <code class="code">class</code>.</p>
   <ul id="links-classes">
     <li class="link-class-item">
       <a href="#queue" data-id='queue'>Queue</a>
@@ -298,6 +298,17 @@
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
 <span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
   <p class="separator">. . . . .</p>
+  <code class="code">length()</code>
+  <p class="method-p">Returns the length of the <code class="parameter">data</code> property. If a <code class="parameter">LinkedList</code> object is empty, it will still have a length of <strong>1</strong>, since it still technically has a node: <code class="parameter">{ val: null, next: null }</code>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>    <span class="c1">// 1</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>
+<span class="nx">Queue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>    <span class="c1">// 0</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>   <span class="c1">// 2</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>
+<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>   <span class="c1">// 1</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
 
@@ -351,9 +362,19 @@
 <span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
 <span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
   <p class="separator">. . . . .</p>
+  <code class="code">length()</code>
+  <p class="method-p">Returns the length of the <code class="parameter">data</code> property. If a <code class="parameter">LinkedList</code> object is empty, it will still have a length of <strong>1</strong>, since it still technically has a node: <code class="parameter">{ val: null, next: null }</code>.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>    <span class="c1">// 1</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+<span class="nx">Stack</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>    <span class="c1">// 0</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>   <span class="c1">// 2</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+<span class="nx">LinkedListStack</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>   <span class="c1">// 1</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>
-
 
 <section id="linkedlist" class="doc-section">
   <h1 class="ds-heading">Linked List</h1>

@@ -65,6 +65,14 @@ Plus.Queue = class {
       return null;
     }
   }
+
+  length() {
+    if (this.ll) {
+      return this.data.length();
+    } else {
+      return this.data.length;
+    }
+  }
 };
 
 // Stack Prototype
@@ -107,7 +115,7 @@ Plus.Stack = class {
 
   isEmpty() {
     if (this.ll) {
-      return this.data.head === null;
+      return this.data.head.val === null;
     } else {
       return this.data.length > 0 ? false : true;
     } 
@@ -130,6 +138,14 @@ Plus.Stack = class {
       }
 
       return null;
+    }
+  }
+
+  length() {
+    if (this.ll) {
+      return this.data.length();
+    } else {
+      return this.data.length;
     }
   }
 };
@@ -157,8 +173,12 @@ Plus.LinkedList = class {
     let deletedValue;
 
     if (headNode.next === null) {
-      this.head = null;
-      return this.head;
+      this.head = {
+        val: null,
+        next: null
+      };
+
+      return headNode;
     }
 
     while (headNode.next !== null) {
@@ -186,10 +206,19 @@ Plus.LinkedList = class {
     let tail = this.tail();
 
     while (nodes.length > 0) {
+      if (this.head.val === null) {
+        this.head = nodes[0];
+        nodes.shift();
+        this.size += 1;
+        tail = this.head;
+        continue;
+      } else {
+        tail.next = nodes[0]; // forms link between data and tail
+      }
+
       this.size += 1;
-      tail.next = nodes[0]; // forms link between data and tail
-      tail = tail.next;     // next iteration, tail is the last added element
-      nodes.shift();        // removes recently added data front front of queue
+      tail = tail.next;
+      nodes.shift();
     }
 
     return this;
@@ -244,7 +273,7 @@ Plus.LinkedList = class {
   }
 
   removeByValue(value) {
-    if (!value) { return 0; }
+    if (!value) { return null; }
 
     let headNode = this.head;
     let val;
@@ -252,21 +281,24 @@ Plus.LinkedList = class {
     if (headNode.val === value) {
       if (this.head.next === null) {
         this.size -= 1;
-        return null;
+        this.head = {
+          val: null,
+          next: null
+        };
+
+        return value;
       }
 
-      val = this.head.val;
       this.head = this.head.next;
       this.size -= 1;
-      return val;
+      return value;
     }
 
     while (headNode.next !== null) {
       if (headNode.next.val === value) {
         this.size -= 1;
-        val = headNode.next.val;
         headNode.next = headNode.next.next;
-        return val;
+        return value;
       }
 
       headNode = headNode.next;
@@ -284,7 +316,10 @@ Plus.LinkedList = class {
       val = this.head.val;
 
       if (this.head.next === null) {
-        this.head = null;
+        this.head = {
+          val: null,
+          next: null
+        };
       } else {
         this.head = this.head.next;
       }
