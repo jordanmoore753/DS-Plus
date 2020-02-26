@@ -1199,4 +1199,209 @@ Plus.BST = class {
   }
 };
 
+// Graph Prototype
+
+Plus.Graph = class {
+  constructor(dataType, direction) {
+    const validDataType = function(type) {
+      const acceptableOptions = { object: true, string: true, number: true };
+      if (type === undefined || type === null) {
+        return false;
+      }
+
+      return acceptableOptions[type] !== undefined;
+    };
+
+    const validDirection = function(dir) {
+      const acceptableOptions = { one: true, two: true };
+      if (dir === undefined || dir === null) {
+        return false;
+      }
+
+      return acceptableOptions[dir];
+    };
+
+    if (!validDataType(dataType) || !validDirection(direction)) {
+      throw 'Data type must be: string, number, object. Direction must be one or two.';
+    }
+
+    this.data = {};
+    this.type = dataType;
+    this.size = 0;
+    this.way = direction;
+  }
+
+  addVertices(...vertices) {
+    let str;
+
+    vertices.forEach(function(vertex) {
+      if (!this.validData(vertex)) {
+        throw 'Incorrect data type for this graph.';
+      }
+
+      str = typeof vertex !== 'string' ? this.toString(vertex) : vertex;
+
+      if (this.data[str]) {
+        throw 'Vertex already exists in graph.';
+      }
+
+      this.data[str] = [];
+      this.size += 1;
+    }, this);
+
+    return this;
+  }
+
+  removeVertex(vertex) {
+    let str = this.toString(vertex);
+
+    if (!this.data[str]) {
+      return null;
+    }
+
+    let edges = this.data[str];
+
+    edges.forEach(function(edge) {
+      this.removeEdges(edge, [vertex]);
+    }, this);
+
+    // write test to check if null equals exists
+
+    this.data[str] = null;
+    this.size -= 1;
+    return vertex;
+  }
+
+  addEdges(vertex, arr) {
+    if (!this.validData(vertex) || !Array.isArray(arr)) {
+      throw 'Must have two arguments: vertex and edges array.';
+    }
+
+    let str = this.toString(vertex);
+    let self = this;
+
+    arr.forEach(function(value) {
+      if (!this.data[this.toString(value)]) {
+        throw 'Vertex in edges array not a valid vertex.';
+      }
+
+      if (this.toString(value) === str) {
+        throw 'Vertex in edges array cannot be the first argument.';
+      }
+
+      if (this.data[str].filter((val) => self.toString(val) === self.toString(value)).length === 1) {
+        throw 'Vertex already exists as edge for passed vertex.';
+      }
+
+      if (this.way === 'one') {
+        this.data[str].push(value);
+      } else {
+        this.data[str].push(value);
+        this.data[this.toString(value)].push(vertex);
+      }
+    }, this);
+
+    return this;
+  }
+
+  removeEdges(vertex, arr) {
+    if (!this.validData(vertex) || !Array.isArray(arr)) {
+      throw 'Must have two arguments: vertex and edges array.';
+    }
+
+    let str = this.toString(vertex);
+    let self = this;
+
+    arr.forEach(function(value) {
+      if (this.way === 'one') {
+        this.data[str] = this.data[str].filter((val) => self.toString(val) !== self.toString(value));
+      } else {
+        this.data[str] = this.data[str].filter((val) => self.toString(val) !== self.toString(value));
+        this.data[this.toString(value)] = this.data[this.toString(value)].filter((val) => self.toString(val) !== self.toString(vertex));
+      }     
+    }, this);
+
+    return this;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
+  getEdges(vertex) {
+    if (!vertex) {
+      return null;
+    }
+
+    if (!this.data[this.toString(vertex)]) {
+      throw 'Vertex does not exist.';
+    }
+
+    return this.data[this.toString(vertex)];
+  }
+
+  edgesToArray(vertex) {
+    if (!vertex) {
+      return null;
+    }
+
+    let str = this.toString(vertex);
+
+    if (!this.data[str]) {
+      throw 'Vertex does not exist.';
+    }
+
+    let arr = [];
+
+    this.data[str].forEach(function(edge) {
+      arr.push([vertex, edge]);
+    });
+
+    return arr;
+  }
+
+  numberOfEdges(vertex) {
+    if (!vertex || !this.data[this.toString(vertex)]) {
+      return null;
+    }
+
+    return this.data[this.toString(vertex)].length;
+  }
+
+  hasEdge(vertexOne, vertexTwo) {
+    if (!this.data[this.toString(vertexOne)]) {
+      throw 'First vertex does not exist.';
+    }
+
+    if (!this.data[this.toString(vertexTwo)]) {
+      throw 'Second vertex does not exist.';
+    }
+
+    let self = this;
+
+    return this.data[this.toString(vertexOne)].filter((val) => self.toString(val) === self.toString(vertexTwo)).length === 1;
+  }
+
+  validData(value) {
+    switch (this.type) {
+      case 'string':
+        return Util.isString(value);
+      case 'number':
+        return Util.isNumber(value);
+      default:
+        return Util.isObjectGraph.call(this, value);
+    }
+  }
+
+  toString(vertex) {
+    if (this.type === 'string') {
+      return vertex;
+    } else if (this.type === 'number') {
+      return vertex.toString();
+    } else {
+      return JSON.stringify(vertex);
+    }
+  }
+};
+
 module.exports = Plus;

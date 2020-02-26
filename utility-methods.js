@@ -18,6 +18,14 @@ exports.isObject = function(value) {
   return typeof value === 'object' && !Array.isArray(value) && typeof value[this.key] === this.keyType;
 };
 
+exports.isObjectGraph = function(value) {
+  if (Object.prototype.toString.call(value) === '[object Date]') { 
+    return false; 
+  }
+
+  return typeof value === 'object' && !Array.isArray(value);
+}
+
 exports.defaultComparison = function(childNodeValue, parentNodeValue) {
   return childNodeValue < parentNodeValue;
 };
