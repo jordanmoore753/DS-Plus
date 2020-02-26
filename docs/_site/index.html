@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript with style.","headline":"DS-Plus","@type":"WebSite","url":"http://localhost:4000/","name":"DS-Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=64a40b05740b7646ddcc7c3f913038801c76c2bb">
+    <link rel="stylesheet" href="/assets/css/style.css?v=feeef1b6c663e2ea408fb320eb6037f22c88b2c6">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="/favicon.png" type="image/png" />
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
@@ -93,8 +93,13 @@
 
       .method-heading {
         text-align: center;
-        margin: 30px 0;
-        text-decoration: underline;
+        padding-bottom: 10px;
+        border-bottom: 1px solid black;
+        width: 32%;
+        display: block;
+        margin: 0 auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
       }
 
       .parameter {
@@ -976,25 +981,85 @@
 <span class="nx">GraphBi</span><span class="p">.</span><span class="nx">removeEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
 <span class="nx">GraphBi</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// [3]</span></code></pre></figure>
   <p class="separator">. . . . .</p>
-  <code class="code">search(value)</code>
-  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>              <span class="c1">// 1</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>              <span class="c1">// null</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>    <span class="c1">// { val: 1, next: null }</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>    <span class="c1">// null</span></code></pre></figure>
+  <code class="code">getSize()</code>
+  <p class="method-p">Returns the number of vertices in the <code class="parameter">Graph</code> object.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getSize</span><span class="p">();</span> <span class="c1">// 0</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">three</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getSize</span><span class="p">();</span> <span class="c1">// 3</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">removeVertex</span><span class="p">(</span><span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getSize</span><span class="p">();</span> <span class="c1">// 2</span></code></pre></figure>
   <p class="separator">. . . . .</p>
-  <code class="code">length()</code>
-  <p class="method-p">Returns the length of the <code class="parameter">data</code> property. If a <code class="parameter">LinkedList</code> object is empty, it will still have a length of <strong>1</strong>, since it still technically has a node: <code class="parameter">{ val: null, next: null }</code>.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Queue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>    <span class="c1">// 1</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>
-<span class="nx">Queue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>    <span class="c1">// 0</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">enqueue</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>   <span class="c1">// 2</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">dequeue</span><span class="p">();</span>
-<span class="nx">LinkedListQueue</span><span class="p">.</span><span class="nx">length</span><span class="p">();</span>   <span class="c1">// 1</span></code></pre></figure>
+  <code class="code">getEdges(vertex)</code>
+  <p class="method-p">Returns the <code class="parameter">[]</code> of <strong>edges</strong> for the passed <code class="parameter">vertex</code>.</p>
+  <p class="method-p">Errors will be thrown for vertices which are not in the <code class="parameter">data</code> property.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">}]);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">});</span>               <span class="c1">// [{ id: 1, some: 'info' }]</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span> <span class="c1">// [{ id: 0 }]</span>
+
+<span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// [2, 3]</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// []</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">numberOfEdges(vertex)</code>
+  <p class="method-p">Returns the number of elements in <code class="parameter">[]</code> of the passed <code class="parameter">vertex</code>.</p>
+  <p class="method-p"><code class='parameter'>null</code> will be returned for vertices which are not in the <code class="parameter">data</code> property.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">}]);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">});</span>               <span class="c1">// [{ id: 1, some: 'info' }]</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span> <span class="c1">// [{ id: 0 }]</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">numberOfEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">});</span> <span class="c1">// 1</span>
+
+<span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// [2, 3]</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// []</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">numberOfEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// 2</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">hasEdge(vertexOne, vertexTwo)</code>
+  <p class="method-p">Returns <code class='parameter'>true || false</code> based on if <code class="parameter">vertexOne</code> has <code class="parameter">vertexTwo</code> as one of its edges.</p>
+  <p class="method-p">Errors will be thrown for vertices which are not in the <code class="parameter">data</code> property.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">}]);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">hasEdge</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span> <span class="c1">// true</span>
+
+<span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">hasEdge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">hasEdge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span> <span class="c1">// false</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">hasVertex(vertex)</code>
+  <p class="method-p">Returns <code class='parameter'>true || false</code> based on if <code class="parameter">vertex</code> is a property in the <code class="parameter">data</code> object.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">hasVertex</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">});</span> <span class="c1">// true</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">hasVertex</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">2</span> <span class="p">});</span> <span class="c1">// false</span>
+
+<span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">hasVertex</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">hasVertex</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// false</span></code></pre></figure>
+  <p class="separator">. . . . .</p>
+  <code class="code">edgesToArray(vertex)</code>
+  <p class="method-p">Returns <code class='parameter'>[[vertex, edgeOne], [vertex, edgeTwo] ...]</code> based on the <code class="parameter">[]</code> for a given <code class="parameter">vertex</code>. Essentially, it will return <strong>sub-arrays</strong> of all the pairs of edges possible for a given vertex.</p>
+  <p class="method-p">Errors will be thrown for vertices which are not in the <code class="parameter">data</code> property.</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">});</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">some</span><span class="p">:</span> <span class="dl">'</span><span class="s1">info</span><span class="dl">'</span> <span class="p">}]);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">edgesToArray</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="mi">0</span> <span class="p">});</span> <span class="c1">// [[{ id: 0 }, { id: 1, some: 'info' }]]</span>
+
+<span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="nx">GraphBi</span><span class="p">.</span><span class="nx">edgesToArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// [[1, 2], [1, 3]]</span></code></pre></figure>
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
 </section>

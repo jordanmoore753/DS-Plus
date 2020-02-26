@@ -856,28 +856,96 @@ GraphBi.removeEdges(1, [2]);
 GraphBi.getEdges(1); // [3]
 {% endhighlight %}
   <p class="separator">. . . . .</p>
-  <code class="code">search(value)</code>
-  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+  <code class="code">getSize()</code>
+  <p class="method-p">Returns the number of vertices in the <code class="parameter">Graph</code> object.</p>
 {% highlight javascript %}
-Queue.enqueue(1);
-Queue.search(1);              // 1
-Queue.search(3);              // null
-LinkedListQueue.enqueue(1);
-LinkedListQueue.search(1);    // { val: 1, next: null }
-LinkedListQueue.search(3);    // null
+let Graph = new Plus.Graph('string', 'one');
+Graph.getSize(); // 0
+Graph.addVertices('one', 'two', 'three');
+Graph.getSize(); // 3
+Graph.removeVertex('one');
+Graph.getSize(); // 2
 {% endhighlight %}
   <p class="separator">. . . . .</p>
-  <code class="code">length()</code>
-  <p class="method-p">Returns the length of the <code class="parameter">data</code> property. If a <code class="parameter">LinkedList</code> object is empty, it will still have a length of <strong>1</strong>, since it still technically has a node: <code class="parameter">{ val: null, next: null }</code>.</p>
+  <code class="code">getEdges(vertex)</code>
+  <p class="method-p">Returns the <code class="parameter">[]</code> of <strong>edges</strong> for the passed <code class="parameter">vertex</code>.</p>
+  <p class="method-p">Errors will be thrown for vertices which are not in the <code class="parameter">data</code> property.</p>
 {% highlight javascript %}
-Queue.enqueue(1);
-Queue.length();    // 1
-Queue.dequeue();
-Queue.length();    // 0
-LinkedListQueue.enqueue(1);
-LinkedListQueue.length();   // 2
-LinkedListQueue.dequeue();
-LinkedListQueue.length();   // 1
+let Graph = new Plus.Graph('object', 'two');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.addEdges({ id: 0 }, [{ id: 1, some: 'info' }]);
+Graph.getEdges({ id: 0 });               // [{ id: 1, some: 'info' }]
+Graph.getEdges({ id: 1, some: 'info' }); // [{ id: 0 }]
+
+let GraphBi = new Plus.Graph('number', 'one');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.addEdges(1, [2, 3]);
+GraphBi.getEdges(1); // [2, 3]
+GraphBi.getEdges(2); // []
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">numberOfEdges(vertex)</code>
+  <p class="method-p">Returns the number of elements in <code class="parameter">[]</code> of the passed <code class="parameter">vertex</code>.</p>
+  <p class="method-p"><code class='parameter'>null</code> will be returned for vertices which are not in the <code class="parameter">data</code> property.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'two');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.addEdges({ id: 0 }, [{ id: 1, some: 'info' }]);
+Graph.getEdges({ id: 0 });               // [{ id: 1, some: 'info' }]
+Graph.getEdges({ id: 1, some: 'info' }); // [{ id: 0 }]
+Graph.numberOfEdges({ id: 0 }); // 1
+
+let GraphBi = new Plus.Graph('number', 'one');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.addEdges(1, [2, 3]);
+GraphBi.getEdges(1); // [2, 3]
+GraphBi.getEdges(2); // []
+GraphBi.numberOfEdges(1); // 2
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">hasEdge(vertexOne, vertexTwo)</code>
+  <p class="method-p">Returns <code class='parameter'>true || false</code> based on if <code class="parameter">vertexOne</code> has <code class="parameter">vertexTwo</code> as one of its edges.</p>
+  <p class="method-p">Errors will be thrown for vertices which are not in the <code class="parameter">data</code> property.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'two');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.addEdges({ id: 0 }, [{ id: 1, some: 'info' }]);
+Graph.hasEdge({ id: 0 }, { id: 1, some: 'info' }); // true
+
+let GraphBi = new Plus.Graph('number', 'one');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.addEdges(1, [2, 3]);
+GraphBi.hasEdge(1, 2); // true
+GraphBi.hasEdge(1, 4); // false
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">hasVertex(vertex)</code>
+  <p class="method-p">Returns <code class='parameter'>true || false</code> based on if <code class="parameter">vertex</code> is a property in the <code class="parameter">data</code> object.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'two');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.hasVertex({ id: 0 }); // true
+Graph.hasVertex({ id: 2 }); // false
+
+let GraphBi = new Plus.Graph('number', 'one');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.hasVertex(1); // true
+GraphBi.hasVertex(0); // false
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">edgesToArray(vertex)</code>
+  <p class="method-p">Returns <code class='parameter'>[[vertex, edgeOne], [vertex, edgeTwo] ...]</code> based on the <code class="parameter">[]</code> for a given <code class="parameter">vertex</code>. Essentially, it will return <strong>sub-arrays</strong> of all the pairs of edges possible for a given vertex.</p>
+  <p class="method-p">Errors will be thrown for vertices which are not in the <code class="parameter">data</code> property.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'two');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.addEdges({ id: 0 }, [{ id: 1, some: 'info' }]);
+Graph.edgesToArray({ id: 0 }); // [[{ id: 0 }, { id: 1, some: 'info' }]]
+
+let GraphBi = new Plus.Graph('number', 'one');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.addEdges(1, [2, 3]);
+GraphBi.edgesToArray(1); // [[1, 2], [1, 3]]
 {% endhighlight %}
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>
