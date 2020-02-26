@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/jordanmoore753/DS-Plus/issues"
   },
-  "homepage": "https://github.com/jordanmoore753/DS-Plus#readme",
+  "homepage": "https://jordanmoore753.github.io/DS-Plus/",
   "dependencies": {
     "jest": "^25.1.0"
   },
