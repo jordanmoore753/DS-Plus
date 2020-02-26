@@ -13,6 +13,18 @@
     "type": "git",
     "url": "git+https://github.com/jordanmoore753/DS-Plus.git"
   },
+  "keywords": [
+    "data-structures",
+    "javascript",
+    "js",
+    "linked list",
+    "avl",
+    "binary tree",
+    "graph",
+    "tree",
+    "queue",
+    "stack"
+  ],
   "author": "Jordan Moore",
   "license": "ISC",
   "bugs": {
