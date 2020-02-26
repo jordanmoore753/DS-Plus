@@ -13,6 +13,15 @@ By using these data structures, a developer can greatly increase the efficiency 
 
 The [documentation](https://jordanmoore753.github.io/DS-Plus/) has been written for novices, generalists, and experts alike, and contains all of the details necessary for one to get started today. Furthermore, these data structures do not eschew reliability for performance; every aspect of this package has been tested, and the **100%** test coverage is a testament to the fact that *DS-Plus* simply **works well consistently**.
 
+To use *DS-Plus*, all one needs to do is download the `ds-plus` package: 
+
+`npm i ds-plus`
+
+Then, require the `ds-plus` file:
+
+```js
+const Plus = require('ds-plus');
+```
 ## Queue
 
 A **Queue** is a data structure which follows a **first-in, first-out** algorithm. The first element added to the queue will be the first to be removed from the queue. Each new element is added to the end of the queue.
