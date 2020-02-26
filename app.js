@@ -1329,7 +1329,7 @@ Plus.Graph = class {
   }
 
   getEdges(vertex) {
-    if (!vertex) {
+    if (vertex === undefined) {
       return null;
     }
 
@@ -1341,7 +1341,7 @@ Plus.Graph = class {
   }
 
   edgesToArray(vertex) {
-    if (!vertex) {
+    if (vertex === undefined) {
       return null;
     }
 
@@ -1361,7 +1361,7 @@ Plus.Graph = class {
   }
 
   numberOfEdges(vertex) {
-    if (!vertex || !this.data[this.toString(vertex)]) {
+    if (vertex === undefined || !this.data[this.toString(vertex)]) {
       return null;
     }
 
@@ -1380,6 +1380,20 @@ Plus.Graph = class {
     let self = this;
 
     return this.data[this.toString(vertexOne)].filter((val) => self.toString(val) === self.toString(vertexTwo)).length === 1;
+  }
+
+  hasVertex(vertex) {
+    if (vertex === undefined) {
+      return false;
+    }
+
+    let str = this.toString(vertex);
+
+    if (!this.data[str]) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   validData(value) {

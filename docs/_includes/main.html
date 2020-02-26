@@ -19,6 +19,9 @@
     <li class="link-class-item">
       <a data-id='bst' href="#bst">Binary Search Tree</a>
     </li>
+    <li class="link-class-item">
+      <a data-id='graph' href="#bst">Graph</a>
+    </li>
   </ul>
   <hr>
 </div>
@@ -746,6 +749,135 @@ NumberBST.isEmpty(); // false
 let NumberBST = new Plus.BST('number');
 NumberBST.insert([1, 2, 3, 4]);
 NumberBST.getValuesTraversal(); // [1, 4, 3, 2]
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <a href="#title" class="topper">Back to Top</a>
+</section>
+
+<section id="graph" class="doc-section">
+  <h1 class="ds-heading">Graph</h1>
+  <p>The <code class="code">Graph</code> object in <em>DS-Plus</em> takes the form of an <strong>Adjacency List</strong>, which is an efficient implementation of a graph. Vertices are stored as keys in an object for <strong>O(1)</strong> lookup time.</p>
+  <h2 class="method-heading">Methods</h2>
+  <code class="code">constructor(dataType, direction)</code>
+  <p class="method-p">Initialize a new <code class="parameter">Graph</code> object.</p>
+{% highlight javascript %}
+  let Graph = new Plus.Graph('number', 'one');
+  let GraphBi = new Plus.Graph('number', 'two');
+{% endhighlight %} 
+  <p class="method-p">The returned <code class="parameter">Graph</code> object has the following structure:</p>
+{% highlight javascript %}
+{
+  data: {},
+  type: 'string' || 'number' || 'object'
+  size: 0,
+  way: 'one' || 'two'
+}
+{% endhighlight %}
+  <p class="method-p">The <code class="parameter">dataType</code> parameter can take either of the following options: <code class="parameter">['string', 'number', 'object']</code>. As one can guess, these are the three kinds of data that can be stored in the <code class="parameter">data</code> property of the <code class="parameter">Graph</code> object.</p>
+  <p class="method-p">The <code class="parameter">direction</code> parameter can take either of the following options: <code class="parameter">['one', 'two']</code>. This parameter determines the whether or not an edge is <strong>bi-directional</strong> or <strong>uni-directional</strong>.</p> 
+  <p>If <code class="parameter">'one'</code> is selected, an <strong>edge</strong> will only go in one direction. Check the following example to see the difference between <code class="parameter">'one'</code> and <code class="parameter">'two'</code>.</p>
+{% highlight javascript %}
+  let Graph = new Plus.Graph('number', 'one');
+  Graph.addVertices(2, 3, 4);
+  Graph.addEdges(2, [3, 4]);
+  Graph.getEdges(3); // [], no edges
+  Graph.getEdges(2); // [3, 4]
+
+  let GraphBi = new Plus.Graph('number', 'two');
+  Graph.addVertices(2, 3, 4);
+  Graph.addEdges(2, [3, 4]);
+  Graph.getEdges(3); // [2]
+  Graph.getEdges(2); // [3, 4]
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">addVertices(...vertices)</code>
+  <p class="method-p">Inserts <strong>vertice(s)</strong> to the <code class="parameter">data</code> property as keys. The keys will have <code class="parameter">[]</code> value by default. To pass several elements at once, simply separate each element by a comma.</p>
+  <p class="method-p"><strong>Objects</strong> passed into this method will be converted to strings with <code class="parameter">JSON.stringify(obj)</code>.</p>
+  <p class="method-p">Errors will be thrown for invalid data or already existing vertices being passed into this method.</p>
+  <p class="method-p">Returns <code class="parameter">this</code> for method chaining.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'one');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.data; // { 'JSON-stringified-object': [], 'JSON-stringified-object': [] };
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">removeVertex(vertex)</code>
+  <p class="method-p">Removes and returns the <code class="parameter">vertex</code> that was passed into the method. This will mutate the other vertexes accordingly and requires no repointing on the developer's end.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'one');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.addEdges({ id: 0 }, [{ id: 1, some: 'info' }]);
+Graph.removeVertice({ id: 1, some: 'info' });
+Graph.getEdges({ id: 0 }); // []
+
+let GraphBi = new Plus.Graph('number', 'two');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.addEdges(1, [2, 3]);
+GraphBi.getEdges(1); // [2, 3]
+GraphBi.getEdges(2); // [1]
+
+GraphBi.removeVertex(1);
+GraphBi.getEdges(2); // [] // removed edge to 1
+GraphBi.getEdges(3); // [] // removed edge to 1
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">addEdges(vertex, arr)</code>
+  <p class="method-p">Inserts <strong>edges</strong> from <code class="parameter">arr</code> for the passed <code class="parameter">vertex</code> and returns <code class="parameter">this</code> for method chaining.</p>
+  <p>Errors will be thrown for incorrect data, missing parameters, or if <code class="parameter">arr</code> is not an <code class="parameter">Array</code> object.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'two');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.addEdges({ id: 0 }, [{ id: 1, some: 'info' }]);
+Graph.getEdges({ id: 0 });               // [{ id: 1, some: 'info' }]
+Graph.getEdges({ id: 1, some: 'info' }); // [{ id: 0 }]
+
+let GraphBi = new Plus.Graph('number', 'one');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.addEdges(1, [2, 3]);
+GraphBi.getEdges(1); // [2, 3]
+GraphBi.getEdges(2); // []
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">removeEdges(vertex, arr)</code>
+  <p class="method-p">Removes <strong>edges</strong> from <code class="parameter">arr</code> for the passed <code class="parameter">vertex</code> and returns <code class="parameter">this</code> for method chaining.</p>
+  <p>Errors will be thrown for incorrect data, missing parameters, or if <code class="parameter">arr</code> is not an <code class="parameter">Array</code> object.</p>
+{% highlight javascript %}
+let Graph = new Plus.Graph('object', 'two');
+Graph.addVertices({ id: 0 }, { id: 1, some: 'info' });
+Graph.addEdges({ id: 0 }, [{ id: 1, some: 'info' }]);
+Graph.removeEdges({ id: 1, some: 'info' }, [{ id: 0 }]);
+Graph.getEdges({ id: 1, some: 'info' }); // []
+Graph.getEdges({ id: 0 });               // []
+
+let GraphBi = new Plus.Graph('number', 'one');
+GraphBi.addVertices(1, 2, 3, 4);
+GraphBi.addEdges(1, [2, 3]);
+GraphBi.removeEdges(1, [2]);
+GraphBi.getEdges(1); // [3]
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">search(value)</code>
+  <p class="method-p">Returns the element or node from the <code class="parameter">data</code> property if it exists. Returns <code class="parameter">null</code> if there are no elements.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.search(1);              // 1
+Queue.search(3);              // null
+LinkedListQueue.enqueue(1);
+LinkedListQueue.search(1);    // { val: 1, next: null }
+LinkedListQueue.search(3);    // null
+{% endhighlight %}
+  <p class="separator">. . . . .</p>
+  <code class="code">length()</code>
+  <p class="method-p">Returns the length of the <code class="parameter">data</code> property. If a <code class="parameter">LinkedList</code> object is empty, it will still have a length of <strong>1</strong>, since it still technically has a node: <code class="parameter">{ val: null, next: null }</code>.</p>
+{% highlight javascript %}
+Queue.enqueue(1);
+Queue.length();    // 1
+Queue.dequeue();
+Queue.length();    // 0
+LinkedListQueue.enqueue(1);
+LinkedListQueue.length();   // 2
+LinkedListQueue.dequeue();
+LinkedListQueue.length();   // 1
 {% endhighlight %}
   <p class="separator">. . . . .</p>
   <a href="#title" class="topper">Back to Top</a>

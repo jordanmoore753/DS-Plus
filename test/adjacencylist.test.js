@@ -507,4 +507,19 @@ describe('Graph', () => {
       g.getEdges(3);
     }).toThrow('Vertex does not exist.');  
   });
+
+  it('should return true || false if vertex exists', () => {
+    let g = new Plus.Graph('number', 'one');
+    g.addVertices(1, 2, 3);
+
+    expect(g.hasVertex(1)).toBe(true);
+    expect(g.hasVertex(0)).toBe(false);
+    expect(g.hasVertex()).toBe(false);
+
+    g = new Plus.Graph('object', 'two');
+    g.addVertices({ id: 0 });
+
+    expect(g.hasVertex({ id: 1 })).toBe(false);
+    expect(g.hasVertex({ id: 0 })).toBe(true);
+  });
 });
