@@ -766,8 +766,8 @@ NumberBST.getValuesTraversal(); // [1, 4, 3, 2]
   <code class="code">constructor(dataType, direction)</code>
   <p class="method-p">Initialize a new <code class="parameter">Graph</code> object.</p>
 {% highlight javascript %}
-  let Graph = new Plus.Graph('number', 'one');
-  let GraphBi = new Plus.Graph('number', 'two');
+let Graph = new Plus.Graph('number', 'one');
+let GraphBi = new Plus.Graph('number', 'two');
 {% endhighlight %} 
   <p class="method-p">The returned <code class="parameter">Graph</code> object has the following structure:</p>
 {% highlight javascript %}
@@ -782,17 +782,17 @@ NumberBST.getValuesTraversal(); // [1, 4, 3, 2]
   <p class="method-p">The <code class="parameter">direction</code> parameter can take either of the following options: <code class="parameter">['one', 'two']</code>. This parameter determines the whether or not an edge is <strong>bi-directional</strong> or <strong>uni-directional</strong>.</p> 
   <p>If <code class="parameter">'one'</code> is selected, an <strong>edge</strong> will only go in one direction. Check the following example to see the difference between <code class="parameter">'one'</code> and <code class="parameter">'two'</code>.</p>
 {% highlight javascript %}
-  let Graph = new Plus.Graph('number', 'one');
-  Graph.addVertices(2, 3, 4);
-  Graph.addEdges(2, [3, 4]);
-  Graph.getEdges(3); // [], no edges
-  Graph.getEdges(2); // [3, 4]
+let Graph = new Plus.Graph('number', 'one');
+Graph.addVertices(2, 3, 4);
+Graph.addEdges(2, [3, 4]);
+Graph.getEdges(3); // [], no edges
+Graph.getEdges(2); // [3, 4]
 
-  let GraphBi = new Plus.Graph('number', 'two');
-  Graph.addVertices(2, 3, 4);
-  Graph.addEdges(2, [3, 4]);
-  Graph.getEdges(3); // [2]
-  Graph.getEdges(2); // [3, 4]
+let GraphBi = new Plus.Graph('number', 'two');
+Graph.addVertices(2, 3, 4);
+Graph.addEdges(2, [3, 4]);
+Graph.getEdges(3); // [2]
+Graph.getEdges(2); // [3, 4]
 {% endhighlight %}
   <p class="separator">. . . . .</p>
   <code class="code">addVertices(...vertices)</code>
