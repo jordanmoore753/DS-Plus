@@ -74,6 +74,24 @@ let StringBST = new Plus.BST('string');  // A BST object which allows String dat
 let NumberBST = new Plus.BST('number');  // A BST object which allows Number data only.
 let DateBST = new Plus.BST('date');      // A BST object which allows Date data only.
 ```
+
+## Graph
+
+A **Graph** is implemented in *DS-Plus* through the use of an **Adjacency List**. This is an efficient structure which stores **vertices** as properties on an `object`, allowing for **O(1)** lookup time.
+
+```js
+let Graph = new Plus.Graph('number', 'one');
+Graph.addVertices(2, 3, 4);
+Graph.addEdges(2, [3, 4]);
+Graph.getEdges(3); // [], no edges
+Graph.getEdges(2); // [3, 4]
+
+let GraphBi = new Plus.Graph('number', 'two');
+Graph.addVertices(2, 3, 4);
+Graph.addEdges(2, [3, 4]);
+Graph.getEdges(3); // [2]
+Graph.getEdges(2); // [3, 4]
+```
 # Next Steps
 
 Read the [documentation](https://jordanmoore753.github.io/DS-Plus/) to get more specific information about initialization, methods, and more.
