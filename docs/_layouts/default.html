@@ -35,7 +35,19 @@
           },
 
           binder: function() {
+            $('.topper').on('click', $.proxy(this.toTop, this));
             $('#links-classes a').on('click', $.proxy(this.show, this));
+          },
+
+          toTop: function(e) {
+            e.preventDefault();
+            let id = '#' + $(e.target).parent().attr('id');
+
+            $('#holder-links hr').hide();
+            $(id).hide(); 
+            $('html, body').animate({
+              scrollTop: $('#title').offset().top - 110
+            }, 200, 'linear');           
           },
 
           show: function(e) {
@@ -48,6 +60,9 @@
               this.hideAll();
               $('#holder-links hr').show();
               $(id).fadeIn(100);
+              $('html, body').animate({
+                scrollTop: $(id).offset().top - 92
+              }, 200, 'linear');
             } else {
               $('#holder-links hr').hide();
               $(id).hide();

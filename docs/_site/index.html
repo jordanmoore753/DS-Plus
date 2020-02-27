@@ -18,7 +18,7 @@
 {"description":"Implement non-native data structures in JavaScript with style.","headline":"DS-Plus","@type":"WebSite","url":"http://localhost:4000/","name":"DS-Plus","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=c648ec1d49cefc95a3bb5a7bbb0a4edba4e5bf83">
+    <link rel="stylesheet" href="/assets/css/style.css?v=f06bdf2ff98808e5150bb5bb5682aab897ebf561">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="/favicon.png" type="image/png" />
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
@@ -48,7 +48,19 @@
           },
 
           binder: function() {
+            $('.topper').on('click', $.proxy(this.toTop, this));
             $('#links-classes a').on('click', $.proxy(this.show, this));
+          },
+
+          toTop: function(e) {
+            e.preventDefault();
+            let id = '#' + $(e.target).parent().attr('id');
+
+            $('#holder-links hr').hide();
+            $(id).hide(); 
+            $('html, body').animate({
+              scrollTop: $('#title').offset().top - 110
+            }, 200, 'linear');           
           },
 
           show: function(e) {
@@ -61,6 +73,9 @@
               this.hideAll();
               $('#holder-links hr').show();
               $(id).fadeIn(100);
+              $('html, body').animate({
+                scrollTop: $(id).offset().top - 92
+              }, 200, 'linear');
             } else {
               $('#holder-links hr').hide();
               $(id).hide();
@@ -286,6 +301,8 @@
   </ul>
   <hr>
 </div>
+<section id="before_info" style="width: 0px; height: 0px; margin: 0; padding: 0;"></section>
+<section id="before_info" style="width: 0px; height: 0px; margin: 0; padding: 0;"></section>
 <section id="queue" class="doc-section">
   <h1 class="ds-heading">Queue</h1>
   <p>Queues are very easy to implement with <em>Plus</em>. There are two initialization options for the data storage in the queue: an array, or a linked list.</p>
@@ -902,8 +919,8 @@
   <h2 class="method-heading">Methods</h2>
   <code class="code">constructor(dataType, direction)</code>
   <p class="method-p">Initialize a new <code class="parameter">Graph</code> object.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
-  <span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span></code></pre></figure> 
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span></code></pre></figure> 
   <p class="method-p">The returned <code class="parameter">Graph</code> object has the following structure:</p>
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
   <span class="nl">data</span><span class="p">:</span> <span class="p">{},</span>
@@ -914,17 +931,17 @@
   <p class="method-p">The <code class="parameter">dataType</code> parameter can take either of the following options: <code class="parameter">['string', 'number', 'object']</code>. As one can guess, these are the three kinds of data that can be stored in the <code class="parameter">data</code> property of the <code class="parameter">Graph</code> object.</p>
   <p class="method-p">The <code class="parameter">direction</code> parameter can take either of the following options: <code class="parameter">['one', 'two']</code>. This parameter determines the whether or not an edge is <strong>bi-directional</strong> or <strong>uni-directional</strong>.</p> 
   <p>If <code class="parameter">'one'</code> is selected, an <strong>edge</strong> will only go in one direction. Check the following example to see the difference between <code class="parameter">'one'</code> and <code class="parameter">'two'</code>.</p>
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript">  <span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// [], no edges</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// [3, 4]</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">Graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// [], no edges</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// [3, 4]</span>
 
-  <span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// [2]</span>
-  <span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// [3, 4]</span></code></pre></figure>
+<span class="kd">let</span> <span class="nx">GraphBi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Plus</span><span class="p">.</span><span class="nx">Graph</span><span class="p">(</span><span class="dl">'</span><span class="s1">number</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">two</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addVertices</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">addEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]);</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// [2]</span>
+<span class="nx">Graph</span><span class="p">.</span><span class="nx">getEdges</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// [3, 4]</span></code></pre></figure>
   <p class="separator">. . . . .</p>
   <code class="code">addVertices(...vertices)</code>
   <p class="method-p">Inserts <strong>vertice(s)</strong> to the <code class="parameter">data</code> property as keys. The keys will have <code class="parameter">[]</code> value by default. To pass several elements at once, simply separate each element by a comma.</p>
