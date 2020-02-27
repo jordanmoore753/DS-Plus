@@ -8,6 +8,7 @@
 3. Linked List
 4. Binary Tree
 5. AVL Tree
+6. Graph
 
 By using these data structures, a developer can greatly increase the efficiency and power of their program. Additionally, *DS-Plus* is made for developers first, so ease-of-use was of paramount concern at every stage of this package's creation. Many standard methods, like `insert` and `remove`, have been improved from their standard implementations, in addition to non-standard methods, like `countMultiple` for *Linked Lists*, also make the developer's life much easier.
 
