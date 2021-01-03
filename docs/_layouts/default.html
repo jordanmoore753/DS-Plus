@@ -395,11 +395,13 @@
         .full {
           width: 100%;
           display: block;
+          background-color: #2a2a2a;
+          height: 50px;
         }
 
         .right-col {
           width: 100%;
-          padding: 50px 10px 20px;
+          padding: 20px 10px;
           box-sizing: border-box;
         }
 
@@ -414,7 +416,17 @@
         .links-classes {
           display: none;
           background-color: #2a2a2a;
-          margin-top: 64px;
+          /* margin-top: 50px; */
+          z-index: 1000;
+          position: absolute;
+          top: 50px;
+          width: 100%;
+          box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.16) 0px 2px 4px -1px;
+        }
+
+        .links-classes a {
+          margin-left: 15px;
+
         }
 
         .icon {
@@ -424,14 +436,14 @@
           display: block;
           position: absolute;
           right: 13px;
-          top: 23px;
+          top: 8px;
         }
 
         #home-link {
           display: block;
           position: absolute;
           left: 15px;
-          top: 27px;    
+          top: 13px;    
           font-size: 1.2rem; 
           color: white;
           font-weight: bold;    
@@ -442,20 +454,18 @@
   <body>
     <div class="row">
       <div class="column full">
-        <div id="header">
-          <a id="home-link" data-id='home' href='#home'>DS-Plus</a>
-          <div id="hamb-links" class="links-classes">
-            <a href="#queue" data-id='queue'>Queue</a>
-            <a data-id='stack' href="#stack">Stack</a>
-            <a data-id='linkedlist' href="#linkedlist">Linked List</a>
-            <a data-id='bt' href="#bt">Binary Tree</a>
-            <a data-id='bst' href="#bst">Binary Search Tree</a>
-            <a data-id='graph' href="#bst">Graph</a>
-          </div>
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-          </a>
+        <a id="home-link" data-id='home' href='#home'>DS-Plus</a>
+        <div id="hamb-links" class="links-classes">
+          <a href="#queue" data-id='queue'>Queue</a>
+          <a data-id='stack' href="#stack">Stack</a>
+          <a data-id='linkedlist' href="#linkedlist">Linked List</a>
+          <a data-id='bt' href="#bt">Binary Tree</a>
+          <a data-id='bst' href="#bst">Binary Search Tree</a>
+          <a data-id='graph' href="#bst">Graph</a>
         </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
       </div>
     </div>
 
@@ -474,7 +484,7 @@
       <div class="column left-col">
         <div class="links-classes">
           <a id="pic-link" data-id='home' href='#home'>
-            <img class="nav-pic" src="/assets/dsplus(2).png"/>
+            <img class="nav-pic" src="/assets/images/dsplus(2).png"/>
           </a>
           <a href="#queue" data-id='queue'>Queue</a>
           <a data-id='stack' href="#stack">Stack</a>
