@@ -1,34 +1,13 @@
-<div id="holder-links">
+<div id="home" class="doc-section">
+  <div id="title" style="margin-bottom: 0px;">
+    <img src="/assets/dsplus(1).png" style="display: block; margin: 0 auto; margin-bottom: 1rem;"/>
+    <!-- <h1>{{ site.title | default: site.github.repository_name }}</h1> -->
+    <p style="color: black;">{{ site.description | default: site.github.project_tagline }}</p>
+    <hr>
+  </div>
   <p>Sometimes, the built-in data structures in <em>JavaScript</em> simply aren't adequate for the application being developed.</p>
   <p>Fear not. <em>DS-Plus</em> gives developers fast and reliable data structures.</p>
   <p>To use <code class="code">DS-Plus</code> in one's project, all one needs to do is download its package with the following command:<code class="parameter">npm i ds-plus</code></p>
-  <p>Then, require the package in the correct file in the project.</p>
-{% highlight javascript %}
-const Plus = require('ds-plus');
-{% endhighlight %}
-  <p>All objects in the <em>Plus</em> class are initialized with the <code class="code">new</code> keyword and a constructor function.</p>
-  <p>Below, you may click on any of the links to view the documentation for a given <code class="code">class</code>.</p>
-  <ul id="links-classes">
-    <li class="link-class-item">
-      <a href="#queue" data-id='queue'>Queue</a>
-    </li>
-    <li class="link-class-item">
-      <a data-id='stack' href="#stack">Stack</a>
-    </li>
-    <li class="link-class-item">
-      <a data-id='linkedlist' href="#linkedlist">Linked List</a>
-    </li>
-    <li class="link-class-item">
-      <a data-id='bt' href="#bt">Binary Tree</a>
-    </li>
-    <li class="link-class-item">
-      <a data-id='bst' href="#bst">Binary Search Tree</a>
-    </li>
-    <li class="link-class-item">
-      <a data-id='graph' href="#bst">Graph</a>
-    </li>
-  </ul>
-  <hr>
 </div>
 <section id="before_info" style="width: 0px; height: 0px; margin: 0; padding: 0;"></section>
 <section id="before_info" style="width: 0px; height: 0px; margin: 0; padding: 0;"></section>
@@ -107,8 +86,6 @@ LinkedListQueue.length();   // 2
 LinkedListQueue.dequeue();
 LinkedListQueue.length();   // 1
 {% endhighlight %}
-  <p class="separator">. . . . .</p>
-  <a href="#title" class="topper">Back to Top</a>
 </section>
 
 <section id="stack" class="doc-section">
@@ -187,8 +164,6 @@ LinkedListStack.length();   // 2
 LinkedListStack.pop();
 LinkedListStack.length();   // 1
 {% endhighlight %}
-  <p class="separator">. . . . .</p>
-  <a href="#title" class="topper">Back to Top</a>
 </section>
 
 <section id="linkedlist" class="doc-section">
@@ -389,8 +364,6 @@ LinkedList.insert(3, 'one', 'one', 1, 'two', ['one']);
 LinkedList.countMultiple(4, 3, 'one', 'two', 2, { one: 'yes' }, ['one']); 
 // { 4: 1, 3: 1, 'one': 2, 'two': 1, 2: 0 }
 {% endhighlight %}
-  <p class="separator">. . . . .</p>
-  <a href="#title" class="topper">Back to Top</a>
 </section>
 <section id="bt" class="doc-section">
 <h1 class="ds-heading">Binary Tree</h1>
@@ -548,8 +521,6 @@ BinaryTree.insert(2).insert(3);
 BinaryTree.manipulateTraversal(double); 
 BinaryTree.getValuesTraversal();       // [2, 3, 1]
 {% endhighlight %}
-  <p class="separator">. . . . .</p>
-  <a href="#title" class="topper">Back to Top</a>
 </section>
 
 <section id="bst" class="doc-section">
@@ -757,8 +728,6 @@ let NumberBST = new Plus.BST('number');
 NumberBST.insert([1, 2, 3, 4]);
 NumberBST.getValuesTraversal(); // [1, 4, 3, 2]
 {% endhighlight %}
-  <p class="separator">. . . . .</p>
-  <a href="#title" class="topper">Back to Top</a>
 </section>
 
 <section id="graph" class="doc-section">
@@ -954,6 +923,4 @@ GraphBi.addVertices(1, 2, 3, 4);
 GraphBi.addEdges(1, [2, 3]);
 GraphBi.edgesToArray(1); // [[1, 2], [1, 3]]
 {% endhighlight %}
-  <p class="separator">. . . . .</p>
-  <a href="#title" class="topper">Back to Top</a>
 </section>

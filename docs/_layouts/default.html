@@ -5,9 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 {% seo %}
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" href="{{ site.baseurl }}/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
     <!--[if lt IE 9]>
@@ -32,11 +38,14 @@
             $('#bt').hide();
             $('#bst').hide();
             $('#graph').hide();
+            $('#home').show();
+            $('#hamb-links').hide();
           },
 
           binder: function() {
             $('.topper').on('click', $.proxy(this.toTop, this));
-            $('#links-classes a').on('click', $.proxy(this.show, this));
+            $('.links-classes a').on('click', $.proxy(this.show, this));
+            $('#home-link').on('click', $.proxy(this.show, this));
           },
 
           toTop: function(e) {
@@ -54,18 +63,22 @@
             e.preventDefault();
             e.stopPropagation();
 
-            let id = '#' + $(e.target).attr('data-id');
-
+            let id = '#' + $(e.currentTarget).attr('data-id');
+            
             if (this.findActive() !== $(id)[0]) {
-              this.hideAll();
-              $('#holder-links hr').show();
+              const activeId = this.findActive().id;
+              $(`#${activeId}`).hide();
               $(id).fadeIn(100);
+
+              // $('#holder-links hr').show();
+              // $(id).fadeIn(100);
               $('html, body').animate({
                 scrollTop: $(id).offset().top - 92
               }, 200, 'linear');
+
+              $('#hamb-links').hide();
             } else {
-              $('#holder-links hr').hide();
-              $(id).hide();
+              this.hideAll();
             }
 
             return;
@@ -82,22 +95,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <style type="text/css">
       .code {
-        background-color: #ffcc00;
+        background-color: #389184;
         border-radius: 3px;
-        color: black;
+        color: white;
       }
 
       .ds-heading {
         margin: 30px 0;
-        text-align: center;
         font-size: 2rem;
       }
 
       .method-heading {
-        text-align: center;
         padding-bottom: 10px;
         border-bottom: 1px solid black;
-        width: 32%;
+        width: 100%;
         display: block;
         margin: 0 auto;
         margin-top: 30px;
@@ -152,6 +163,7 @@
         background-color: #fdfbfc;
         color: black;
         padding-bottom: 0;
+        text-align: left;
       }
 
       .wrapper section {
@@ -175,7 +187,7 @@
       }
 
       #my-name {
-        color: #856a00;
+        color: #389184;
       }
 
       .left {
@@ -235,33 +247,273 @@
       }
 
       #dat-name a {
-        color: #663300;
+        color: #389184;
         transition: .3s;
       }
 
       #dat-name a:hover {
-        color: #BE8D0D;
+        color: #2a6c63;
+      }
+
+      #header {
+        display: none;
+      }
+
+      #right-main {
+
+        width: 100%;
+      }
+
+      #left-nav {
+        height: 100%;
+        width: 250px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #2a6c63;
+        overflow-x: hidden;
+        padding-top: 20px;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 6px -1px, rgba(0, 0, 0, 0.16) 0px 2px 4px -1px;
+      }
+
+      #left-nav ul {
+        list-style-type: none;
+      }
+      
+      #left-nav li {
+        cursor: none;
+      }
+
+      #left-nav a {
+        padding: 6px 0 16px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        color: white;
+        display: block;
+      }
+
+      #left-nav a:hover {
+        color: lightgray;
+        transition: 1s;
+      }
+
+      body {
+        text-align: center;
+      }
+
+      .row {
+        display: flex;
+      }
+
+      .column {
+        float: left;
+      }
+
+      .full {
+        width: 100%;
+        display: none;
+      }
+
+      .left-col {
+        width: 20%;
+        min-height: 100vh;
+        padding-top: 70px;
+        background-color: #2a2a2a;
+      }
+
+      .right-col {
+        width: 80%;
+        padding: 50px 125px;
+        box-sizing: border-box;
+      }
+
+      .links-classes a {
+        display: block;
+        text-align: left;
+        margin-left: 35px;
+        font-size: 1rem;
+        padding: 10px 0;
+        color: white;
+      }
+
+      .links-classes a:hover {
+        color: #2a6c63;
+        transition: 1s;
+      }
+
+      section {
+        max-width: 800px;
+        margin-top: 0px;
+      }
+
+      .wrapper {
+        max-width: 800px;
+        text-align: left;
+      }
+
+      section h1 {
+        text-align: left;
+      }
+
+      .nav-pic {
+        display: block;
+        margin: 0 auto;
+        width: 125px;
+        padding-bottom: 50px;
+      }
+
+      #pic-link {
+        margin-left: 0px;
+        display: block;
+        padding: 0;
+        display: inline;
+      }
+
+      .highlight {
+        text-align: left;
+      }
+      @media(max-width: 1200px) {
+        #header {
+          display: block;
+          background-color: #2a2a2a;
+        }
+
+        .left-col {
+          display: none;
+          height: 0;
+        }
+
+        .row {
+          display: flex;
+        }
+
+        .column {
+          float: left;
+        }
+
+        .full {
+          width: 100%;
+          display: block;
+        }
+
+        .right-col {
+          width: 100%;
+          padding: 50px 10px 20px;
+          box-sizing: border-box;
+        }
+
+        #dat-name {
+          height: auto;
+        }
+
+        #dat-name p {
+          padding: 20px 5px 0;
+        }
+
+        .links-classes {
+          display: none;
+          background-color: #2a2a2a;
+          margin-top: 64px;
+        }
+
+        .icon {
+          font-size: 1.5rem;
+          color: white;
+          background: inherit;
+          display: block;
+          position: absolute;
+          right: 13px;
+          top: 23px;
+        }
+
+        #home-link {
+          display: block;
+          position: absolute;
+          left: 15px;
+          top: 27px;    
+          font-size: 1.2rem; 
+          color: white;
+          font-weight: bold;    
+        }
       }
     </style>
   </head>
   <body>
-      <div id="header">
-        <nav>
-        </nav>
-      </div><!-- end header -->
-
-    <div class="wrapper" style="margin-bottom: 0px;">
-      <section>
-        <div id="title" style="margin-bottom: 0px;">
-          <h1>{{ site.title | default: site.github.repository_name }}</h1>
-          <p style="color: black;">{{ site.description | default: site.github.project_tagline }}</p>
-          <hr>
+    <div class="row">
+      <div class="column full">
+        <div id="header">
+          <a id="home-link" data-id='home' href='#home'>DS-Plus</a>
+          <div id="hamb-links" class="links-classes">
+            <a href="#queue" data-id='queue'>Queue</a>
+            <a data-id='stack' href="#stack">Stack</a>
+            <a data-id='linkedlist' href="#linkedlist">Linked List</a>
+            <a data-id='bt' href="#bt">Binary Tree</a>
+            <a data-id='bst' href="#bst">Binary Search Tree</a>
+            <a data-id='graph' href="#bst">Graph</a>
+          </div>
+          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </a>
         </div>
+      </div>
+    </div>
 
-        {% include main.html %}
+    <script>
+      function myFunction() {
+        var x = document.getElementById("hamb-links");
+        if (x.style.display === "block") {
+          x.style.display = "none";
+        } else {
+          x.style.display = "block";
+        }
+      }
+    </script>
 
-      </section>
-
+    <div class="row">
+      <div class="column left-col">
+        <div class="links-classes">
+          <a id="pic-link" data-id='home' href='#home'>
+            <img class="nav-pic" src="/assets/dsplus(2).png"/>
+          </a>
+          <a href="#queue" data-id='queue'>Queue</a>
+          <a data-id='stack' href="#stack">Stack</a>
+          <a data-id='linkedlist' href="#linkedlist">Linked List</a>
+          <a data-id='bt' href="#bt">Binary Tree</a>
+          <a data-id='bst' href="#bst">Binary Search Tree</a>
+          <a data-id='graph' href="#bst">Graph</a>
+        </div>
+      </div>
+      <div class="column right-col">
+        <div class="wrapper">
+          <section>
+            {% include main.html %}
+            <hr>
+            <ul id="out-links-list">
+              <li>
+                <a href="https://travis-ci.org/jordanmoore753/DS-Plus">
+                  <img style='position: relative; top: 3px;' src="https://travis-ci.org/jordanmoore753/DS-Plus.svg?branch=master">
+                </a>
+              </li>
+              <li>
+                <div>
+                  <i class="fa fa-github"></i>
+                </div>
+                <a href="{{ site.github.repository_url }}">Github</a>
+              </li>
+              <li>
+                <div>
+                  <i class="fa fa-code"></i>
+                </div>
+                <a href="https://www.npmjs.com/package/ds-plus">npm</a>
+              </li>
+            </ul>
+            <footer id="dat-name">
+              <p>Created and maintained by <a href="{{ site.github.owner_url }}">Jordan Moore</a></p>
+            </footer>
+          </section>
+        </div>
+      </div>
     </div>
 
     {% if site.google_analytics %}
@@ -274,31 +526,5 @@
         ga('send', 'pageview');
       </script>
     {% endif %}
-    <div class="wrapper">
-      <hr>
-      <ul id="out-links-list">
-        <li>
-          <a href="https://travis-ci.org/jordanmoore753/DS-Plus">
-            <img style='position: relative; top: 3px;' src="https://travis-ci.org/jordanmoore753/DS-Plus.svg?branch=master">
-          </a>
-        </li>
-        <li>
-          <div>
-            <i class="fa fa-github"></i>
-          </div>
-          <a href="{{ site.github.repository_url }}">Github</a>
-        </li>
-        <li>
-          <div>
-            <i class="fa fa-code"></i>
-          </div>
-          <a href="https://www.npmjs.com/package/ds-plus">npm</a>
-        </li>
-      </ul>
-      <footer id="dat-name">
-        <p>Created and maintained by <a href="{{ site.github.owner_url }}">Jordan Moore</a></p>
-      </footer>
-    </div>
-
   </body>
 </html>
